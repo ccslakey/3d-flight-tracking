@@ -1,11 +1,13 @@
 // Turns raw adsb.lol snapshots into per-flight track files and detects SFO landings.
 // Usage: tsx scripts/extract-tracks.ts public/data/raw/adsb-<stamp>.ndjson
 //
-// Output: public/data/tracks/<stamp>/index.json and one <flightId>.json per flight.
+// Output: public/data/tracks/<stamp>/index.json, one <flightId>.json per flight, and an
+// entry in public/data/tracks/manifest.json.
 // Altitudes stay raw (feet, as reported); conversion happens only in src/altitude.ts.
 
-import { mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
+import type { FlightSummary, Landing, RecordingIndex, TrackFile, TrackManifest, TrackSample } from "../src/track";
 
 const SFO_LAT = 37.6189;
 const SFO_LON = -122.375;
@@ -28,35 +30,6 @@ interface RawAircraft {
   baro_rate?: number;
   seen?: number;
   seen_pos?: number;
-}
-
-export interface TrackSample {
-  tMs: number; // position time: snapshot `now` minus `seen_pos`
-  lat: number;
-  lon: number;
-  altBaroFt: number | "ground" | null;
-  altGeomFt: number | null;
-  gsKt: number | null;
-  trackDeg: number | null;
-  baroRateFpm: number | null;
-}
-
-interface FlightSummary {
-  id: string;
-  hex: string;
-  flight?: string;
-  typeCode?: string;
-  sampleCount: number;
-  startMs: number;
-  endMs: number;
-  hasGeom: boolean;
-  landing: Landing | null;
-}
-
-interface Landing {
-  method: "ground" | "fallback";
-  touchdownMs: number; // first "ground" sample, or first slow sample for fallback
-  lastAirborneIndex: number;
 }
 
 function distanceNm(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -154,7 +127,8 @@ for (const [hex, { flight, typeCode, samples }] of byHex) {
   segments.forEach((seg, i) => {
     const id = segments.length > 1 ? `${hex}-${i}` : hex;
     const landing = detectLanding(seg);
-    writeFileSync(join(outDir, `${id}.json`), JSON.stringify({ id, hex, flight, typeCode, landing, samples: seg }));
+    const file: TrackFile = { id, hex, flight, typeCode, landing, samples: seg };
+    writeFileSync(join(outDir, `${id}.json`), JSON.stringify(file));
     flights.push({
       id,
       hex,
@@ -183,5 +157,14 @@ const summary = {
     fallback: landings.filter((f) => f.landing!.method === "fallback").length,
   },
 };
-writeFileSync(join(outDir, "index.json"), JSON.stringify({ ...summary, flights }, null, 1));
+const index: RecordingIndex = { ...summary, flights };
+writeFileSync(join(outDir, "index.json"), JSON.stringify(index, null, 1));
+
+const manifestPath = join("public", "data", "tracks", "manifest.json");
+const manifest: TrackManifest = existsSync(manifestPath)
+  ? JSON.parse(readFileSync(manifestPath, "utf8"))
+  : { recordings: [] };
+manifest.recordings = manifest.recordings.filter((r) => r.stamp !== stamp);
+manifest.recordings.push({ stamp, metarFile: `metar-${stamp}.json` });
+writeFileSync(manifestPath, JSON.stringify(manifest, null, 1));
 console.log(JSON.stringify(summary, null, 2));
