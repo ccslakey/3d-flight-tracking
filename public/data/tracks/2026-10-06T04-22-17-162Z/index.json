@@ -1,0 +1,2684 @@
+{
+ "source": "adsb-2026-10-06T04-22-17-162Z.ndjson",
+ "snapshotCount": 436,
+ "rawBytes": 12508485,
+ "distinctAircraft": 205,
+ "flightCount": 235,
+ "droppedStale": 1630,
+ "droppedDuplicate": 1210,
+ "landings": {
+  "ground": 43,
+  "fallback": 0
+ },
+ "flights": [
+  {
+   "id": "a1c90e",
+   "hex": "a1c90e",
+   "flight": "ASA960",
+   "typeCode": "A21N",
+   "sampleCount": 39,
+   "startMs": 1791260553501,
+   "endMs": 1791260939290,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a178ae",
+   "hex": "a178ae",
+   "flight": "SKW3465",
+   "typeCode": "E75L",
+   "sampleCount": 8,
+   "startMs": 1791260553281,
+   "endMs": 1791260620000,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "acf146",
+   "hex": "acf146",
+   "flight": "SKW410Z",
+   "typeCode": "CRJ2",
+   "sampleCount": 55,
+   "startMs": 1791260553179,
+   "endMs": 1791261110056,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ab5d36",
+   "hex": "ab5d36",
+   "flight": "N831MT",
+   "typeCode": "G280",
+   "sampleCount": 322,
+   "startMs": 1791260553042,
+   "endMs": 1791263803147,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "3c6708",
+   "hex": "3c6708",
+   "flight": "DLH459",
+   "typeCode": "A359",
+   "sampleCount": 50,
+   "startMs": 1791260553114,
+   "endMs": 1791261047874,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a3d568",
+   "hex": "a3d568",
+   "flight": "UPS961",
+   "typeCode": "B763",
+   "sampleCount": 50,
+   "startMs": 1791260553205,
+   "endMs": 1791261047876,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a9eeef",
+   "hex": "a9eeef",
+   "flight": "N73904",
+   "typeCode": "C172",
+   "sampleCount": 94,
+   "startMs": 1791260553309,
+   "endMs": 1791261426755,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a8e9fd",
+   "hex": "a8e9fd",
+   "flight": "UAL292",
+   "typeCode": "B38M",
+   "sampleCount": 82,
+   "startMs": 1791260550045,
+   "endMs": 1791261478044,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a12f73",
+   "hex": "a12f73",
+   "flight": "UAL737",
+   "typeCode": "B39M",
+   "sampleCount": 81,
+   "startMs": 1791260553294,
+   "endMs": 1791261384110,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a7d831-0",
+   "hex": "~a7d831",
+   "sampleCount": 8,
+   "startMs": 1791260552452,
+   "endMs": 1791260655485,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a7d831-1",
+   "hex": "~a7d831",
+   "sampleCount": 1,
+   "startMs": 1791262005384,
+   "endMs": 1791262005384,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a7d831-2",
+   "hex": "~a7d831",
+   "sampleCount": 53,
+   "startMs": 1791263134465,
+   "endMs": 1791264728359,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a330e6-0",
+   "hex": "~a330e6",
+   "sampleCount": 83,
+   "startMs": 1791260545505,
+   "endMs": 1791261471611,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a330e6-1",
+   "hex": "~a330e6",
+   "sampleCount": 17,
+   "startMs": 1791262731425,
+   "endMs": 1791262891418,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a330e6-2",
+   "hex": "~a330e6",
+   "sampleCount": 45,
+   "startMs": 1791264031490,
+   "endMs": 1791264575431,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a12710",
+   "hex": "a12710",
+   "flight": "UAL1219",
+   "typeCode": "B38M",
+   "sampleCount": 172,
+   "startMs": 1791260552996,
+   "endMs": 1791262562244,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "c82347",
+   "hex": "c82347",
+   "flight": "ANZ7",
+   "typeCode": "B789",
+   "sampleCount": 190,
+   "startMs": 1791260553248,
+   "endMs": 1791262500337,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12a80",
+   "hex": "a12a80",
+   "flight": "UAL705",
+   "typeCode": "B39M",
+   "sampleCount": 286,
+   "startMs": 1791260551843,
+   "endMs": 1791263406134,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a0ad24-0",
+   "hex": "a0ad24",
+   "flight": "UAL1302",
+   "typeCode": "B738",
+   "sampleCount": 74,
+   "startMs": 1791260552120,
+   "endMs": 1791261562081,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a0ad24-1",
+   "hex": "a0ad24",
+   "flight": "UAL1302",
+   "typeCode": "B738",
+   "sampleCount": 10,
+   "startMs": 1791264468647,
+   "endMs": 1791264688558,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "aa92fb",
+   "hex": "aa92fb",
+   "flight": "UAL698",
+   "typeCode": "B772",
+   "sampleCount": 176,
+   "startMs": 1791260553198,
+   "endMs": 1791262419404,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a1272d",
+   "hex": "a1272d",
+   "flight": "UAL1083",
+   "typeCode": "B38M",
+   "sampleCount": 57,
+   "startMs": 1791260551492,
+   "endMs": 1791261484397,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a51d1b",
+   "hex": "a51d1b",
+   "flight": "AAL1400",
+   "typeCode": "A21N",
+   "sampleCount": 259,
+   "startMs": 1791260540871,
+   "endMs": 1791263603257,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a5449a",
+   "hex": "a5449a",
+   "flight": "AAL3166",
+   "typeCode": "A21N",
+   "sampleCount": 148,
+   "startMs": 1791260552612,
+   "endMs": 1791262131374,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "addadb",
+   "hex": "addadb",
+   "flight": "JBU615",
+   "typeCode": "A321",
+   "sampleCount": 20,
+   "startMs": 1791260539985,
+   "endMs": 1791261336595,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a02c40",
+   "hex": "a02c40",
+   "flight": "AAL276",
+   "typeCode": "A321",
+   "sampleCount": 279,
+   "startMs": 1791260552612,
+   "endMs": 1791263701272,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa9b82",
+   "hex": "aa9b82",
+   "flight": "UAL442",
+   "typeCode": "B738",
+   "sampleCount": 118,
+   "startMs": 1791260553237,
+   "endMs": 1791261826444,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ad9ac9",
+   "hex": "ad9ac9",
+   "flight": "JBU134",
+   "typeCode": "A321",
+   "sampleCount": 162,
+   "startMs": 1791260544803,
+   "endMs": 1791262834814,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a3b05d",
+   "hex": "a3b05d",
+   "flight": "FFT4156",
+   "typeCode": "A20N",
+   "sampleCount": 227,
+   "startMs": 1791260552068,
+   "endMs": 1791262711309,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a81815",
+   "hex": "a81815",
+   "flight": "SKW5534",
+   "typeCode": "E75L",
+   "sampleCount": 30,
+   "startMs": 1791260553016,
+   "endMs": 1791260826116,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12796",
+   "hex": "a12796",
+   "flight": "UAL1653",
+   "typeCode": "B38M",
+   "sampleCount": 192,
+   "startMs": 1791260549496,
+   "endMs": 1791262562180,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa5690",
+   "hex": "aa5690",
+   "flight": "UAL2615",
+   "typeCode": "B738",
+   "sampleCount": 5,
+   "startMs": 1791260553336,
+   "endMs": 1791260589030,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a7816a",
+   "hex": "a7816a",
+   "flight": "DAL2197",
+   "typeCode": "A21N",
+   "sampleCount": 82,
+   "startMs": 1791260553214,
+   "endMs": 1791261340572,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~a35f3f-0",
+   "hex": "~a35f3f",
+   "sampleCount": 47,
+   "startMs": 1791260548350,
+   "endMs": 1791261416547,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a35f3f-1",
+   "hex": "~a35f3f",
+   "sampleCount": 18,
+   "startMs": 1791264352488,
+   "endMs": 1791264535575,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a93604",
+   "hex": "a93604",
+   "flight": "SKW5271",
+   "typeCode": "CRJ2",
+   "sampleCount": 81,
+   "startMs": 1791260549880,
+   "endMs": 1791261341001,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a609d4",
+   "hex": "a609d4",
+   "flight": "UAL552",
+   "typeCode": "A319",
+   "sampleCount": 134,
+   "startMs": 1791260539700,
+   "endMs": 1791261966386,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "c07b09",
+   "hex": "c07b09",
+   "flight": "ACA738",
+   "typeCode": "BCS3",
+   "sampleCount": 253,
+   "startMs": 1791260546463,
+   "endMs": 1791263527025,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "c0853f",
+   "hex": "c0853f",
+   "flight": "ACA759",
+   "typeCode": "BCS3",
+   "sampleCount": 423,
+   "startMs": 1791260550809,
+   "endMs": 1791264728502,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "ad28ce-0",
+   "hex": "ad28ce",
+   "flight": "SKW5961",
+   "typeCode": "CRJ2",
+   "sampleCount": 18,
+   "startMs": 1791260547425,
+   "endMs": 1791260734368,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "ad28ce-1",
+   "hex": "ad28ce",
+   "flight": "SKW5961",
+   "typeCode": "CRJ2",
+   "sampleCount": 3,
+   "startMs": 1791264614652,
+   "endMs": 1791264690021,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a247f0",
+   "hex": "a247f0",
+   "flight": "SKW3991",
+   "typeCode": "E75L",
+   "sampleCount": 118,
+   "startMs": 1791260550617,
+   "endMs": 1791261748371,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12b2b",
+   "hex": "a12b2b",
+   "flight": "UAL301",
+   "typeCode": "B39M",
+   "sampleCount": 52,
+   "startMs": 1791260552837,
+   "endMs": 1791261073490,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12755",
+   "hex": "a12755",
+   "flight": "UAL796",
+   "typeCode": "B38M",
+   "sampleCount": 109,
+   "startMs": 1791260553198,
+   "endMs": 1791261594089,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a48307",
+   "hex": "a48307",
+   "flight": "ABX1820",
+   "typeCode": "B763",
+   "sampleCount": 108,
+   "startMs": 1791260552942,
+   "endMs": 1791261562413,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a73220-0",
+   "hex": "a73220",
+   "flight": "ASA1385",
+   "typeCode": "B738",
+   "sampleCount": 35,
+   "startMs": 1791260553336,
+   "endMs": 1791260887577,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a73220-1",
+   "hex": "a73220",
+   "flight": "ASA1385",
+   "typeCode": "B738",
+   "sampleCount": 57,
+   "startMs": 1791263795960,
+   "endMs": 1791264458024,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a82dfb-0",
+   "hex": "a82dfb",
+   "flight": "QXE2112",
+   "typeCode": "E75L",
+   "sampleCount": 43,
+   "startMs": 1791260549661,
+   "endMs": 1791260980713,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a82dfb-1",
+   "hex": "a82dfb",
+   "flight": "QXE2112",
+   "typeCode": "E75L",
+   "sampleCount": 118,
+   "startMs": 1791263317038,
+   "endMs": 1791264684041,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12aeb",
+   "hex": "a12aeb",
+   "flight": "UAL1995",
+   "typeCode": "B39M",
+   "sampleCount": 165,
+   "startMs": 1791260553336,
+   "endMs": 1791262213313,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a8e0e3",
+   "hex": "a8e0e3",
+   "flight": "QXE2265",
+   "sampleCount": 118,
+   "startMs": 1791260553252,
+   "endMs": 1791261688463,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261192460,
+    "lastAirborneIndex": 61
+   }
+  },
+  {
+   "id": "a12b51",
+   "hex": "a12b51",
+   "flight": "UAL2330",
+   "sampleCount": 67,
+   "startMs": 1791260553184,
+   "endMs": 1791261219640,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791260650710,
+    "lastAirborneIndex": 9
+   }
+  },
+  {
+   "id": "a2b1ab-0",
+   "hex": "a2b1ab",
+   "flight": "ASA619",
+   "typeCode": "B739",
+   "sampleCount": 43,
+   "startMs": 1791260552968,
+   "endMs": 1791260972076,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791260676722,
+    "lastAirborneIndex": 11
+   }
+  },
+  {
+   "id": "a2b1ab-1",
+   "hex": "a2b1ab",
+   "flight": "ASA619",
+   "typeCode": "B739",
+   "sampleCount": 20,
+   "startMs": 1791264587354,
+   "endMs": 1791264722595,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a5498f",
+   "hex": "a5498f",
+   "flight": "N44PF",
+   "typeCode": "P28A",
+   "sampleCount": 313,
+   "startMs": 1791260552425,
+   "endMs": 1791263540695,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12711",
+   "hex": "a12711",
+   "flight": "UAL2080",
+   "typeCode": "B38M",
+   "sampleCount": 95,
+   "startMs": 1791260553159,
+   "endMs": 1791261432161,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261032550,
+    "lastAirborneIndex": 45
+   }
+  },
+  {
+   "id": "ac34bf-0",
+   "hex": "ac34bf",
+   "flight": "SWA4002",
+   "typeCode": "B38M",
+   "sampleCount": 123,
+   "startMs": 1791260553042,
+   "endMs": 1791261732961,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac34bf-1",
+   "hex": "ac34bf",
+   "flight": "SWA4002",
+   "typeCode": "B38M",
+   "sampleCount": 225,
+   "startMs": 1791262547299,
+   "endMs": 1791264725108,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "aa94be",
+   "hex": "aa94be",
+   "flight": "FDX1810",
+   "typeCode": "B752",
+   "sampleCount": 390,
+   "startMs": 1791260544939,
+   "endMs": 1791264728740,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a0aaa0",
+   "hex": "a0aaa0",
+   "typeCode": "B763",
+   "sampleCount": 425,
+   "startMs": 1791260551033,
+   "endMs": 1791264727803,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a69c03",
+   "hex": "a69c03",
+   "flight": "FDX3815",
+   "typeCode": "MD11",
+   "sampleCount": 392,
+   "startMs": 1791260550779,
+   "endMs": 1791264729067,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "abf9b1",
+   "hex": "abf9b1",
+   "flight": "SWA2274",
+   "typeCode": "B38M",
+   "sampleCount": 124,
+   "startMs": 1791260551144,
+   "endMs": 1791261738703,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "abfd39",
+   "hex": "abfd39",
+   "flight": "SWA3149",
+   "typeCode": "B38M",
+   "sampleCount": 82,
+   "startMs": 1791260553042,
+   "endMs": 1791261340957,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "abdd4a",
+   "hex": "abdd4a",
+   "flight": "SWA3170",
+   "typeCode": "B738",
+   "sampleCount": 133,
+   "startMs": 1791260551490,
+   "endMs": 1791261852386,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a9f0ce",
+   "hex": "a9f0ce",
+   "flight": "N74GG",
+   "typeCode": "GLF4",
+   "sampleCount": 177,
+   "startMs": 1791260551347,
+   "endMs": 1791262300223,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac2082",
+   "hex": "ac2082",
+   "flight": "SWA581",
+   "typeCode": "B38M",
+   "sampleCount": 140,
+   "startMs": 1791260549111,
+   "endMs": 1791261929976,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "abd230",
+   "hex": "abd230",
+   "flight": "SWA1048",
+   "typeCode": "B738",
+   "sampleCount": 181,
+   "startMs": 1791260544906,
+   "endMs": 1791262377408,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a81205",
+   "hex": "a81205",
+   "flight": "SKW5724",
+   "typeCode": "E75L",
+   "sampleCount": 33,
+   "startMs": 1791260553401,
+   "endMs": 1791260872425,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a72e5b",
+   "hex": "a72e5b",
+   "flight": "N562AC",
+   "typeCode": "C172",
+   "sampleCount": 296,
+   "startMs": 1791260552949,
+   "endMs": 1791263332871,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "abee27",
+   "hex": "abee27",
+   "flight": "FFL1360",
+   "typeCode": "F2TH",
+   "sampleCount": 54,
+   "startMs": 1791260553501,
+   "endMs": 1791261125068,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791260820818,
+    "lastAirborneIndex": 27
+   }
+  },
+  {
+   "id": "a44258",
+   "hex": "a44258",
+   "flight": "UAL1007",
+   "typeCode": "B38M",
+   "sampleCount": 14,
+   "startMs": 1791260553024,
+   "endMs": 1791260687151,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa9e4a",
+   "hex": "aa9e4a",
+   "flight": "SWA1145",
+   "typeCode": "B737",
+   "sampleCount": 36,
+   "startMs": 1791260553153,
+   "endMs": 1791260887522,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a8fc72",
+   "hex": "a8fc72",
+   "flight": "UAL693",
+   "typeCode": "B739",
+   "sampleCount": 68,
+   "startMs": 1791260553269,
+   "endMs": 1791261235633,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791260928626,
+    "lastAirborneIndex": 35
+   }
+  },
+  {
+   "id": "a19a7c",
+   "hex": "a19a7c",
+   "flight": "N202LS",
+   "typeCode": "DA40",
+   "sampleCount": 179,
+   "startMs": 1791260553187,
+   "endMs": 1791262398476,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa7f2b",
+   "hex": "aa7f2b",
+   "flight": "UAL356",
+   "typeCode": "B39M",
+   "sampleCount": 201,
+   "startMs": 1791260553461,
+   "endMs": 1791262548727,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791260887470,
+    "lastAirborneIndex": 34
+   }
+  },
+  {
+   "id": "a0fe42",
+   "hex": "a0fe42",
+   "flight": "N163QS",
+   "typeCode": "GLEX",
+   "sampleCount": 358,
+   "startMs": 1791260548912,
+   "endMs": 1791264115218,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a2bb10",
+   "hex": "a2bb10",
+   "flight": "SWA3801",
+   "typeCode": "B737",
+   "sampleCount": 257,
+   "startMs": 1791260551569,
+   "endMs": 1791263015594,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac205f",
+   "hex": "ac205f",
+   "flight": "SWA3815",
+   "typeCode": "B38M",
+   "sampleCount": 244,
+   "startMs": 1791260549927,
+   "endMs": 1791263087926,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a44940",
+   "hex": "a44940",
+   "flight": "UAL504",
+   "typeCode": "B39M",
+   "sampleCount": 139,
+   "startMs": 1791260553430,
+   "endMs": 1791261966064,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261002123,
+    "lastAirborneIndex": 43
+   }
+  },
+  {
+   "id": "ac2c56",
+   "hex": "ac2c56",
+   "flight": "SWA3842",
+   "typeCode": "B38M",
+   "sampleCount": 54,
+   "startMs": 1791260553170,
+   "endMs": 1791261105128,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa6988",
+   "hex": "aa6988",
+   "flight": "FDX1839",
+   "typeCode": "B752",
+   "sampleCount": 398,
+   "startMs": 1791260553000,
+   "endMs": 1791264724007,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa739e",
+   "hex": "aa739e",
+   "flight": "UAL1118",
+   "typeCode": "B38M",
+   "sampleCount": 134,
+   "startMs": 1791260553296,
+   "endMs": 1791262046977,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261135965,
+    "lastAirborneIndex": 57
+   }
+  },
+  {
+   "id": "a702ca",
+   "hex": "a702ca",
+   "flight": "N5507T",
+   "typeCode": "C172",
+   "sampleCount": 36,
+   "startMs": 1791260553296,
+   "endMs": 1791260887987,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a26a93",
+   "hex": "a26a93",
+   "flight": "FDX1804",
+   "typeCode": "B763",
+   "sampleCount": 420,
+   "startMs": 1791260553385,
+   "endMs": 1791264725843,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a2bbf2",
+   "hex": "a2bbf2",
+   "flight": "UAL1160",
+   "typeCode": "B39M",
+   "sampleCount": 117,
+   "startMs": 1791260569852,
+   "endMs": 1791261836875,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "780bb6",
+   "hex": "780bb6",
+   "flight": "CAO1166",
+   "typeCode": "B77L",
+   "sampleCount": 60,
+   "startMs": 1791260574098,
+   "endMs": 1791261145988,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a6792d-0",
+   "hex": "a6792d",
+   "flight": "AAST1",
+   "sampleCount": 4,
+   "startMs": 1791260576590,
+   "endMs": 1791260596655,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a6792d-1",
+   "hex": "a6792d",
+   "flight": "AAST1",
+   "sampleCount": 97,
+   "startMs": 1791261637467,
+   "endMs": 1791262669575,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a9ec06",
+   "hex": "a9ec06",
+   "flight": "UAL2633",
+   "typeCode": "B753",
+   "sampleCount": 49,
+   "startMs": 1791260583537,
+   "endMs": 1791261871593,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a0cdf3",
+   "hex": "a0cdf3",
+   "flight": "AAL1954",
+   "typeCode": "A321",
+   "sampleCount": 188,
+   "startMs": 1791260589157,
+   "endMs": 1791263026933,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261289845,
+    "lastAirborneIndex": 69
+   }
+  },
+  {
+   "id": "a8a82f",
+   "hex": "a8a82f",
+   "flight": "QXE2023",
+   "typeCode": "E75L",
+   "sampleCount": 160,
+   "startMs": 1791260604008,
+   "endMs": 1791262464311,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a7e1cd-0",
+   "hex": "a7e1cd",
+   "flight": "FFT1447",
+   "typeCode": "A21N",
+   "sampleCount": 15,
+   "startMs": 1791260639966,
+   "endMs": 1791261804876,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a7e1cd-1",
+   "hex": "a7e1cd",
+   "flight": "FFT1447",
+   "typeCode": "A21N",
+   "sampleCount": 150,
+   "startMs": 1791263190635,
+   "endMs": 1791264724087,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a82d29",
+   "hex": "a82d29",
+   "flight": "N626GM",
+   "typeCode": "C172",
+   "sampleCount": 67,
+   "startMs": 1791260640961,
+   "endMs": 1791261287149,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a5ea5c",
+   "hex": "a5ea5c",
+   "flight": "UAL2866",
+   "typeCode": "A320",
+   "sampleCount": 198,
+   "startMs": 1791260655953,
+   "endMs": 1791262763112,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "adc9b6",
+   "hex": "adc9b6",
+   "flight": "JBU933",
+   "typeCode": "A321",
+   "sampleCount": 402,
+   "startMs": 1791260676695,
+   "endMs": 1791264728597,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261391621,
+    "lastAirborneIndex": 75
+   }
+  },
+  {
+   "id": "c00e6c-0",
+   "hex": "c00e6c",
+   "flight": "FLE1848",
+   "typeCode": "B38M",
+   "sampleCount": 157,
+   "startMs": 1791260723950,
+   "endMs": 1791262349518,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261873244,
+    "lastAirborneIndex": 117
+   }
+  },
+  {
+   "id": "c00e6c-1",
+   "hex": "c00e6c",
+   "flight": "FLE1848",
+   "typeCode": "B38M",
+   "sampleCount": 3,
+   "startMs": 1791264715813,
+   "endMs": 1791264725792,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a44560",
+   "hex": "a44560",
+   "flight": "UAL1202",
+   "typeCode": "B739",
+   "sampleCount": 119,
+   "startMs": 1791260723974,
+   "endMs": 1791262235193,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261422339,
+    "lastAirborneIndex": 75
+   }
+  },
+  {
+   "id": "a365fd",
+   "hex": "a365fd",
+   "flight": "OPS44",
+   "sampleCount": 117,
+   "startMs": 1791260728411,
+   "endMs": 1791262240665,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a59b0f-0",
+   "hex": "~a59b0f",
+   "sampleCount": 20,
+   "startMs": 1791260748593,
+   "endMs": 1791261249536,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a59b0f-1",
+   "hex": "~a59b0f",
+   "sampleCount": 96,
+   "startMs": 1791262459500,
+   "endMs": 1791263529564,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a59b0f-2",
+   "hex": "~a59b0f",
+   "sampleCount": 2,
+   "startMs": 1791264520602,
+   "endMs": 1791264531540,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~ac4985-0",
+   "hex": "~ac4985",
+   "sampleCount": 1,
+   "startMs": 1791260750235,
+   "endMs": 1791260750235,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~ac4985-1",
+   "hex": "~ac4985",
+   "sampleCount": 78,
+   "startMs": 1791261543355,
+   "endMs": 1791262987448,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~ac4985-2",
+   "hex": "~ac4985",
+   "sampleCount": 37,
+   "startMs": 1791264027598,
+   "endMs": 1791264671589,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a126eb",
+   "hex": "a126eb",
+   "flight": "UAL276",
+   "typeCode": "B38M",
+   "sampleCount": 125,
+   "startMs": 1791260785501,
+   "endMs": 1791262649698,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261505126,
+    "lastAirborneIndex": 76
+   }
+  },
+  {
+   "id": "a7608e",
+   "hex": "a7608e",
+   "flight": "UAL1575",
+   "sampleCount": 65,
+   "startMs": 1791260800238,
+   "endMs": 1791262488015,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a12733",
+   "hex": "a12733",
+   "flight": "UAL2469",
+   "typeCode": "B38M",
+   "sampleCount": 169,
+   "startMs": 1791260846870,
+   "endMs": 1791262701322,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a5cf82",
+   "hex": "a5cf82",
+   "flight": "UAL2817",
+   "typeCode": "B38M",
+   "sampleCount": 146,
+   "startMs": 1791260882506,
+   "endMs": 1791262380481,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261634414,
+    "lastAirborneIndex": 79
+   }
+  },
+  {
+   "id": "a4c849",
+   "hex": "a4c849",
+   "flight": "SKW3493",
+   "typeCode": "E75L",
+   "sampleCount": 103,
+   "startMs": 1791260929448,
+   "endMs": 1791261943890,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261634497,
+    "lastAirborneIndex": 77
+   }
+  },
+  {
+   "id": "a650cd",
+   "hex": "a650cd",
+   "flight": "LXJ506",
+   "typeCode": "CL35",
+   "sampleCount": 200,
+   "startMs": 1791260933759,
+   "endMs": 1791262928316,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~a34cac-0",
+   "hex": "~a34cac",
+   "sampleCount": 16,
+   "startMs": 1791260965493,
+   "endMs": 1791261117658,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a34cac-1",
+   "hex": "~a34cac",
+   "sampleCount": 30,
+   "startMs": 1791263730638,
+   "endMs": 1791264087488,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "ac4210",
+   "hex": "ac4210",
+   "flight": "SWA8507",
+   "typeCode": "B38M",
+   "sampleCount": 127,
+   "startMs": 1791260980619,
+   "endMs": 1791262247383,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aaf06f",
+   "hex": "aaf06f",
+   "flight": "N80377",
+   "typeCode": "C172",
+   "sampleCount": 72,
+   "startMs": 1791261001626,
+   "endMs": 1791261815813,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12a7c",
+   "hex": "a12a7c",
+   "flight": "UAL2400",
+   "typeCode": "B39M",
+   "sampleCount": 185,
+   "startMs": 1791261002379,
+   "endMs": 1791262728466,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262521553,
+    "lastAirborneIndex": 158
+   }
+  },
+  {
+   "id": "c07b8c",
+   "hex": "c07b8c",
+   "flight": "WJA1504",
+   "typeCode": "B38M",
+   "sampleCount": 143,
+   "startMs": 1791261032971,
+   "endMs": 1791262385827,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262130497,
+    "lastAirborneIndex": 109
+   }
+  },
+  {
+   "id": "a56d7b",
+   "hex": "a56d7b",
+   "flight": "EJA449",
+   "typeCode": "E55P",
+   "sampleCount": 202,
+   "startMs": 1791261032449,
+   "endMs": 1791263087627,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a69bdd",
+   "hex": "a69bdd",
+   "flight": "N525DS",
+   "typeCode": "DA40",
+   "sampleCount": 162,
+   "startMs": 1791261115203,
+   "endMs": 1791262651152,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a7133f",
+   "hex": "a7133f",
+   "flight": "DAL335",
+   "typeCode": "B752",
+   "sampleCount": 140,
+   "startMs": 1791261130996,
+   "endMs": 1791262483696,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791261826169,
+    "lastAirborneIndex": 72
+   }
+  },
+  {
+   "id": "0d116a",
+   "hex": "0d116a",
+   "flight": "VOI7790",
+   "typeCode": "A20N",
+   "sampleCount": 367,
+   "startMs": 1791261135793,
+   "endMs": 1791264729501,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~a7c955",
+   "hex": "~a7c955",
+   "sampleCount": 15,
+   "startMs": 1791261177665,
+   "endMs": 1791261867758,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a2e0a8",
+   "hex": "a2e0a8",
+   "flight": "TWY125",
+   "typeCode": "G280",
+   "sampleCount": 165,
+   "startMs": 1791261202127,
+   "endMs": 1791262805313,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac75dc",
+   "hex": "ac75dc",
+   "flight": "SWA1342",
+   "sampleCount": 318,
+   "startMs": 1791261218828,
+   "endMs": 1791264555199,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a4caa7",
+   "hex": "a4caa7",
+   "flight": "N408DC",
+   "typeCode": "K100",
+   "sampleCount": 356,
+   "startMs": 1791261257632,
+   "endMs": 1791264729501,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a38a3a",
+   "hex": "a38a3a",
+   "flight": "AAL2347",
+   "typeCode": "B38M",
+   "sampleCount": 125,
+   "startMs": 1791261258220,
+   "endMs": 1791262468781,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262007407,
+    "lastAirborneIndex": 73
+   }
+  },
+  {
+   "id": "aaa5d4-0",
+   "hex": "aaa5d4",
+   "flight": "UAL1195",
+   "typeCode": "B738",
+   "sampleCount": 104,
+   "startMs": 1791261304279,
+   "endMs": 1791262325376,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262007788,
+    "lastAirborneIndex": 67
+   }
+  },
+  {
+   "id": "aaa5d4-1",
+   "hex": "aaa5d4",
+   "flight": "UAL1195",
+   "typeCode": "B738",
+   "sampleCount": 84,
+   "startMs": 1791263298640,
+   "endMs": 1791264725916,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a44187",
+   "hex": "a44187",
+   "flight": "UAL233",
+   "typeCode": "B38M",
+   "sampleCount": 208,
+   "startMs": 1791261316166,
+   "endMs": 1791263344490,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~a330e5-0",
+   "hex": "~a330e5",
+   "sampleCount": 4,
+   "startMs": 1791261373529,
+   "endMs": 1791261393604,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a330e5-1",
+   "hex": "~a330e5",
+   "sampleCount": 43,
+   "startMs": 1791264041421,
+   "endMs": 1791264511599,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a9a8b7",
+   "hex": "a9a8b7",
+   "flight": "OPS28",
+   "sampleCount": 265,
+   "startMs": 1791261412854,
+   "endMs": 1791264728139,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "aae9a3",
+   "hex": "aae9a3",
+   "flight": "DAL2762",
+   "typeCode": "B739",
+   "sampleCount": 171,
+   "startMs": 1791261562013,
+   "endMs": 1791263184325,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262762945,
+    "lastAirborneIndex": 123
+   }
+  },
+  {
+   "id": "a5bb1b",
+   "hex": "a5bb1b",
+   "flight": "ASA39",
+   "typeCode": "B739",
+   "sampleCount": 138,
+   "startMs": 1791261562224,
+   "endMs": 1791262934088,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262249083,
+    "lastAirborneIndex": 61
+   }
+  },
+  {
+   "id": "a47fd9",
+   "hex": "a47fd9",
+   "flight": "UAL926",
+   "typeCode": "B789",
+   "sampleCount": 202,
+   "startMs": 1791261579995,
+   "endMs": 1791263958971,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a99ef0-0",
+   "hex": "a99ef0",
+   "flight": "OPS26",
+   "sampleCount": 2,
+   "startMs": 1791261634500,
+   "endMs": 1791261638438,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a99ef0-1",
+   "hex": "a99ef0",
+   "flight": "OPS26",
+   "sampleCount": 25,
+   "startMs": 1791264472487,
+   "endMs": 1791264727519,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a671bf-0",
+   "hex": "a671bf",
+   "flight": "OPS18",
+   "sampleCount": 29,
+   "startMs": 1791261660450,
+   "endMs": 1791262004402,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a671bf-1",
+   "hex": "a671bf",
+   "flight": "OPS18",
+   "sampleCount": 1,
+   "startMs": 1791264427440,
+   "endMs": 1791264427440,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a6bbef",
+   "hex": "a6bbef",
+   "flight": "DAL1693",
+   "typeCode": "A21N",
+   "sampleCount": 175,
+   "startMs": 1791261660234,
+   "endMs": 1791263357401,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262409115,
+    "lastAirborneIndex": 73
+   }
+  },
+  {
+   "id": "aa7f01-0",
+   "hex": "aa7f01",
+   "flight": "UAL2620",
+   "typeCode": "B39M",
+   "sampleCount": 74,
+   "startMs": 1791261701980,
+   "endMs": 1791262803117,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262357078,
+    "lastAirborneIndex": 61
+   }
+  },
+  {
+   "id": "aa7f01-1",
+   "hex": "aa7f01",
+   "flight": "UAL2620",
+   "typeCode": "B39M",
+   "sampleCount": 36,
+   "startMs": 1791263644714,
+   "endMs": 1791264045051,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a3696e",
+   "hex": "a3696e",
+   "flight": "DAL1420",
+   "typeCode": "A319",
+   "sampleCount": 54,
+   "startMs": 1791261738967,
+   "endMs": 1791262300425,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ad0d3c",
+   "hex": "ad0d3c",
+   "flight": "TAI560",
+   "typeCode": "A20N",
+   "sampleCount": 163,
+   "startMs": 1791261790452,
+   "endMs": 1791263269850,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262654362,
+    "lastAirborneIndex": 95
+   }
+  },
+  {
+   "id": "a7824e",
+   "hex": "a7824e",
+   "flight": "DAL495",
+   "typeCode": "B753",
+   "sampleCount": 172,
+   "startMs": 1791261815447,
+   "endMs": 1791263958928,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a174f7",
+   "hex": "a174f7",
+   "flight": "SKW3463",
+   "typeCode": "E75L",
+   "sampleCount": 166,
+   "startMs": 1791261893475,
+   "endMs": 1791263383810,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262949271,
+    "lastAirborneIndex": 111
+   }
+  },
+  {
+   "id": "~aa1b7f",
+   "hex": "~aa1b7f",
+   "sampleCount": 22,
+   "startMs": 1791261919509,
+   "endMs": 1791262405459,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "ac5066",
+   "hex": "ac5066",
+   "flight": "SWA3831",
+   "typeCode": "B38M",
+   "sampleCount": 188,
+   "startMs": 1791261920880,
+   "endMs": 1791263669915,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a08021",
+   "hex": "a08021",
+   "flight": "AAL1430",
+   "typeCode": "A321",
+   "sampleCount": 172,
+   "startMs": 1791261930360,
+   "endMs": 1791264723952,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262619000,
+    "lastAirborneIndex": 74
+   }
+  },
+  {
+   "id": "a05cc7",
+   "hex": "a05cc7",
+   "flight": "SKW6027",
+   "typeCode": "E75L",
+   "sampleCount": 180,
+   "startMs": 1791262007584,
+   "endMs": 1791263803268,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a34235-0",
+   "hex": "a34235",
+   "flight": "OPS38",
+   "sampleCount": 1,
+   "startMs": 1791261993624,
+   "endMs": 1791261993624,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a34235-1",
+   "hex": "a34235",
+   "flight": "OPS38",
+   "sampleCount": 17,
+   "startMs": 1791263813557,
+   "endMs": 1791264125315,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a6dfaa",
+   "hex": "a6dfaa",
+   "flight": "DAL1655",
+   "typeCode": "A21N",
+   "sampleCount": 166,
+   "startMs": 1791262017943,
+   "endMs": 1791263588200,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262742317,
+    "lastAirborneIndex": 82
+   }
+  },
+  {
+   "id": "~a362f6-0",
+   "hex": "~a362f6",
+   "sampleCount": 15,
+   "startMs": 1791262043449,
+   "endMs": 1791262211438,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a362f6-1",
+   "hex": "~a362f6",
+   "sampleCount": 17,
+   "startMs": 1791263876665,
+   "endMs": 1791264066773,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a7f4ec",
+   "hex": "a7f4ec",
+   "flight": "UAL1757",
+   "typeCode": "B789",
+   "sampleCount": 159,
+   "startMs": 1791262131459,
+   "endMs": 1791263645251,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791262876772,
+    "lastAirborneIndex": 84
+   }
+  },
+  {
+   "id": "a25ca9",
+   "hex": "a25ca9",
+   "flight": "OPS46",
+   "typeCode": "SERV",
+   "sampleCount": 5,
+   "startMs": 1791262140462,
+   "endMs": 1791262178401,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "ac2d32",
+   "hex": "ac2d32",
+   "flight": "FDX5991",
+   "typeCode": "B77L",
+   "sampleCount": 236,
+   "startMs": 1791262172203,
+   "endMs": 1791264427574,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a34fb3-0",
+   "hex": "a34fb3",
+   "flight": "OPS48",
+   "sampleCount": 27,
+   "startMs": 1791262172486,
+   "endMs": 1791262924448,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a34fb3-1",
+   "hex": "a34fb3",
+   "flight": "OPS48",
+   "sampleCount": 49,
+   "startMs": 1791263823628,
+   "endMs": 1791264729501,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "76cce4",
+   "hex": "76cce4",
+   "flight": "SIA33",
+   "typeCode": "A359",
+   "sampleCount": 183,
+   "startMs": 1791262185222,
+   "endMs": 1791263907912,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a0ccde",
+   "hex": "a0ccde",
+   "flight": "N1502S",
+   "typeCode": "BE35",
+   "sampleCount": 188,
+   "startMs": 1791262208374,
+   "endMs": 1791264192232,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac69fc",
+   "hex": "ac69fc",
+   "flight": "SWA2417",
+   "typeCode": "B38M",
+   "sampleCount": 63,
+   "startMs": 1791262249378,
+   "endMs": 1791262758987,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "899014",
+   "hex": "899014",
+   "flight": "CAL5345",
+   "typeCode": "B77L",
+   "sampleCount": 182,
+   "startMs": 1791262280152,
+   "endMs": 1791263904093,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791263036816,
+    "lastAirborneIndex": 86
+   }
+  },
+  {
+   "id": "a38257",
+   "hex": "a38257",
+   "flight": "R33",
+   "sampleCount": 9,
+   "startMs": 1791262309199,
+   "endMs": 1791262416084,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~a993cb",
+   "hex": "~a993cb",
+   "sampleCount": 16,
+   "startMs": 1791262336451,
+   "endMs": 1791262499527,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a69424",
+   "hex": "a69424",
+   "typeCode": "B738",
+   "sampleCount": 128,
+   "startMs": 1791262387297,
+   "endMs": 1791263672899,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a8d5a4",
+   "hex": "a8d5a4",
+   "flight": "UAL1267",
+   "typeCode": "B739",
+   "sampleCount": 130,
+   "startMs": 1791262428944,
+   "endMs": 1791263688539,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791263200983,
+    "lastAirborneIndex": 86
+   }
+  },
+  {
+   "id": "~2b0f4c",
+   "hex": "~2b0f4c",
+   "sampleCount": 1,
+   "startMs": 1791262516301,
+   "endMs": 1791262516301,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac250b",
+   "hex": "ac250b",
+   "flight": "SWA988",
+   "typeCode": "B38M",
+   "sampleCount": 100,
+   "startMs": 1791262531977,
+   "endMs": 1791263375109,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a3536a",
+   "hex": "a3536a",
+   "flight": "R41",
+   "sampleCount": 7,
+   "startMs": 1791262699796,
+   "endMs": 1791262751950,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~ac759b-0",
+   "hex": "~ac759b",
+   "sampleCount": 1,
+   "startMs": 1791262711374,
+   "endMs": 1791262711374,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~ac759b-1",
+   "hex": "~ac759b",
+   "sampleCount": 1,
+   "startMs": 1791264461517,
+   "endMs": 1791264461517,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a9e038",
+   "hex": "a9e038",
+   "flight": "N73516",
+   "typeCode": "C172",
+   "sampleCount": 54,
+   "startMs": 1791262732388,
+   "endMs": 1791263311848,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a70aed",
+   "hex": "a70aed",
+   "flight": "DAL681",
+   "sampleCount": 129,
+   "startMs": 1791262732463,
+   "endMs": 1791264002303,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791263396020,
+    "lastAirborneIndex": 76
+   }
+  },
+  {
+   "id": "aa7f25",
+   "hex": "aa7f25",
+   "flight": "UAL406",
+   "typeCode": "B39M",
+   "sampleCount": 162,
+   "startMs": 1791262759899,
+   "endMs": 1791264729293,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a445a9",
+   "hex": "a445a9",
+   "flight": "UAL1947",
+   "typeCode": "B39M",
+   "sampleCount": 138,
+   "startMs": 1791262805823,
+   "endMs": 1791264215403,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791263732470,
+    "lastAirborneIndex": 103
+   }
+  },
+  {
+   "id": "a2b991",
+   "hex": "a2b991",
+   "flight": "FDX1807",
+   "typeCode": "B763",
+   "sampleCount": 194,
+   "startMs": 1791262876950,
+   "endMs": 1791264729114,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a0e086",
+   "hex": "a0e086",
+   "flight": "AAL2514",
+   "typeCode": "A321",
+   "sampleCount": 93,
+   "startMs": 1791262880231,
+   "endMs": 1791264011193,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a36246",
+   "hex": "a36246",
+   "flight": "OPS41",
+   "sampleCount": 165,
+   "startMs": 1791262886528,
+   "endMs": 1791264728528,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "aa7e9b",
+   "hex": "aa7e9b",
+   "flight": "UAL1958",
+   "typeCode": "B39M",
+   "sampleCount": 152,
+   "startMs": 1791262896531,
+   "endMs": 1791264441110,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a67ce4",
+   "hex": "a67ce4",
+   "flight": "AAST2",
+   "sampleCount": 115,
+   "startMs": 1791262902410,
+   "endMs": 1791264727519,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a6492f",
+   "hex": "a6492f",
+   "flight": "DAL667",
+   "typeCode": "A21N",
+   "sampleCount": 176,
+   "startMs": 1791262970408,
+   "endMs": 1791264725574,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791263644729,
+    "lastAirborneIndex": 73
+   }
+  },
+  {
+   "id": "a38f78",
+   "hex": "a38f78",
+   "flight": "N3288",
+   "typeCode": "C172",
+   "sampleCount": 170,
+   "startMs": 1791263082787,
+   "endMs": 1791264729085,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a0a457",
+   "hex": "a0a457",
+   "flight": "SKW5415",
+   "typeCode": "E75L",
+   "sampleCount": 127,
+   "startMs": 1791263108499,
+   "endMs": 1791264381756,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264172231,
+    "lastAirborneIndex": 103
+   }
+  },
+  {
+   "id": "aeb225-0",
+   "hex": "aeb225",
+   "sampleCount": 17,
+   "startMs": 1791263132657,
+   "endMs": 1791263245193,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "aeb225-1",
+   "hex": "aeb225",
+   "sampleCount": 5,
+   "startMs": 1791264253384,
+   "endMs": 1791264287490,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "~2b0f74-0",
+   "hex": "~2b0f74",
+   "sampleCount": 17,
+   "startMs": 1791263130179,
+   "endMs": 1791263245943,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~2b0f74-1",
+   "hex": "~2b0f74",
+   "sampleCount": 3,
+   "startMs": 1791264274337,
+   "endMs": 1791264283707,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a1118c",
+   "hex": "a1118c",
+   "flight": "N168Y",
+   "typeCode": "C172",
+   "sampleCount": 150,
+   "startMs": 1791263221872,
+   "endMs": 1791264729234,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a2f9b3",
+   "hex": "a2f9b3",
+   "flight": "FDX1838",
+   "typeCode": "B763",
+   "sampleCount": 153,
+   "startMs": 1791263226754,
+   "endMs": 1791264726984,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a182ae",
+   "hex": "a182ae",
+   "flight": "FDX1837",
+   "typeCode": "B763",
+   "sampleCount": 140,
+   "startMs": 1791263324337,
+   "endMs": 1791264726000,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a4df52",
+   "hex": "a4df52",
+   "flight": "AAL2663",
+   "typeCode": "A21N",
+   "sampleCount": 101,
+   "startMs": 1791263329167,
+   "endMs": 1791264475008,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264000723,
+    "lastAirborneIndex": 62
+   }
+  },
+  {
+   "id": "780a67",
+   "hex": "780a67",
+   "flight": "CPA872",
+   "typeCode": "B77W",
+   "sampleCount": 138,
+   "startMs": 1791263334601,
+   "endMs": 1791264729381,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264632784,
+    "lastAirborneIndex": 124
+   }
+  },
+  {
+   "id": "a31e86",
+   "hex": "a31e86",
+   "flight": "REH33",
+   "typeCode": "EC35",
+   "sampleCount": 36,
+   "startMs": 1791263427253,
+   "endMs": 1791263815372,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac56ba",
+   "hex": "ac56ba",
+   "flight": "SWA724",
+   "typeCode": "B38M",
+   "sampleCount": 81,
+   "startMs": 1791263463955,
+   "endMs": 1791264323756,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264120637,
+    "lastAirborneIndex": 57
+   }
+  },
+  {
+   "id": "a37ae9",
+   "hex": "a37ae9",
+   "flight": "OPS40",
+   "typeCode": "SERV",
+   "sampleCount": 34,
+   "startMs": 1791263536423,
+   "endMs": 1791264632702,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a4497f",
+   "hex": "a4497f",
+   "flight": "UAL1702",
+   "typeCode": "B39M",
+   "sampleCount": 113,
+   "startMs": 1791263541648,
+   "endMs": 1791264729026,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a188d8",
+   "hex": "a188d8",
+   "flight": "SD1",
+   "typeCode": "EC45",
+   "sampleCount": 112,
+   "startMs": 1791263582778,
+   "endMs": 1791264729492,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac4ffb",
+   "hex": "ac4ffb",
+   "flight": "SWA4175",
+   "typeCode": "B38M",
+   "sampleCount": 95,
+   "startMs": 1791263583244,
+   "endMs": 1791264552479,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264275308,
+    "lastAirborneIndex": 64
+   }
+  },
+  {
+   "id": "aad2a8",
+   "hex": "aad2a8",
+   "flight": "N797GM",
+   "typeCode": "PC12",
+   "sampleCount": 90,
+   "startMs": 1791263644968,
+   "endMs": 1791264555146,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac4fb5",
+   "hex": "ac4fb5",
+   "flight": "SWA384",
+   "typeCode": "B38M",
+   "sampleCount": 79,
+   "startMs": 1791263664877,
+   "endMs": 1791264476903,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264362886,
+    "lastAirborneIndex": 67
+   }
+  },
+  {
+   "id": "af3bca",
+   "hex": "af3bca",
+   "flight": "ORCA13",
+   "typeCode": "B762",
+   "sampleCount": 6,
+   "startMs": 1791263705630,
+   "endMs": 1791263778481,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a4ae05",
+   "hex": "a4ae05",
+   "flight": "N400QF",
+   "typeCode": "E50P",
+   "sampleCount": 90,
+   "startMs": 1791263714144,
+   "endMs": 1791264724820,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a3396b",
+   "hex": "a3396b",
+   "flight": "ATN3349",
+   "typeCode": "B763",
+   "sampleCount": 51,
+   "startMs": 1791263774097,
+   "endMs": 1791264290022,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a5954e",
+   "hex": "a5954e",
+   "flight": "UAL1204",
+   "typeCode": "A320",
+   "sampleCount": 95,
+   "startMs": 1791263783518,
+   "endMs": 1791264729161,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264509002,
+    "lastAirborneIndex": 69
+   }
+  },
+  {
+   "id": "a4b420",
+   "hex": "a4b420",
+   "flight": "ASA613",
+   "typeCode": "B739",
+   "sampleCount": 91,
+   "startMs": 1791263793822,
+   "endMs": 1791264711947,
+   "hasGeom": true,
+   "landing": {
+    "method": "ground",
+    "touchdownMs": 1791264477139,
+    "lastAirborneIndex": 64
+   }
+  },
+  {
+   "id": "a32fd5",
+   "hex": "a32fd5",
+   "flight": "SKW3956",
+   "typeCode": "E75L",
+   "sampleCount": 88,
+   "startMs": 1791263877311,
+   "endMs": 1791264729492,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a8aeb6",
+   "hex": "a8aeb6",
+   "flight": "FFT3837",
+   "typeCode": "A21N",
+   "sampleCount": 82,
+   "startMs": 1791263949050,
+   "endMs": 1791264729227,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a4c492",
+   "hex": "a4c492",
+   "flight": "SKW3341",
+   "typeCode": "E75L",
+   "sampleCount": 78,
+   "startMs": 1791263974776,
+   "endMs": 1791264729421,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ad5269",
+   "hex": "ad5269",
+   "flight": "ASA1331",
+   "typeCode": "B39M",
+   "sampleCount": 75,
+   "startMs": 1791264011269,
+   "endMs": 1791264729470,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a37b02",
+   "hex": "a37b02",
+   "flight": "CMD12",
+   "typeCode": "EC35",
+   "sampleCount": 74,
+   "startMs": 1791264011483,
+   "endMs": 1791264728438,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a99014",
+   "hex": "a99014",
+   "flight": "OPS13",
+   "sampleCount": 15,
+   "startMs": 1791264027598,
+   "endMs": 1791264728651,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a5cc35",
+   "hex": "a5cc35",
+   "flight": "UAL1341",
+   "typeCode": "B38M",
+   "sampleCount": 57,
+   "startMs": 1791264036244,
+   "endMs": 1791264729470,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "abd19e",
+   "hex": "abd19e",
+   "flight": "SWA2959",
+   "typeCode": "B738",
+   "sampleCount": 72,
+   "startMs": 1791264042165,
+   "endMs": 1791264728622,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aa4c42",
+   "hex": "aa4c42",
+   "flight": "UAL481C",
+   "typeCode": "B738",
+   "sampleCount": 49,
+   "startMs": 1791264068420,
+   "endMs": 1791264580572,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a18b71",
+   "hex": "a18b71",
+   "flight": "AAL2069",
+   "typeCode": "A321",
+   "sampleCount": 67,
+   "startMs": 1791264099646,
+   "endMs": 1791264729256,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a20639",
+   "hex": "a20639",
+   "flight": "N23AT",
+   "typeCode": "C172",
+   "sampleCount": 54,
+   "startMs": 1791264167168,
+   "endMs": 1791264693678,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac4279",
+   "hex": "ac4279",
+   "flight": "SWA3300",
+   "typeCode": "B38M",
+   "sampleCount": 64,
+   "startMs": 1791264167150,
+   "endMs": 1791264729319,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ac5e8d",
+   "hex": "ac5e8d",
+   "flight": "SWA3489",
+   "typeCode": "B38M",
+   "sampleCount": 49,
+   "startMs": 1791264213477,
+   "endMs": 1791264682163,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a27f7f",
+   "hex": "a27f7f",
+   "flight": "FDX1801",
+   "typeCode": "B763",
+   "sampleCount": 48,
+   "startMs": 1791264295481,
+   "endMs": 1791264729348,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a2452c",
+   "hex": "a2452c",
+   "flight": "UAL2123",
+   "typeCode": "A21N",
+   "sampleCount": 39,
+   "startMs": 1791264373362,
+   "endMs": 1791264729414,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a87942",
+   "hex": "a87942",
+   "flight": "QXE2105",
+   "typeCode": "E75L",
+   "sampleCount": 38,
+   "startMs": 1791264383987,
+   "endMs": 1791264728994,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a17ef7",
+   "hex": "a17ef7",
+   "flight": "FDX1803",
+   "typeCode": "B763",
+   "sampleCount": 35,
+   "startMs": 1791264436331,
+   "endMs": 1791264729026,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a12ac1",
+   "hex": "a12ac1",
+   "flight": "UAL2056",
+   "typeCode": "B39M",
+   "sampleCount": 31,
+   "startMs": 1791264472147,
+   "endMs": 1791264729348,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "a3572c",
+   "hex": "a3572c",
+   "flight": "AAL1537",
+   "typeCode": "B38M",
+   "sampleCount": 31,
+   "startMs": 1791264472380,
+   "endMs": 1791264729426,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~2b0fa9",
+   "hex": "~2b0fa9",
+   "sampleCount": 7,
+   "startMs": 1791264497804,
+   "endMs": 1791264547350,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a2b10b",
+   "hex": "a2b10b",
+   "flight": "UAL2384",
+   "typeCode": "B38M",
+   "sampleCount": 24,
+   "startMs": 1791264535744,
+   "endMs": 1791264729212,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "~a357d1",
+   "hex": "~a357d1",
+   "sampleCount": 20,
+   "startMs": 1791264554510,
+   "endMs": 1791264727519,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a12f75",
+   "hex": "a12f75",
+   "flight": "UAL2837",
+   "typeCode": "B39M",
+   "sampleCount": 20,
+   "startMs": 1791264555127,
+   "endMs": 1791264728925,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "a12861",
+   "hex": "a12861",
+   "flight": "DAL319",
+   "typeCode": "B763",
+   "sampleCount": 22,
+   "startMs": 1791264555269,
+   "endMs": 1791264725978,
+   "hasGeom": false,
+   "landing": null
+  },
+  {
+   "id": "acbe34",
+   "hex": "acbe34",
+   "flight": "ASA590",
+   "typeCode": "B39M",
+   "sampleCount": 21,
+   "startMs": 1791264587473,
+   "endMs": 1791264729373,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "ab5f1b",
+   "hex": "ab5f1b",
+   "flight": "SWA1700",
+   "typeCode": "B738",
+   "sampleCount": 21,
+   "startMs": 1791264587456,
+   "endMs": 1791264729222,
+   "hasGeom": true,
+   "landing": null
+  },
+  {
+   "id": "aaa954",
+   "hex": "aaa954",
+   "flight": "SWA1891",
+   "typeCode": "B737",
+   "sampleCount": 12,
+   "startMs": 1791264674130,
+   "endMs": 1791264729166,
+   "hasGeom": true,
+   "landing": null
+  }
+ ]
+}

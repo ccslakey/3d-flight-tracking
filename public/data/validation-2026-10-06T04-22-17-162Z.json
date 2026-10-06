@@ -1,0 +1,1761 @@
+{
+ "recording": "2026-10-06T04-22-17-162Z",
+ "bySource": {
+  "baro-uncorrected": {
+   "count": 43,
+   "medianM": -11.582399999999996,
+   "p95AbsM": 19.2024,
+   "maxAbsM": 87.4776
+  },
+  "baro-corrected": {
+   "count": 43,
+   "medianM": -11.582399999999996,
+   "p95AbsM": 22.25040000000048,
+   "maxAbsM": 84.42959999999951
+  },
+  "geom-HAE": {
+   "count": 43,
+   "medianM": 5.450335085263998,
+   "p95AbsM": 13.06175092763999,
+   "maxAbsM": 96.861167823536
+  },
+  "geom-MSL": {
+   "count": 43,
+   "medianM": -26.8224,
+   "p95AbsM": 34.442400000000006,
+   "maxAbsM": 64.6176
+  }
+ },
+ "geomReference": {
+  "closerAsHae": 41,
+  "landingsWithGeom": 43,
+  "deltaSummary": {
+   "count": 43,
+   "medianM": 12.417962108080474,
+   "p95AbsM": 19.973147016527207,
+   "maxAbsM": 20.000823532590076
+  }
+ },
+ "landings": [
+  {
+   "id": "a8e0e3",
+   "flight": "QXE2265",
+   "lastAirborne": {
+    "tMs": 1791261187101,
+    "lat": 37.619339,
+    "lon": -122.376534,
+    "altBaroFt": 0,
+    "altGeomFt": -100,
+    "gsKt": 51.9,
+    "trackDeg": 297.55,
+    "baroRateFpm": 64
+   },
+   "touchdown": {
+    "tMs": 1791261192460,
+    "lat": 37.619783,
+    "lon": -122.37762,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 32.5,
+    "trackDeg": 298.12,
+    "baroRateFpm": 64
+   },
+   "sampleAgeS": 5.359,
+   "geoidN": -32.289918975896,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -32.289918975896,
+    "baro-corrected": -35.33791897589648,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.769918975896005
+   },
+   "deltaGeomHaeMinusBaroM": 12.41226294094649,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -7.010400000000477,
+    "geom-HAE": -2.1524810241039987,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a12b51",
+   "flight": "UAL2330",
+   "lastAirborne": {
+    "tMs": 1791260645597,
+    "lat": 37.617645,
+    "lon": -122.367008,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 116.8,
+    "trackDeg": 298.1,
+    "baroRateFpm": -64
+   },
+   "touchdown": {
+    "tMs": 1791260650710,
+    "lat": 37.618805,
+    "lon": -122.369708,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 99,
+    "trackDeg": 297.87,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 5.113,
+   "geoidN": -32.273586475359984,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.89358647535998,
+    "baro-corrected": -42.94158647536046,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.133586475359984
+   },
+   "deltaGeomHaeMinusBaroM": 19.995764447450483,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.451186475359986,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a2b1ab-0",
+   "flight": "ASA619",
+   "lastAirborne": {
+    "tMs": 1791260655790,
+    "lat": 37.612206,
+    "lon": -122.359573,
+    "altBaroFt": 25,
+    "altGeomFt": -50,
+    "gsKt": 148.1,
+    "trackDeg": 297.78,
+    "baroRateFpm": -640
+   },
+   "touchdown": {
+    "tMs": 1791260676722,
+    "lat": 37.617817,
+    "lon": -122.37294,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 83,
+    "trackDeg": 297.84,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 20.932,
+   "geoidN": -32.26313006784798,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -24.64313006784798,
+    "baro-corrected": -27.69113006784846,
+    "geom-HAE": -15.24,
+    "geom-MSL": -47.503130067847984
+   },
+   "deltaGeomHaeMinusBaroM": 16.20898028483845,
+   "residualsM": {
+    "baro-uncorrected": 3.657600000000002,
+    "baro-corrected": 0.6095999999995243,
+    "geom-HAE": 13.060730067847983,
+    "geom-MSL": -19.2024
+   }
+  },
+  {
+   "id": "a12711",
+   "flight": "UAL2080",
+   "lastAirborne": {
+    "tMs": 1791261011557,
+    "lat": 37.614395,
+    "lon": -122.364788,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 136.9,
+    "trackDeg": 297.88,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791261032550,
+    "lat": 37.618858,
+    "lon": -122.375365,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 57.5,
+    "trackDeg": 298.12,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 20.993,
+   "geoidN": -32.271472406959994,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.89147240695999,
+    "baro-corrected": -42.93947240696047,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.13147240695999
+   },
+   "deltaGeomHaeMinusBaroM": 16.20894938480444,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.449072406959996,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "abee27",
+   "flight": "FFL1360",
+   "lastAirborne": {
+    "tMs": 1791260800238,
+    "lat": 37.619562,
+    "lon": -122.371455,
+    "altBaroFt": 0,
+    "altGeomFt": -100,
+    "gsKt": 60.8,
+    "trackDeg": 297.41,
+    "baroRateFpm": -64
+   },
+   "touchdown": {
+    "tMs": 1791260820818,
+    "lat": 37.620853,
+    "lon": -122.374589,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 10.8,
+    "trackDeg": 295.31,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 20.58,
+   "geoidN": -32.28052220915998,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -32.28052220915998,
+    "baro-corrected": -35.32852220916046,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.76052220915999
+   },
+   "deltaGeomHaeMinusBaroM": 4.765253965274468,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -7.010400000000477,
+    "geom-HAE": -2.161877790840016,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a8fc72",
+   "flight": "UAL693",
+   "lastAirborne": {
+    "tMs": 1791260887733,
+    "lat": 37.614349,
+    "lon": -122.364671,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 142.2,
+    "trackDeg": 297.65,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791260928626,
+    "lat": 37.62104,
+    "lon": -122.380665,
+    "altBaroFt": "ground",
+    "altGeomFt": -50,
+    "gsKt": 31.5,
+    "trackDeg": 297.41,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 40.893,
+   "geoidN": -32.271284383284,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.891284383283995,
+    "baro-corrected": -42.93928438328447,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.131284383284
+   },
+   "deltaGeomHaeMinusBaroM": 12.450477483022457,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.448884383284,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "aa7f2b",
+   "flight": "UAL356",
+   "lastAirborne": {
+    "tMs": 1791260882585,
+    "lat": 37.618057,
+    "lon": -122.367943,
+    "altBaroFt": -50,
+    "altGeomFt": -100,
+    "gsKt": 115.4,
+    "trackDeg": 297.9,
+    "baroRateFpm": -64
+   },
+   "touchdown": {
+    "tMs": 1791260887470,
+    "lat": 37.619143,
+    "lon": -122.370529,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 99,
+    "trackDeg": 297.87,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 4.885,
+   "geoidN": -32.27504493299598,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -47.515044932995984,
+    "baro-corrected": -50.56304493299646,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.755044932995986
+   },
+   "deltaGeomHaeMinusBaroM": 16.201050650198464,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -22.25040000000048,
+    "geom-HAE": -2.167355067004017,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a44940",
+   "flight": "UAL504",
+   "lastAirborne": {
+    "tMs": 1791260980751,
+    "lat": 37.614395,
+    "lon": -122.359178,
+    "altBaroFt": 25,
+    "altGeomFt": -50,
+    "gsKt": 148.9,
+    "trackDeg": 297.6,
+    "baroRateFpm": -704
+   },
+   "touchdown": {
+    "tMs": 1791261002123,
+    "lat": 37.619991,
+    "lon": -122.372531,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 83,
+    "trackDeg": 298.12,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.372,
+   "geoidN": -32.26113643075999,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -24.64113643075999,
+    "baro-corrected": -27.689136430760467,
+    "geom-HAE": -15.24,
+    "geom-MSL": -47.50113643075999
+   },
+   "deltaGeomHaeMinusBaroM": 12.432766668500463,
+   "residualsM": {
+    "baro-uncorrected": 3.657600000000002,
+    "baro-corrected": 0.6095999999995243,
+    "geom-HAE": 13.058736430759991,
+    "geom-MSL": -19.2024
+   }
+  },
+  {
+   "id": "aa739e",
+   "flight": "UAL1118",
+   "lastAirborne": {
+    "tMs": 1791261130788,
+    "lat": 37.618491,
+    "lon": -122.368947,
+    "altBaroFt": -50,
+    "altGeomFt": -75,
+    "gsKt": 110.9,
+    "trackDeg": 297.95,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791261135965,
+    "lat": 37.619562,
+    "lon": -122.371529,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 85,
+    "trackDeg": 297.57,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 5.177,
+   "geoidN": -32.276612764092,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -47.516612764092,
+    "baro-corrected": -50.56461276409247,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.136612764092
+   },
+   "deltaGeomHaeMinusBaroM": 19.973147016527207,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -22.25040000000047,
+    "geom-HAE": 5.454212764092002,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a0cdf3",
+   "flight": "AAL1954",
+   "lastAirborne": {
+    "tMs": 1791261268058,
+    "lat": 37.619888,
+    "lon": -122.372291,
+    "altBaroFt": -25,
+    "altGeomFt": -100,
+    "gsKt": 111.8,
+    "trackDeg": 297.71,
+    "baroRateFpm": 0
+   },
+   "touchdown": {
+    "tMs": 1791261289845,
+    "lat": 37.623104,
+    "lon": -122.379952,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 42.5,
+    "trackDeg": 298.04,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 21.787,
+   "geoidN": -32.28184008636799,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.90184008636799,
+    "baro-corrected": -42.94984008636847,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.761840086368
+   },
+   "deltaGeomHaeMinusBaroM": 12.469840086368468,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": -2.1605599136320066,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "adc9b6",
+   "flight": "JBU933",
+   "lastAirborne": {
+    "tMs": 1791261385990,
+    "lat": 37.619431,
+    "lon": -122.371157,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 94.8,
+    "trackDeg": 297.65,
+    "baroRateFpm": 0
+   },
+   "touchdown": {
+    "tMs": 1791261391621,
+    "lat": 37.620435,
+    "lon": -122.373589,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 73,
+    "trackDeg": 297.65,
+    "baroRateFpm": 0
+   },
+   "sampleAgeS": 5.631,
+   "geoidN": -32.280061153331985,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -32.280061153331985,
+    "baro-corrected": -35.32806115333246,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.140061153331985
+   },
+   "deltaGeomHaeMinusBaroM": 12.454622894936463,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -7.010400000000477,
+    "geom-HAE": 5.457661153331987,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "c00e6c-0",
+   "flight": "FLE1848",
+   "lastAirborne": {
+    "tMs": 1791261852181,
+    "lat": 37.615265,
+    "lon": -122.366775,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 127.9,
+    "trackDeg": 297.97,
+    "baroRateFpm": 0
+   },
+   "touchdown": {
+    "tMs": 1791261873244,
+    "lat": 37.618852,
+    "lon": -122.375351,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 43.5,
+    "trackDeg": 298.12,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 21.063,
+   "geoidN": -32.2746051185,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.894605118499996,
+    "baro-corrected": -42.942605118500474,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.1346051185
+   },
+   "deltaGeomHaeMinusBaroM": 12.417962108080474,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.4522051185,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a44560",
+   "flight": "UAL1202",
+   "lastAirborne": {
+    "tMs": 1791261417539,
+    "lat": 37.618332,
+    "lon": -122.374196,
+    "altBaroFt": -50,
+    "altGeomFt": -100,
+    "gsKt": 93.1,
+    "trackDeg": 298.22,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791261422339,
+    "lat": 37.619166,
+    "lon": -122.376127,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 77,
+    "trackDeg": 298.12,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 4.8,
+   "geoidN": -32.286298875711985,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -47.52629887571199,
+    "baro-corrected": -50.57429887571246,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.76629887571198
+   },
+   "deltaGeomHaeMinusBaroM": 12.440657605712445,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -22.25040000000047,
+    "geom-HAE": -2.156101124288014,
+    "geom-MSL": -34.44239999999999
+   }
+  },
+  {
+   "id": "a126eb",
+   "flight": "UAL276",
+   "lastAirborne": {
+    "tMs": 1791261484371,
+    "lat": 37.616364,
+    "lon": -122.363853,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 139.1,
+    "trackDeg": 297.85,
+    "baroRateFpm": -64
+   },
+   "touchdown": {
+    "tMs": 1791261505126,
+    "lat": 37.620815,
+    "lon": -122.374532,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 57.5,
+    "trackDeg": 297.6,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 20.755,
+   "geoidN": -32.268577378032006,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.888577378032004,
+    "baro-corrected": -42.93657737803248,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.128577378032006
+   },
+   "deltaGeomHaeMinusBaroM": 12.43145566640046,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.446177378032008,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a5cf82",
+   "flight": "UAL2817",
+   "lastAirborne": {
+    "tMs": 1791261612778,
+    "lat": 37.61891,
+    "lon": -122.369962,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 119,
+    "trackDeg": 298.07,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791261634414,
+    "lat": 37.622532,
+    "lon": -122.378623,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 49.5,
+    "trackDeg": 297.9,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.636,
+   "geoidN": -32.27820647431999,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.898206474319984,
+    "baro-corrected": -42.94620647432046,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.138206474319986
+   },
+   "deltaGeomHaeMinusBaroM": 12.447998929592465,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.4558064743199886,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a4c849",
+   "flight": "SKW3493",
+   "lastAirborne": {
+    "tMs": 1791261613290,
+    "lat": 37.619096,
+    "lon": -122.375992,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 56.4,
+    "trackDeg": 297.47,
+    "baroRateFpm": 0
+   },
+   "touchdown": {
+    "tMs": 1791261634497,
+    "lat": 37.620003,
+    "lon": -122.378813,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 11.8,
+    "trackDeg": 297.18,
+    "baroRateFpm": 0
+   },
+   "sampleAgeS": 21.207,
+   "geoidN": -32.28908758707199,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -32.28908758707199,
+    "baro-corrected": -35.33708758707247,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.14908758707199
+   },
+   "deltaGeomHaeMinusBaroM": 12.3646133742281,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -7.010400000000477,
+    "geom-HAE": 5.466687587071991,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a12a7c",
+   "flight": "UAL2400",
+   "lastAirborne": {
+    "tMs": 1791262500206,
+    "lat": 37.616043,
+    "lon": -122.368761,
+    "altBaroFt": -50,
+    "altGeomFt": -75,
+    "gsKt": 130.2,
+    "trackDeg": 297.94,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791262521553,
+    "lat": 37.619503,
+    "lon": -122.376948,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 35.5,
+    "trackDeg": 297.62,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.347,
+   "geoidN": -32.277778749108,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -47.517778749108004,
+    "baro-corrected": -50.565778749108475,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.137778749108
+   },
+   "deltaGeomHaeMinusBaroM": 12.440561260232464,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -22.25040000000047,
+    "geom-HAE": 5.455378749108004,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "c07b8c",
+   "flight": "WJA1504",
+   "lastAirborne": {
+    "tMs": 1791262126190,
+    "lat": 37.616684,
+    "lon": -122.370164,
+    "altBaroFt": -50,
+    "altGeomFt": -75,
+    "gsKt": 99.8,
+    "trackDeg": 298.11,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791262130497,
+    "lat": 37.617519,
+    "lon": -122.372195,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 83,
+    "trackDeg": 298.11,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 4.307,
+   "geoidN": -32.27995657529599,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -47.51995657529599,
+    "baro-corrected": -50.56795657529646,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.13995657529599
+   },
+   "deltaGeomHaeMinusBaroM": 12.44505699574447,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -22.25040000000047,
+    "geom-HAE": 5.4575565752959925,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a7133f",
+   "flight": "DAL335",
+   "lastAirborne": {
+    "tMs": 1791261815570,
+    "lat": 37.616089,
+    "lon": -122.363151,
+    "altBaroFt": 25,
+    "altGeomFt": -75,
+    "gsKt": 123,
+    "trackDeg": 297.61,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791261826169,
+    "lat": 37.618641,
+    "lon": -122.369287,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 98,
+    "trackDeg": 297.35,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 10.599,
+   "geoidN": -32.26745249424399,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -24.64745249424399,
+    "baro-corrected": -27.695452494244467,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.12745249424399
+   },
+   "deltaGeomHaeMinusBaroM": 4.830241942544477,
+   "residualsM": {
+    "baro-uncorrected": 3.657600000000002,
+    "baro-corrected": 0.6095999999995243,
+    "geom-HAE": 5.445052494243992,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a38a3a",
+   "flight": "AAL2347",
+   "lastAirborne": {
+    "tMs": 1791261965898,
+    "lat": 37.615884,
+    "lon": -122.362737,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 140.5,
+    "trackDeg": 298.02,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791262007407,
+    "lat": 37.621296,
+    "lon": -122.376664,
+    "altBaroFt": "ground",
+    "altGeomFt": -50,
+    "gsKt": 23.5,
+    "trackDeg": 298.12,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 41.509,
+   "geoidN": -32.266813681967975,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.88681368196797,
+    "baro-corrected": -42.93481368196845,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.126813681967974
+   },
+   "deltaGeomHaeMinusBaroM": 12.44341750598048,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.444413681967976,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "aaa5d4-0",
+   "flight": "UAL1195",
+   "lastAirborne": {
+    "tMs": 1791261966274,
+    "lat": 37.607117,
+    "lon": -122.347548,
+    "altBaroFt": 300,
+    "altGeomFt": 225,
+    "gsKt": 159.7,
+    "trackDeg": 298.01,
+    "baroRateFpm": -768
+   },
+   "touchdown": {
+    "tMs": 1791262007788,
+    "lat": 37.618689,
+    "lon": -122.375007,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 75,
+    "trackDeg": 298.11,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 41.514,
+   "geoidN": -32.243567823536,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": 59.196432176464,
+    "baro-corrected": 56.148432176463515,
+    "geom-HAE": 68.58,
+    "geom-MSL": 36.336432176464
+   },
+   "deltaGeomHaeMinusBaroM": 12.421464410994474,
+   "residualsM": {
+    "baro-uncorrected": 87.4776,
+    "baro-corrected": 84.42959999999951,
+    "geom-HAE": 96.861167823536,
+    "geom-MSL": 64.6176
+   }
+  },
+  {
+   "id": "aae9a3",
+   "flight": "DAL2762",
+   "lastAirborne": {
+    "tMs": 1791262742169,
+    "lat": 37.611969,
+    "lon": -122.359061,
+    "altBaroFt": 50,
+    "altGeomFt": -25,
+    "gsKt": 150.8,
+    "trackDeg": 298.09,
+    "baroRateFpm": -704
+   },
+   "touchdown": {
+    "tMs": 1791262762945,
+    "lat": 37.617668,
+    "lon": -122.37256,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 91,
+    "trackDeg": 297.81,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 20.776,
+   "geoidN": -32.26231883556399,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -17.022318835563986,
+    "baro-corrected": -17.022318835563986,
+    "geom-HAE": -7.62,
+    "geom-MSL": -39.882318835563986
+   },
+   "deltaGeomHaeMinusBaroM": 9.392721054619996,
+   "residualsM": {
+    "baro-uncorrected": 11.277600000000003,
+    "baro-corrected": 11.277600000000003,
+    "geom-HAE": 20.67991883556399,
+    "geom-MSL": -11.582399999999996
+   }
+  },
+  {
+   "id": "a5bb1b",
+   "flight": "ASA39",
+   "lastAirborne": {
+    "tMs": 1791262228430,
+    "lat": 37.615585,
+    "lon": -122.362041,
+    "altBaroFt": -25,
+    "altGeomFt": -100,
+    "gsKt": 133.8,
+    "trackDeg": 298.1,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791262249083,
+    "lat": 37.619911,
+    "lon": -122.372355,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 65.5,
+    "trackDeg": 297.6,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 20.653,
+   "geoidN": -32.265711364059996,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.88571136405999,
+    "baro-corrected": -42.93371136406047,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.74571136406
+   },
+   "deltaGeomHaeMinusBaroM": 12.432720498548461,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": -2.1766886359400033,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a6bbef",
+   "flight": "DAL1693",
+   "lastAirborne": {
+    "tMs": 1791262397726,
+    "lat": 37.614627,
+    "lon": -122.365305,
+    "altBaroFt": -25,
+    "altGeomFt": -100,
+    "gsKt": 109.6,
+    "trackDeg": 297.73,
+    "baroRateFpm": -64
+   },
+   "touchdown": {
+    "tMs": 1791262409115,
+    "lat": 37.616695,
+    "lon": -122.370208,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 68.5,
+    "trackDeg": 297.87,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 11.389,
+   "geoidN": -32.27228545506,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.89228545506,
+    "baro-corrected": -42.940285455060476,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.752285455060004
+   },
+   "deltaGeomHaeMinusBaroM": 12.351007675091637,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": -2.170114544939999,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "aa7f01-0",
+   "flight": "UAL2620",
+   "lastAirborne": {
+    "tMs": 1791262336040,
+    "lat": 37.615814,
+    "lon": -122.362625,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 140.5,
+    "trackDeg": 298.02,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791262357078,
+    "lat": 37.620564,
+    "lon": -122.373919,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 61.5,
+    "trackDeg": 297.84,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.038,
+   "geoidN": -32.266649332999975,
+   "altimeterInHg": 29.91,
+   "heightsM": {
+    "baro-uncorrected": -39.88664933299997,
+    "baro-corrected": -42.93464933300045,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.126649332999975
+   },
+   "deltaGeomHaeMinusBaroM": 12.432605712212464,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -14.630400000000474,
+    "geom-HAE": 5.444249332999977,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "ad0d3c",
+   "flight": "TAI560",
+   "lastAirborne": {
+    "tMs": 1791262649310,
+    "lat": 37.616089,
+    "lon": -122.368761,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 108.2,
+    "trackDeg": 297.51,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791262654362,
+    "lat": 37.617164,
+    "lon": -122.37135,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 89,
+    "trackDeg": 298.12,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 5.052,
+   "geoidN": -32.277750457084,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -39.897750457083994,
+    "baro-corrected": -39.897750457083994,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.137750457083996
+   },
+   "deltaGeomHaeMinusBaroM": 9.339963736261183,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -11.582399999999996,
+    "geom-HAE": 5.455350457083998,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a174f7",
+   "flight": "SKW3463",
+   "lastAirborne": {
+    "tMs": 1791262938787,
+    "lat": 37.618607,
+    "lon": -122.374781,
+    "altBaroFt": 0,
+    "altGeomFt": -100,
+    "gsKt": 73.4,
+    "trackDeg": 297.61,
+    "baroRateFpm": 0
+   },
+   "touchdown": {
+    "tMs": 1791262949271,
+    "lat": 37.619671,
+    "lon": -122.377337,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 26.5,
+    "trackDeg": 297.18,
+    "baroRateFpm": 64
+   },
+   "sampleAgeS": 10.484,
+   "geoidN": -32.28719171973199,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.28719171973199,
+    "baro-corrected": -32.28719171973199,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.767191719732
+   },
+   "deltaGeomHaeMinusBaroM": 1.7997991407039926,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": -2.155208280268006,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a08021",
+   "flight": "AAL1430",
+   "lastAirborne": {
+    "tMs": 1791262597914,
+    "lat": 37.616117,
+    "lon": -122.363334,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 141.4,
+    "trackDeg": 297.83,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791262619000,
+    "lat": 37.620941,
+    "lon": -122.374795,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 62.5,
+    "trackDeg": 297.78,
+    "baroRateFpm": 0
+   },
+   "sampleAgeS": 21.086,
+   "geoidN": -32.26777180368798,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -39.887771803687976,
+    "baro-corrected": -39.887771803687976,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.12777180368798
+   },
+   "deltaGeomHaeMinusBaroM": 20.000823532590076,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -11.582399999999996,
+    "geom-HAE": 5.44537180368798,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a6dfaa",
+   "flight": "DAL1655",
+   "lastAirborne": {
+    "tMs": 1791262736582,
+    "lat": 37.617793,
+    "lon": -122.367275,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 110.1,
+    "trackDeg": 298.19,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791262742317,
+    "lat": 37.619038,
+    "lon": -122.370246,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 91,
+    "trackDeg": 297.87,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 5.735,
+   "geoidN": -32.2739847837,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.2739847837,
+    "baro-corrected": -32.2739847837,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.1339847837
+   },
+   "deltaGeomHaeMinusBaroM": 9.340523672395975,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": 5.451584783700003,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a7f4ec",
+   "flight": "UAL1757",
+   "lastAirborne": {
+    "tMs": 1791262855493,
+    "lat": 37.617462,
+    "lon": -122.366482,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 134.6,
+    "trackDeg": 297.9,
+    "baroRateFpm": null
+   },
+   "touchdown": {
+    "tMs": 1791262876772,
+    "lat": 37.621901,
+    "lon": -122.377097,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 65.5,
+    "trackDeg": 297.65,
+    "baroRateFpm": null
+   },
+   "sampleAgeS": 21.279,
+   "geoidN": -32.272735085263996,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.272735085263996,
+    "baro-corrected": -32.272735085263996,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.132735085263995
+   },
+   "deltaGeomHaeMinusBaroM": 9.374171825619996,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": 5.450335085263998,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "899014",
+   "flight": "CAL5345",
+   "lastAirborne": {
+    "tMs": 1791263015608,
+    "lat": 37.619981,
+    "lon": -122.37247,
+    "altBaroFt": -100,
+    "altGeomFt": -75,
+    "gsKt": 91.7,
+    "trackDeg": 297.96,
+    "baroRateFpm": -320
+   },
+   "touchdown": {
+    "tMs": 1791263036816,
+    "lat": 37.622704,
+    "lon": -122.379008,
+    "altBaroFt": "ground",
+    "altGeomFt": 25,
+    "gsKt": 43.5,
+    "trackDeg": 297.79,
+    "baroRateFpm": -256
+   },
+   "sampleAgeS": 21.208,
+   "geoidN": -32.28210736772,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -62.762107367720006,
+    "baro-corrected": -62.762107367720006,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.14210736772
+   },
+   "deltaGeomHaeMinusBaroM": 16.935131337627567,
+   "residualsM": {
+    "baro-uncorrected": -34.442400000000006,
+    "baro-corrected": -34.442400000000006,
+    "geom-HAE": 5.459707367720004,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a8d5a4",
+   "flight": "UAL1267",
+   "lastAirborne": {
+    "tMs": 1791263195797,
+    "lat": 37.619064,
+    "lon": -122.370398,
+    "altBaroFt": -50,
+    "altGeomFt": -100,
+    "gsKt": 102.9,
+    "trackDeg": 297.81,
+    "baroRateFpm": -64
+   },
+   "touchdown": {
+    "tMs": 1791263200983,
+    "lat": 37.620106,
+    "lon": -122.372837,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 81.4,
+    "trackDeg": 297.82,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 5.186,
+   "geoidN": -32.27890617011198,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -47.51890617011198,
+    "baro-corrected": -47.51890617011198,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.758906170111985
+   },
+   "deltaGeomHaeMinusBaroM": 9.38022072104198,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -19.2024,
+    "geom-HAE": -2.1634938298880186,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a70aed",
+   "flight": "DAL681",
+   "lastAirborne": {
+    "tMs": 1791263375260,
+    "lat": 37.616024,
+    "lon": -122.363036,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 124.4,
+    "trackDeg": 297.8,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791263396020,
+    "lat": 37.620272,
+    "lon": -122.373216,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 60.5,
+    "trackDeg": 297.9,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 20.76,
+   "geoidN": -32.26727988454398,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.26727988454398,
+    "baro-corrected": -32.26727988454398,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.12727988454398
+   },
+   "deltaGeomHaeMinusBaroM": 9.385069013411986,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": 5.444879884543983,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a445a9",
+   "flight": "UAL1947",
+   "lastAirborne": {
+    "tMs": 1791263721040,
+    "lat": 37.615419,
+    "lon": -122.367215,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 140.5,
+    "trackDeg": 298.02,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791263732470,
+    "lat": 37.618275,
+    "lon": -122.374021,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 91,
+    "trackDeg": 298.12,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 11.43,
+   "geoidN": -32.27532048765999,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -39.89532048765999,
+    "baro-corrected": -39.89532048765999,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.13532048765999
+   },
+   "deltaGeomHaeMinusBaroM": 13.163900029626792,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -11.582399999999996,
+    "geom-HAE": 5.452920487659991,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a6492f",
+   "flight": "DAL667",
+   "lastAirborne": {
+    "tMs": 1791263603381,
+    "lat": 37.615186,
+    "lon": -122.361065,
+    "altBaroFt": 25,
+    "altGeomFt": -50,
+    "gsKt": 125.2,
+    "trackDeg": 297.59,
+    "baroRateFpm": -384
+   },
+   "touchdown": {
+    "tMs": 1791263644729,
+    "lat": 37.621785,
+    "lon": -122.376769,
+    "altBaroFt": "ground",
+    "altGeomFt": -50,
+    "gsKt": 39.5,
+    "trackDeg": 297.87,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 41.348,
+   "geoidN": -32.26415092763999,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -24.644150927639988,
+    "baro-corrected": -24.644150927639988,
+    "geom-HAE": -15.24,
+    "geom-MSL": -47.50415092763999
+   },
+   "deltaGeomHaeMinusBaroM": 1.7789925076959792,
+   "residualsM": {
+    "baro-uncorrected": 3.657600000000002,
+    "baro-corrected": 3.657600000000002,
+    "geom-HAE": 13.06175092763999,
+    "geom-MSL": -19.2024
+   }
+  },
+  {
+   "id": "a0a457",
+   "flight": "SKW5415",
+   "lastAirborne": {
+    "tMs": 1791264167316,
+    "lat": 37.620912,
+    "lon": -122.380291,
+    "altBaroFt": 0,
+    "altGeomFt": -100,
+    "gsKt": 41.6,
+    "trackDeg": 297.18,
+    "baroRateFpm": 0
+   },
+   "touchdown": {
+    "tMs": 1791264172231,
+    "lat": 37.621296,
+    "lon": -122.381217,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 34.5,
+    "trackDeg": 297.18,
+    "baroRateFpm": 0
+   },
+   "sampleAgeS": 4.915,
+   "geoidN": -32.29572663843199,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.29572663843199,
+    "baro-corrected": -32.29572663843199,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.77572663843199
+   },
+   "deltaGeomHaeMinusBaroM": 9.30090872403997,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": -2.1466733615680127,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "a4df52",
+   "flight": "AAL2663",
+   "lastAirborne": {
+    "tMs": 1791263979202,
+    "lat": 37.618332,
+    "lon": -122.368645,
+    "altBaroFt": -25,
+    "altGeomFt": -100,
+    "gsKt": 102,
+    "trackDeg": 296.82,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791264000723,
+    "lat": 37.620982,
+    "lon": -122.374933,
+    "altBaroFt": "ground",
+    "altGeomFt": -50,
+    "gsKt": 41.5,
+    "trackDeg": 296.82,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.521,
+   "geoidN": -32.27615901943999,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -39.896159019439985,
+    "baro-corrected": -39.896159019439985,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.75615901943999
+   },
+   "deltaGeomHaeMinusBaroM": 9.318481446726338,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -11.582399999999996,
+    "geom-HAE": -2.166240980560012,
+    "geom-MSL": -34.442400000000006
+   }
+  },
+  {
+   "id": "780a67",
+   "flight": "CPA872",
+   "lastAirborne": {
+    "tMs": 1791264627492,
+    "lat": 37.616913,
+    "lon": -122.37069,
+    "altBaroFt": -25,
+    "altGeomFt": -75,
+    "gsKt": 108.2,
+    "trackDeg": 297.51,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791264632784,
+    "lat": 37.617944,
+    "lon": -122.373156,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 89,
+    "trackDeg": 298.12,
+    "baroRateFpm": -64
+   },
+   "sampleAgeS": 5.292,
+   "geoidN": -32.28077826011998,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -39.90077826011998,
+    "baro-corrected": -39.90077826011998,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.14077826011998
+   },
+   "deltaGeomHaeMinusBaroM": 9.393086261759997,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -11.582399999999996,
+    "geom-HAE": 5.458378260119982,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "ac56ba",
+   "flight": "SWA724",
+   "lastAirborne": {
+    "tMs": 1791264099635,
+    "lat": 37.616396,
+    "lon": -122.363931,
+    "altBaroFt": -25,
+    "altGeomFt": -100,
+    "gsKt": 133.8,
+    "trackDeg": 298.1,
+    "baroRateFpm": -192
+   },
+   "touchdown": {
+    "tMs": 1791264120637,
+    "lat": 37.620376,
+    "lon": -122.37344,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 42.5,
+    "trackDeg": 297.6,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.002,
+   "geoidN": -32.26870140929598,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -39.888701409295976,
+    "baro-corrected": -39.888701409295976,
+    "geom-HAE": -30.48,
+    "geom-MSL": -62.748701409295975
+   },
+   "deltaGeomHaeMinusBaroM": 9.362819549435983,
+   "residualsM": {
+    "baro-uncorrected": -11.582399999999996,
+    "baro-corrected": -11.582399999999996,
+    "geom-HAE": -2.1736985907040207,
+    "geom-MSL": -34.44239999999999
+   }
+  },
+  {
+   "id": "ac4ffb",
+   "flight": "SWA4175",
+   "lastAirborne": {
+    "tMs": 1791264253843,
+    "lat": 37.615173,
+    "lon": -122.360989,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 133.3,
+    "trackDeg": 297.72,
+    "baroRateFpm": -256
+   },
+   "touchdown": {
+    "tMs": 1791264275308,
+    "lat": 37.620106,
+    "lon": -122.372808,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 62.5,
+    "trackDeg": 298.11,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 21.465,
+   "geoidN": -32.264018735612,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.264018735612,
+    "baro-corrected": -32.264018735612,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.124018735612
+   },
+   "deltaGeomHaeMinusBaroM": 9.401603148601998,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": 5.441618735612,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "ac4fb5",
+   "flight": "SWA384",
+   "lastAirborne": {
+    "tMs": 1791264357207,
+    "lat": 37.615558,
+    "lon": -122.367454,
+    "altBaroFt": -50,
+    "altGeomFt": -75,
+    "gsKt": 117.2,
+    "trackDeg": 297.44,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791264362886,
+    "lat": 37.616833,
+    "lon": -122.370588,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 93,
+    "trackDeg": 297.55,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 5.679,
+   "geoidN": -32.27567508267198,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -47.51567508267198,
+    "baro-corrected": -47.51567508267198,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.13567508267198
+   },
+   "deltaGeomHaeMinusBaroM": 9.374016204103981,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -19.2024,
+    "geom-HAE": 5.453275082671983,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a5954e",
+   "flight": "UAL1204",
+   "lastAirborne": {
+    "tMs": 1791264503903,
+    "lat": 37.615977,
+    "lon": -122.368589,
+    "altBaroFt": 0,
+    "altGeomFt": -75,
+    "gsKt": 107.4,
+    "trackDeg": 297.76,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791264509002,
+    "lat": 37.617048,
+    "lon": -122.371081,
+    "altBaroFt": "ground",
+    "altGeomFt": -75,
+    "gsKt": 87,
+    "trackDeg": 297.84,
+    "baroRateFpm": -192
+   },
+   "sampleAgeS": 5.099,
+   "geoidN": -32.277503534187986,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -32.277503534187986,
+    "baro-corrected": -32.277503534187986,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.137503534187985
+   },
+   "deltaGeomHaeMinusBaroM": 1.7707408063199814,
+   "residualsM": {
+    "baro-uncorrected": -3.962399999999999,
+    "baro-corrected": -3.962399999999999,
+    "geom-HAE": 5.455103534187987,
+    "geom-MSL": -26.8224
+   }
+  },
+  {
+   "id": "a4b420",
+   "flight": "ASA613",
+   "lastAirborne": {
+    "tMs": 1791264472235,
+    "lat": 37.618011,
+    "lon": -122.367768,
+    "altBaroFt": -50,
+    "altGeomFt": -75,
+    "gsKt": 110.9,
+    "trackDeg": 297.95,
+    "baroRateFpm": -128
+   },
+   "touchdown": {
+    "tMs": 1791264477139,
+    "lat": 37.619061,
+    "lon": -122.370305,
+    "altBaroFt": "ground",
+    "altGeomFt": -100,
+    "gsKt": 93,
+    "trackDeg": 297.84,
+    "baroRateFpm": -128
+   },
+   "sampleAgeS": 4.904,
+   "geoidN": -32.27475318220799,
+   "altimeterInHg": 29.92,
+   "heightsM": {
+    "baro-uncorrected": -47.51475318220799,
+    "baro-corrected": -47.51475318220799,
+    "geom-HAE": -22.86,
+    "geom-MSL": -55.13475318220799
+   },
+   "deltaGeomHaeMinusBaroM": 9.385031962343987,
+   "residualsM": {
+    "baro-uncorrected": -19.2024,
+    "baro-corrected": -19.2024,
+    "geom-HAE": 5.45235318220799,
+    "geom-MSL": -26.8224
+   }
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+[
+ {
+  "icaoId": "KSFO",
+  "receiptTime": "2026-10-06T04:00:05.807Z",
+  "obsTime": 1791258960,
+  "reportTime": "2026-10-06T04:00:00.000Z",
+  "temp": 16.1,
+  "dewp": 13.3,
+  "wdir": 290,
+  "wspd": 12,
+  "visib": "10+",
+  "altim": 1013,
+  "slp": 1012.9,
+  "qcField": 4,
+  "metarType": "METAR",
+  "rawOb": "METAR KSFO 060356Z 29012KT 10SM FEW008 16/13 A2991 RMK AO2 SLP129 T01610133",
+  "lat": 37.6196,
+  "lon": -122.3656,
+  "elev": 2,
+  "name": "San Francisco Intl, CA, US",
+  "cover": "FEW",
+  "clouds": [
+   {
+    "cover": "FEW",
+    "base": 800
+   }
+  ],
+  "fltCat": "VFR"
+ },
+ {
+  "icaoId": "KSFO",
+  "receiptTime": "2026-10-06T05:00:12.870Z",
+  "obsTime": 1791262560,
+  "reportTime": "2026-10-06T05:00:00.000Z",
+  "temp": 15.6,
+  "dewp": 13.3,
+  "wdir": 300,
+  "wspd": 10,
+  "visib": "10+",
+  "altim": 1013.3,
+  "slp": 1013.1,
+  "qcField": 4,
+  "metarType": "METAR",
+  "rawOb": "METAR KSFO 060456Z 30010KT 10SM FEW008 16/13 A2992 RMK AO2 SLP131 T01560133",
+  "lat": 37.6196,
+  "lon": -122.3656,
+  "elev": 2,
+  "name": "San Francisco Intl, CA, US",
+  "cover": "FEW",
+  "clouds": [
+   {
+    "cover": "FEW",
+    "base": 800
+   }
+  ],
+  "fltCat": "VFR"
+ }
+]
