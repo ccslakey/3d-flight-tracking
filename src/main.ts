@@ -1,5 +1,6 @@
 import { Cartesian3, type Entity, Ion, JulianDate, Math as CesiumMath, Terrain, type TerrainProvider, Viewer } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
+import { createCurtains } from "./curtains";
 import { createDebugTrails } from "./debugTrails";
 import { createFlightList } from "./flightList";
 import { loadGeoidGrid } from "./geoid";
@@ -85,6 +86,7 @@ async function loadReplay(): Promise<void> {
   document.body.append(sidePanel);
   const list = createFlightList(sidePanel, flights, (f) => select(f));
   const trails = createDebugTrails(viewer, sidePanel, geomReference);
+  const curtains = createCurtains(viewer, sidePanel, flights, geoid);
 
   let current: ReplayFlight | null = null;
   function select(flight: ReplayFlight | null): void {
@@ -96,12 +98,15 @@ async function loadReplay(): Promise<void> {
     viewer.selectedEntity = flight?.entity;
     viewer.trackedEntity = flight?.entity;
     trails.show(flight ? (flight.track.flight ?? flight.track.hex) : null, flight?.resolved ?? []);
+    curtains.show(flight);
     list.setSelected(flight?.track.id ?? null);
   }
   viewer.selectedEntityChanged.addEventListener((entity?: Entity) => {
-    // Clicking a debug trail selects a non-flight entity; keep the current flight then.
-    if (!entity) select(null);
-    else if (byEntityId.has(entity.id)) select(byEntityId.get(entity.id)!);
+    if (!entity) return select(null);
+    // A drop line selects its aircraft; trails and curtains keep the current flight.
+    const flight = byEntityId.get(entity.id.replace(/^drop-/, "flight-"));
+    if (flight) select(flight);
+    if (viewer.selectedEntity !== current?.entity) viewer.selectedEntity = current?.entity;
   });
 
   const requested = params.get("flight");
