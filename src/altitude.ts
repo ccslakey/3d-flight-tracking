@@ -25,6 +25,20 @@ export interface AltResult {
 
 export const metersToFeet = (m: number): number => m / M_PER_FT;
 
+/** Ellipsoid height back to feet MSL, for display. */
+export function ellipsoidMToMslFt(heightM: number, geoidN: number): number {
+  return metersToFeet(heightM - geoidN);
+}
+
+const M_PER_NM = 1852;
+
+/** Climb (+) or descent (-) angle from vertical rate and ground speed, in radians. */
+export function flightPathAngleRad(verticalRateFpm: number, groundSpeedKt: number): number {
+  const verticalMps = (verticalRateFpm * M_PER_FT) / 60;
+  const groundMps = (groundSpeedKt * M_PER_NM) / 3600;
+  return Math.atan2(verticalMps, groundMps);
+}
+
 /** An MSL (orthometric) height in feet, such as a field elevation, as ellipsoid height. */
 export function mslFtToEllipsoidM(mslFt: number, geoidN: number): number {
   return mslFt * M_PER_FT + geoidN;

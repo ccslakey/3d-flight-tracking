@@ -2,30 +2,38 @@
 // altitude.ts; ground samples are clamped to the sampled terrain height.
 
 import {
+  CallbackProperty,
   Cartesian2,
   Cartesian3,
   Cartographic,
   Color,
+  ColorBlendMode,
   type Entity,
   ExtrapolationType,
+  HeadingPitchRoll,
   JulianDate,
   LabelStyle,
   LinearApproximation,
+  Math as CesiumMath,
   NearFarScalar,
+  Quaternion,
   SampledPositionProperty,
+  SampledProperty,
   sampleTerrainMostDetailed,
   type TerrainProvider,
   TimeInterval,
   TimeIntervalCollection,
+  Transforms,
   VerticalOrigin,
   type Viewer,
 } from "cesium";
-import { type AltResult, toEllipsoidHeight } from "./altitude";
+import { type AltResult, ellipsoidMToMslFt, flightPathAngleRad, toEllipsoidHeight } from "./altitude";
 import { geoidUndulationM, type GeoidGrid } from "./geoid";
 import { type Metar, metarAt } from "./metar";
 import type { TrackFile, TrackSample } from "./track";
 
 const TRAIL_SECONDS = 90;
+const MODEL_URL = "/models/airliner.glb";
 const LANDING_COLOR = Color.fromCssColorString("#7cf29a");
 const OTHER_COLOR = Color.WHITE;
 
@@ -75,8 +83,68 @@ export async function resolveSamples(track: TrackFile, ctx: ReplayContext): Prom
   return resolved;
 }
 
+/** Orientation from each sample's recorded track and climb angle, smoother than velocity between sparse samples. */
+function buildOrientation(usable: ResolvedSample[]): SampledProperty {
+  const orientation = new SampledProperty(Quaternion);
+  orientation.forwardExtrapolationType = ExtrapolationType.HOLD;
+  orientation.backwardExtrapolationType = ExtrapolationType.HOLD;
+  for (const r of usable) {
+    const { trackDeg, gsKt, baroRateFpm } = r.sample;
+    if (trackDeg === null) continue;
+    const onGround = r.alt.source === "ground";
+    const pitch = onGround || gsKt === null || baroRateFpm === null ? 0 : flightPathAngleRad(baroRateFpm, gsKt);
+    // Cesium model heading is measured from east; ADS-B track is measured from north.
+    const hpr = new HeadingPitchRoll(CesiumMath.toRadians(trackDeg - 90), pitch, 0);
+    const position = Cartesian3.fromDegrees(r.sample.lon, r.sample.lat, r.heightM!);
+    orientation.addSample(JulianDate.fromDate(new Date(r.sample.tMs)), Transforms.headingPitchRollQuaternion(position, hpr));
+  }
+  return orientation;
+}
+
+/** Callsign, MSL altitude, ground speed, and vertical rate at the current replay time. */
+function liveLabel(
+  name: string,
+  usable: ResolvedSample[],
+  position: SampledPositionProperty,
+  geoid: GeoidGrid,
+): CallbackProperty {
+  const scratch = new Cartographic();
+  return new CallbackProperty((time) => {
+    const p = position.getValue(time!);
+    if (!p || !time) return name;
+    const carto = Cartographic.fromCartesian(p, undefined, scratch);
+    const lat = CesiumMath.toDegrees(carto.latitude);
+    const lon = CesiumMath.toDegrees(carto.longitude);
+    const altFt = ellipsoidMToMslFt(carto.height, geoidUndulationM(geoid, lat, lon));
+
+    // Speeds from the latest sample at or before this time.
+    const tMs = JulianDate.toDate(time).getTime();
+    let lo = 0;
+    let hi = usable.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (usable[mid].sample.tMs <= tMs) lo = mid;
+      else hi = mid - 1;
+    }
+    const { gsKt, baroRateFpm } = usable[lo].sample;
+    const onGround = usable[lo].alt.source === "ground";
+    const alt = onGround ? "GND" : `${Math.round(altFt / 25) * 25} ft`;
+    const speed = gsKt !== null ? `${Math.round(gsKt)} kt` : "";
+    const vs =
+      !onGround && baroRateFpm !== null && Math.abs(baroRateFpm) >= 100
+        ? `\n${baroRateFpm > 0 ? "▲" : "▼"} ${Math.abs(Math.round(baroRateFpm / 50) * 50)} fpm`
+        : "";
+    return `${name}\n${alt}  ${speed}${vs}`;
+  }, false);
+}
+
 /** Adds one aircraft entity that exists only during its recorded time span. Null if it has no usable heights. */
-export function addFlightEntity(viewer: Viewer, track: TrackFile, resolved: ResolvedSample[]): ReplayFlight | null {
+export function addFlightEntity(
+  viewer: Viewer,
+  track: TrackFile,
+  resolved: ResolvedSample[],
+  geoid: GeoidGrid,
+): ReplayFlight | null {
   const usable = resolved.filter((r) => r.heightM !== null);
   if (usable.length < 2) return null;
 
@@ -93,23 +161,36 @@ export function addFlightEntity(viewer: Viewer, track: TrackFile, resolved: Reso
   const startMs = usable[0].sample.tMs;
   const stopMs = usable[usable.length - 1].sample.tMs;
   const color = track.landing ? LANDING_COLOR : OTHER_COLOR;
+  const name = track.flight ?? track.hex;
 
   const entity = viewer.entities.add({
     id: `flight-${track.id}`,
-    name: track.flight ?? track.hex,
+    name,
     availability: new TimeIntervalCollection([
       new TimeInterval({ start: JulianDate.fromDate(new Date(startMs)), stop: JulianDate.fromDate(new Date(stopMs)) }),
     ]),
     position,
-    point: { pixelSize: 8, color, outlineColor: Color.BLACK, outlineWidth: 1.5 },
+    orientation: buildOrientation(usable),
+    model: {
+      uri: MODEL_URL,
+      // Real size up close, but never smaller than this on screen.
+      minimumPixelSize: 28,
+      maximumScale: 400,
+      color,
+      colorBlendMode: ColorBlendMode.MIX,
+      colorBlendAmount: 0.35,
+      silhouetteColor: Color.BLACK.withAlpha(0.6),
+      silhouetteSize: 1,
+    },
     path: { leadTime: 0, trailTime: TRAIL_SECONDS, width: 1.5, material: color.withAlpha(0.5) },
     label: {
-      text: track.flight ?? track.hex,
+      text: liveLabel(name, usable, position, geoid),
       font: "12px sans-serif",
+      showBackground: false,
       style: LabelStyle.FILL_AND_OUTLINE,
       outlineWidth: 3,
       verticalOrigin: VerticalOrigin.BOTTOM,
-      pixelOffset: new Cartesian2(0, -10),
+      pixelOffset: new Cartesian2(0, -18),
       // Fade labels out with distance so the whole-area view stays readable.
       translucencyByDistance: new NearFarScalar(15_000, 1, 60_000, 0),
     },

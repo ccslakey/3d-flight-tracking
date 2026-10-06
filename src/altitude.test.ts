@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { toEllipsoidHeight, uncorrectedBaroToEllipsoidM, type AltContext } from "./altitude";
+import {
+  ellipsoidMToMslFt,
+  flightPathAngleRad,
+  mslFtToEllipsoidM,
+  toEllipsoidHeight,
+  uncorrectedBaroToEllipsoidM,
+  type AltContext,
+} from "./altitude";
 
 const N = -32;
 const std: AltContext = { altimeterInHg: 29.92, geoidN: N, geomReference: "HAE" };
@@ -76,5 +83,15 @@ describe("toEllipsoidHeight", () => {
     it("returns none when no altitude is reported", () => {
       expect(toEllipsoidHeight({ altBaroFt: null, altGeomFt: null }, std)).toEqual({ heightM: null, source: "none" });
     });
+  });
+});
+
+describe("display helpers", () => {
+  it("round-trips MSL feet through ellipsoid height", () => {
+    expect(ellipsoidMToMslFt(mslFtToEllipsoidM(3250, N), N)).toBeCloseTo(3250);
+  });
+
+  it("gives a 3 degree angle for a typical 140 kt approach at about 743 fpm", () => {
+    expect((flightPathAngleRad(-743, 140) * 180) / Math.PI).toBeCloseTo(-3, 1);
   });
 });

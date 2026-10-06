@@ -71,7 +71,7 @@ async function loadReplay(): Promise<void> {
 
   const ctx = { geoid, metars, geomReference, terrainProvider } as const;
   const flights = (
-    await Promise.all(tracks.map(async (t) => addFlightEntity(viewer, t, await resolveSamples(t, ctx))))
+    await Promise.all(tracks.map(async (t) => addFlightEntity(viewer, t, await resolveSamples(t, ctx), geoid)))
   ).filter((f) => f !== null);
   const byEntityId = new Map(flights.map((f) => [f.entity.id, f]));
   setClockRange(

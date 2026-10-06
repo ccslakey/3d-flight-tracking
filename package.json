@@ -11,7 +11,8 @@
     "record:adsb": "tsx scripts/record-adsb.ts",
     "record:metar": "tsx scripts/record-metar.ts",
     "extract": "tsx scripts/extract-tracks.ts",
-    "geoid": "uv run scripts/build-geoid-grid.py"
+    "geoid": "uv run scripts/build-geoid-grid.py",
+    "model": "tsx scripts/build-aircraft-model.ts"
   },
   "dependencies": {
     "cesium": "^1.146.0"
