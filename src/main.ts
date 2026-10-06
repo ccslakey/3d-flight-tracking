@@ -4,6 +4,7 @@ import { addDebugTrails } from "./debugTrails";
 import { loadGeoidGrid } from "./geoid";
 import { parseMetars, type RawMetar } from "./metar";
 import { addFlightEntity, resolveSamples } from "./replay";
+import { addValidationPanel } from "./validationPanel";
 import type { FlightSummary, RecordingIndex, TrackFile, TrackManifest } from "./track";
 
 const SFO_LAT = 37.6189;
@@ -75,12 +76,15 @@ async function loadReplay(): Promise<void> {
     loadGeoidGrid(),
     terrainReady,
   ]);
+  const metars = parseMetars(rawMetars);
+  const loadTrack = (id: string) => fetchJson<TrackFile>(`/data/tracks/${recording.stamp}/${id}.json`);
   const flight = pickFlight(index, params.get("flight"));
-  const track = await fetchJson<TrackFile>(`/data/tracks/${recording.stamp}/${flight.id}.json`);
+  const track = await loadTrack(flight.id);
 
-  const resolved = await resolveSamples(track, { geoid, metars: parseMetars(rawMetars), geomReference, terrainProvider });
+  const resolved = await resolveSamples(track, { geoid, metars, geomReference, terrainProvider });
   const entity = addFlightEntity(viewer, track, resolved);
   addDebugTrails(viewer, resolved, geomReference);
+  void addValidationPanel(index, loadTrack, geoid, metars, terrainProvider).catch((err) => console.error(err));
   viewer.trackedEntity = undefined;
   await viewer.zoomTo(viewer.entities);
   console.info(`Replaying ${track.flight ?? track.hex} (${flight.id}), ${resolved.length} samples`, entity.id);

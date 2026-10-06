@@ -23,10 +23,17 @@ export interface AltResult {
   deltaGeomBaroM?: number; // geom minus corrected baro, both as ellipsoid heights
 }
 
+export const metersToFeet = (m: number): number => m / M_PER_FT;
+
+/** An MSL (orthometric) height in feet, such as a field elevation, as ellipsoid height. */
+export function mslFtToEllipsoidM(mslFt: number, geoidN: number): number {
+  return mslFt * M_PER_FT + geoidN;
+}
+
 /** Pressure altitude corrected with the local altimeter setting, as ellipsoid height. */
 export function baroToEllipsoidM(altBaroFt: number, altimeterInHg: number, geoidN: number): number {
   const mslFt = altBaroFt + (altimeterInHg - STANDARD_ALTIMETER_INHG) * 1000;
-  return mslFt * M_PER_FT + geoidN;
+  return mslFtToEllipsoidM(mslFt, geoidN);
 }
 
 /** Pressure altitude treated as MSL with no altimeter correction. For debug comparison only. */
@@ -36,7 +43,7 @@ export function uncorrectedBaroToEllipsoidM(altBaroFt: number, geoidN: number): 
 
 /** GNSS altitude as ellipsoid height; adds N only when the aircraft reports MSL. */
 export function geomToEllipsoidM(altGeomFt: number, geomReference: "HAE" | "MSL", geoidN: number): number {
-  return altGeomFt * M_PER_FT + (geomReference === "MSL" ? geoidN : 0);
+  return geomReference === "MSL" ? mslFtToEllipsoidM(altGeomFt, geoidN) : altGeomFt * M_PER_FT;
 }
 
 /**

@@ -142,10 +142,10 @@ Rules:
 
 - `validate-landings.ts`: for every detected landing, take the last airborne sample before the first `"ground"` message and compare computed height to KSFO field elevation converted to ellipsoid height (`13 * 0.3048 + N`). Report per source: count, median residual, p95, max, and the age of that sample relative to the first `"ground"` message.
 - Expect a positive residual bias: the last airborne sample can be several seconds before touchdown (about 50 to 60 ft of descent at 5 s), and the GNSS antenna sits above the wheels.
-- Decide `geomReference` from `deltaGeomBaroM` on near-ground samples, not from absolute residuals. Timing bias affects baro and geom equally, so it cancels in the delta.
+- Decide `geomReference` per landing by whether the geom-as-HAE or geom-as-MSL residual is closer to the runway. (The original idea of using `deltaGeomBaroM` cancels timing bias but absorbs baro's own near-ground error, which the first recording showed is about -45 ft, so the delta landed between the HAE and MSL values. It is still reported for reference.)
 - In the browser, add a debug panel that does the same comparison against `sampleTerrainMostDetailed` at the touchdown point (this checks rendering, while the script checks the math).
 
-**Expected:** corrected baro and geom land within tens of feet of the runway, after accounting for the timing bias. Uncorrected baro is off by roughly `(altimeter - 29.92) * 1000` ft. Near the ground, `deltaGeomBaroM` near 0 means geom is HAE; near +32 m means that aircraft reports MSL.
+**Expected:** corrected baro and geom land within tens of feet of the runway, after accounting for the timing bias. Uncorrected baro is off by roughly `(altimeter - 29.92) * 1000` ft. Geom read with the wrong reference is off by about 32 m.
 
 **Checkpoint:** report the residual table and a recommendation for the `geomReference` default.
 
