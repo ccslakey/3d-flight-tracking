@@ -6,7 +6,7 @@ Built with an AI coding agent (Claude Code).
 
 ## Setup
 
-Requires Node 22+ and, for the geoid grid script, Python 3 with `pyproj`.
+Requires Node 22+ and, for the geoid grid script, [uv](https://docs.astral.sh/uv/) (it installs Python and `pyproj` on demand).
 
 ```sh
 npm install

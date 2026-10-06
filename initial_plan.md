@@ -91,6 +91,8 @@ N is the geoid undulation (ellipsoid height minus orthometric/MSL height). Aroun
 
 **Done when:** at least one hour of snapshots and matching METARs are saved in `/public/data`.
 
+**Second recording (pending):** the first recording (2026-10-06 04:02 UTC) was at 29.91 inHg, too close to 29.92 to validate the baro correction. It is used for Phases 3–5 and the geom HAE/MSL check. Before Phase 6's baro validation, record again on a day with altimeter at least 0.15 inHg from 29.92.
+
 **Checkpoint:** report snapshot count, raw data size, number of distinct aircraft, number of detected landings (with `"ground"` vs. fallback-only counts), the altimeter range during the window, and a sample raw METAR with the parsed altimeter value and units.
 
 ### Phase 3: Geoid grid
