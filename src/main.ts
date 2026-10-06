@@ -1,11 +1,12 @@
-import { Cartesian3, Ion, Math as CesiumMath, Terrain, type TerrainProvider, Viewer } from "cesium";
+import { Cartesian3, type Entity, Ion, JulianDate, Math as CesiumMath, Terrain, type TerrainProvider, Viewer } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
-import { addDebugTrails } from "./debugTrails";
+import { createDebugTrails } from "./debugTrails";
+import { createFlightList } from "./flightList";
 import { loadGeoidGrid } from "./geoid";
 import { parseMetars, type RawMetar } from "./metar";
-import { addFlightEntity, resolveSamples } from "./replay";
+import { addFlightEntity, type ReplayFlight, resolveSamples, setClockRange } from "./replay";
 import { addValidationPanel } from "./validationPanel";
-import type { FlightSummary, RecordingIndex, TrackFile, TrackManifest } from "./track";
+import type { RecordingIndex, TrackFile, TrackManifest } from "./track";
 
 const SFO_LAT = 37.6189;
 const SFO_LON = -122.375;
@@ -24,19 +25,19 @@ const terrainReady = new Promise<TerrainProvider>((resolve, reject) => {
   terrain.errorEvent.addEventListener(reject);
 });
 
-const viewer = new Viewer("cesiumContainer", { terrain, navigationInstructionsInitiallyVisible: false });
+const viewer = new Viewer("cesiumContainer", { terrain, infoBox: false, navigationInstructionsInitiallyVisible: false });
 
 if (import.meta.env.DEV) Object.assign(window, { viewer });
 
 // Hide anything below terrain so altitude errors are visible.
 viewer.scene.globe.depthTestAgainstTerrain = true;
 
-// Look at SFO from the southeast, about 8 km out.
+// Overview of the Bay Area from the south, centered near SFO.
 viewer.camera.setView({
-  destination: Cartesian3.fromDegrees(SFO_LON + 0.06, SFO_LAT - 0.08, 3000),
+  destination: Cartesian3.fromDegrees(SFO_LON, SFO_LAT - 0.45, 40_000),
   orientation: {
-    heading: CesiumMath.toRadians(-30),
-    pitch: CesiumMath.toRadians(-20),
+    heading: 0,
+    pitch: CesiumMath.toRadians(-40),
     roll: 0,
   },
 });
@@ -45,20 +46,6 @@ async function fetchJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to load ${url}: HTTP ${res.status}`);
   return (await res.json()) as T;
-}
-
-/** A landing with geom data and the most samples, or the flight named by ?flight=. */
-function pickFlight(index: RecordingIndex, requestedId: string | null): FlightSummary {
-  if (requestedId) {
-    const flight = index.flights.find((f) => f.id === requestedId);
-    if (!flight) throw new Error(`Flight ${requestedId} not found in ${index.source}`);
-    return flight;
-  }
-  const landings = index.flights
-    .filter((f) => f.landing?.method === "ground" && f.hasGeom)
-    .sort((a, b) => b.sampleCount - a.sampleCount);
-  if (!landings.length) throw new Error(`No landings with geom data in ${index.source}`);
-  return landings[0];
 }
 
 async function loadReplay(): Promise<void> {
@@ -77,17 +64,57 @@ async function loadReplay(): Promise<void> {
     terrainReady,
   ]);
   const metars = parseMetars(rawMetars);
-  const loadTrack = (id: string) => fetchJson<TrackFile>(`/data/tracks/${recording.stamp}/${id}.json`);
-  const flight = pickFlight(index, params.get("flight"));
-  const track = await loadTrack(flight.id);
+  const tracks = await Promise.all(
+    index.flights.map((f) => fetchJson<TrackFile>(`/data/tracks/${recording.stamp}/${f.id}.json`)),
+  );
+  const tracksById = new Map(tracks.map((t) => [t.id, t]));
 
-  const resolved = await resolveSamples(track, { geoid, metars, geomReference, terrainProvider });
-  const entity = addFlightEntity(viewer, track, resolved);
-  addDebugTrails(viewer, resolved, geomReference);
-  void addValidationPanel(index, loadTrack, geoid, metars, terrainProvider).catch((err) => console.error(err));
-  viewer.trackedEntity = undefined;
-  await viewer.zoomTo(viewer.entities);
-  console.info(`Replaying ${track.flight ?? track.hex} (${flight.id}), ${resolved.length} samples`, entity.id);
+  const ctx = { geoid, metars, geomReference, terrainProvider } as const;
+  const flights = (
+    await Promise.all(tracks.map(async (t) => addFlightEntity(viewer, t, await resolveSamples(t, ctx))))
+  ).filter((f) => f !== null);
+  const byEntityId = new Map(flights.map((f) => [f.entity.id, f]));
+  setClockRange(
+    viewer,
+    Math.min(...flights.map((f) => f.startMs)),
+    Math.max(...flights.map((f) => f.stopMs)),
+  );
+
+  const sidePanel = document.createElement("div");
+  sidePanel.className = "side-panel";
+  document.body.append(sidePanel);
+  const list = createFlightList(sidePanel, flights, (f) => select(f));
+  const trails = createDebugTrails(viewer, sidePanel, geomReference);
+
+  let current: ReplayFlight | null = null;
+  function select(flight: ReplayFlight | null): void {
+    if (flight === current) return;
+    current = flight;
+    if (flight && !flight.entity.isAvailable(viewer.clock.currentTime)) {
+      viewer.clock.currentTime = JulianDate.fromDate(new Date(flight.startMs));
+    }
+    viewer.selectedEntity = flight?.entity;
+    viewer.trackedEntity = flight?.entity;
+    trails.show(flight ? (flight.track.flight ?? flight.track.hex) : null, flight?.resolved ?? []);
+    list.setSelected(flight?.track.id ?? null);
+  }
+  viewer.selectedEntityChanged.addEventListener((entity?: Entity) => {
+    // Clicking a debug trail selects a non-flight entity; keep the current flight then.
+    if (!entity) select(null);
+    else if (byEntityId.has(entity.id)) select(byEntityId.get(entity.id)!);
+  });
+
+  const requested = params.get("flight");
+  if (requested) {
+    const flight = flights.find((f) => f.track.id === requested);
+    if (!flight) throw new Error(`Flight ${requested} not found in ${index.source}`);
+    select(flight);
+  }
+
+  void addValidationPanel(index, async (id) => tracksById.get(id)!, geoid, metars, terrainProvider).catch((err) =>
+    console.error(err),
+  );
+  console.info(`Replaying ${flights.length} flights from ${recording.stamp}`);
 }
 
 loadReplay().catch((err) => {

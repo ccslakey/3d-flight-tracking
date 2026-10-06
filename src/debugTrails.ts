@@ -1,7 +1,7 @@
-// Three polylines for one flight (uncorrected baro, corrected baro, geom) with a legend
-// whose checkboxes toggle them. Heights come only from altitude.ts.
+// Three polylines for the selected flight (uncorrected baro, corrected baro, geom) with a
+// legend whose checkboxes toggle them. Heights come only from altitude.ts.
 
-import { Cartesian3, Color, PolylineDashMaterialProperty, type Viewer } from "cesium";
+import { Cartesian3, Color, type Entity, PolylineDashMaterialProperty, type Viewer } from "cesium";
 import { baroToEllipsoidM, geomToEllipsoidM, uncorrectedBaroToEllipsoidM } from "./altitude";
 import type { ResolvedSample } from "./replay";
 
@@ -34,39 +34,77 @@ const TRAILS: TrailSpec[] = [
   },
 ];
 
-export function addDebugTrails(viewer: Viewer, resolved: ResolvedSample[], geomReference: "HAE" | "MSL"): void {
+export interface DebugTrails {
+  /** Replaces the trails with the given flight's, or clears them when null. */
+  show(flightName: string | null, resolved: ResolvedSample[]): void;
+}
+
+/** Creates the trail legend inside `container`; checkbox state persists across flights. */
+export function createDebugTrails(viewer: Viewer, container: HTMLElement, geomReference: "HAE" | "MSL"): DebugTrails {
   const legend = document.createElement("div");
   legend.className = "trail-legend";
-  legend.innerHTML = `<div class="trail-legend-title">Altitude trails (geom as ${geomReference})</div>`;
+  const title = document.createElement("div");
+  title.className = "trail-legend-title";
+  legend.append(title);
+
+  const visible = new Map(TRAILS.map((spec) => [spec.key, true]));
+  const entities = new Map<string, Entity>();
+  const rows = new Map<string, { box: HTMLInputElement; text: Text }>();
 
   for (const spec of TRAILS) {
-    const positions: Cartesian3[] = [];
-    for (const r of resolved) {
-      const h = spec.heightM(r, geomReference);
-      if (h !== null) positions.push(Cartesian3.fromDegrees(r.sample.lon, r.sample.lat, h));
-    }
-    const entity = viewer.entities.add({
-      id: `trail-${spec.key}`,
-      polyline: {
-        positions,
-        width: 2,
-        material: spec.color,
-        // Show the part below terrain as dashes so altitude errors stay visible.
-        depthFailMaterial: new PolylineDashMaterialProperty({ color: spec.color.withAlpha(0.6) }),
-      },
-    });
-
     const row = document.createElement("label");
     const box = document.createElement("input");
     box.type = "checkbox";
     box.checked = true;
-    box.disabled = positions.length < 2;
-    box.addEventListener("change", () => (entity.show = box.checked));
+    box.addEventListener("change", () => {
+      visible.set(spec.key, box.checked);
+      const entity = entities.get(spec.key);
+      if (entity) entity.show = box.checked;
+    });
     const swatch = document.createElement("span");
     swatch.className = "trail-swatch";
     swatch.style.background = spec.color.toCssColorString();
-    row.append(box, swatch, ` ${spec.label}${positions.length < 2 ? " (no data)" : ""}`);
+    const text = document.createTextNode(` ${spec.label}`);
+    row.append(box, swatch, text);
     legend.append(row);
+    rows.set(spec.key, { box, text });
   }
-  document.body.append(legend);
+  container.append(legend);
+
+  function show(flightName: string | null, resolved: ResolvedSample[]): void {
+    for (const entity of entities.values()) viewer.entities.remove(entity);
+    entities.clear();
+    title.textContent = flightName
+      ? `Altitude trails: ${flightName} (geom as ${geomReference})`
+      : "Altitude trails: select a flight";
+
+    for (const spec of TRAILS) {
+      const positions: Cartesian3[] = [];
+      for (const r of resolved) {
+        const h = spec.heightM(r, geomReference);
+        if (h !== null) positions.push(Cartesian3.fromDegrees(r.sample.lon, r.sample.lat, h));
+      }
+      const { box, text } = rows.get(spec.key)!;
+      const hasData = positions.length >= 2;
+      box.disabled = !hasData;
+      text.textContent = ` ${spec.label}${flightName && !hasData ? " (no data)" : ""}`;
+      if (!hasData) continue;
+      entities.set(
+        spec.key,
+        viewer.entities.add({
+          show: visible.get(spec.key),
+          polyline: {
+            positions,
+            width: 2,
+            material: spec.color,
+            // Show the part below terrain as dashes so altitude errors stay visible.
+            depthFailMaterial: new PolylineDashMaterialProperty({ color: spec.color.withAlpha(0.6) }),
+          },
+        }),
+      );
+    }
+  }
+
+  show(null, []);
+  return { show };
 }
