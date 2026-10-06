@@ -47,8 +47,9 @@ export function geomToEllipsoidM(altGeomFt: number, geomReference: "HAE" | "MSL"
 }
 
 /**
- * Ellipsoid height for one ADS-B sample. Corrected baro is preferred until Phase 6
- * settles which reference alt_geom uses; geom is the fallback when baro is missing.
+ * Ellipsoid height for one ADS-B sample. Geom is preferred: Phase 6 validation found it
+ * HAE-referenced and closer to the runway at touchdown than corrected baro, which reads
+ * about 40 ft low there. Corrected baro is the fallback when geom is missing.
  */
 export function toEllipsoidHeight(sample: AltSample, ctx: AltContext): AltResult {
   if (sample.altBaroFt === "ground") return { heightM: null, source: "ground" };
@@ -58,11 +59,11 @@ export function toEllipsoidHeight(sample: AltSample, ctx: AltContext): AltResult
   const geomM =
     sample.altGeomFt !== null ? geomToEllipsoidM(sample.altGeomFt, ctx.geomReference, ctx.geoidN) : null;
 
-  if (baroM !== null) {
-    const result: AltResult = { heightM: baroM, source: "baro-corrected" };
-    if (geomM !== null) result.deltaGeomBaroM = geomM - baroM;
+  if (geomM !== null) {
+    const result: AltResult = { heightM: geomM, source: "geom" };
+    if (baroM !== null) result.deltaGeomBaroM = geomM - baroM;
     return result;
   }
-  if (geomM !== null) return { heightM: geomM, source: "geom" };
+  if (baroM !== null) return { heightM: baroM, source: "baro-corrected" };
   return { heightM: null, source: "none" };
 }

@@ -124,7 +124,7 @@ toEllipsoidHeight(sample, ctx): AltResult
 Rules:
 
 - `alt_baro === "ground"` returns `source: "ground"`. Ground clamping happens in the render layer via `sampleTerrainMostDetailed`.
-- Until Phase 6 settles `geomReference`, prefer corrected `alt_baro`; use `alt_geom` (applying N only when `geomReference === "MSL"`) only when baro is missing. After Phase 6, revisit whether geom should take priority.
+- Prefer `alt_geom` (applying N only when `geomReference === "MSL"`), falling back to corrected `alt_baro`. (Baro was preferred until Phase 6 found geom HAE-referenced and closer to the runway at touchdown.)
 - Always compute `deltaGeomBaroM` when both are present, with both values already converted to ellipsoid height.
 - `metar.ts` picks the latest METAR at or before each sample's timestamp, not the latest overall.
 

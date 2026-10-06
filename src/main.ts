@@ -9,7 +9,7 @@ import type { FlightSummary, RecordingIndex, TrackFile, TrackManifest } from "./
 
 const SFO_LAT = 37.6189;
 const SFO_LON = -122.375;
-// Until Phase 6 settles it. Override with ?geom=MSL.
+// Phase 6 found 41 of 43 SFO landings HAE-referenced. Override with ?geom=MSL.
 const DEFAULT_GEOM_REFERENCE = "HAE";
 
 const ionToken = import.meta.env.VITE_CESIUM_ION_TOKEN;

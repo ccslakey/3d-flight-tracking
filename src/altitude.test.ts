@@ -47,10 +47,10 @@ describe("toEllipsoidHeight", () => {
   });
 
   describe("both present", () => {
-    it("prefers corrected baro and reports geom minus baro", () => {
+    it("prefers geom and reports geom minus baro", () => {
       const r = toEllipsoidHeight({ altBaroFt: 1000, altGeomFt: 1000 }, std);
-      expect(r.source).toBe("baro-corrected");
-      expect(r.heightM).toBeCloseTo(304.8 + N);
+      expect(r.source).toBe("geom");
+      expect(r.heightM).toBeCloseTo(304.8);
       // HAE geom has no N, baro does, so geom sits |N| above baro.
       expect(r.deltaGeomBaroM).toBeCloseTo(-N);
     });
