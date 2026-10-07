@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "cesium": "^1.146.0",
+    "railway": "^3.13.0",
     "tsx": "^4.23.15"
   },
   "devDependencies": {

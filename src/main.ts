@@ -4,6 +4,7 @@ import { createConnectionPanel } from "./connectionPanel";
 import { createCurtains } from "./curtains";
 import { createDebugTrails } from "./debugTrails";
 import { createFlightList } from "./flightList";
+import { enableKeyboardCamera } from "./keyboardCamera";
 import { loadGeoidGrid } from "./geoid";
 import { parseMetars, type RawMetar } from "./metar";
 import { connectLive, LIVE_HOLD_MS, runLive } from "./live";
@@ -37,6 +38,8 @@ viewer.creditDisplay.addStaticCredit(
 );
 
 if (import.meta.env.DEV) Object.assign(window, { viewer });
+
+enableKeyboardCamera(viewer);
 
 // Hide anything below terrain so altitude errors are visible.
 viewer.scene.globe.depthTestAgainstTerrain = true;

@@ -299,7 +299,7 @@ function updateAvailability(flight: ReplayFlight): void {
   flight.entity.availability!.addInterval(timeInterval(flight.startMs, flight.stopMs + flight.holdAfterMs));
 }
 
-/** Sets the clock and timeline to span the given time range. */
+/** Sets the clock and timeline to span the given time range, and starts playing. */
 export function setClockRange(viewer: Viewer, startMs: number, stopMs: number): void {
   const start = JulianDate.fromDate(new Date(startMs));
   const stop = JulianDate.fromDate(new Date(stopMs));
@@ -307,5 +307,6 @@ export function setClockRange(viewer: Viewer, startMs: number, stopMs: number): 
   viewer.clock.stopTime = stop.clone();
   viewer.clock.currentTime = start.clone();
   viewer.clock.multiplier = 10;
+  viewer.clock.shouldAnimate = true;
   viewer.timeline.zoomTo(start, stop);
 }
