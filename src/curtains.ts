@@ -13,6 +13,8 @@ export interface Curtains {
   show(flight: ReplayFlight | null): void;
   /** Adds a drop line for a flight created after setup. */
   add(flight: ReplayFlight): void;
+  /** Removes a flight's drop line. */
+  remove(flight: ReplayFlight): void;
 }
 
 export function createCurtains(viewer: Viewer, container: HTMLElement, flights: ReplayFlight[], geoid: GeoidGrid): Curtains {
@@ -79,5 +81,5 @@ export function createCurtains(viewer: Viewer, container: HTMLElement, flights: 
   toggle("Drop lines to sea level", dropLines.show, (on) => (dropLines.show = on));
   container.append(section);
 
-  return { show, add };
+  return { show, add, remove: (flight) => void viewer.entities.removeById(`drop-${flight.track.id}`) };
 }

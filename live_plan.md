@@ -44,7 +44,7 @@ A flight's ID is assigned once, when the flight is created, and never changes. T
 - **LIVE button:** while following, the clock runs at 1x and its current time is pinned to the live edge. Scrubbing, pausing, or changing the speed stops following, and the replay then behaves as it does today. Reaching the live edge, or pressing LIVE, resumes following. The button shows whether the view is live.
 - **Selected flight:** trails and the altitude curtain rebuild when that flight gets new samples.
 - **Pruning:** once a minute, drop samples and flights older than the retention start, matching the relay.
-- **Reconnect:** on an SSE error, reconnect, then fetch `/api/history?from=<latest sample time>` to fill the gap before applying new events.
+- **Reconnect:** the relay sends a `ping` event every 15 s. If the stream closes, or is silent for 40 s, the page opens a new one; `EventSource` alone gives up on HTTP errors (the dev proxy's while the relay is down) and cannot detect a stream that hangs open. After reconnecting, it fetches `/api/history` from a minute before the last data it saw and applies that before new events; samples it already has are dropped by time.
 - **Validation panel:** hidden in live mode for now.
 
 ## File layout (new and changed)

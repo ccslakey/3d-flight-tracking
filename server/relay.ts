@@ -1,17 +1,19 @@
 // Live relay: polls adsb.lol and KSFO METARs, keeps the last few hours, and serves them.
-//   GET /api/history?from=<ms>&to=<ms>  tracks and METARs in a time window (default: all held)
-//   GET /api/live                       Server-Sent Events: `samples` after each poll, `metar` on new METARs
+//   GET /api/history?from=<ms>&to=<ms>  tracks and METARs in a time window (default: all held), and the retention
+//   GET /api/live                       Server-Sent Events: `samples` after each poll, `metar` on new METARs,
+//                                       `ping` every 15 s
 //   GET /api/status                     poll health and store size
 // Usage: tsx server/relay.ts [--raw]
 //   --raw also writes raw snapshots to public/data/raw/, in record-adsb.ts format.
-// Env: PORT (default 8787), RETENTION_HOURS (default 4).
+// Env: PORT (default 8787), RETENTION_HOURS (default 4), LIVE_DATA_DIR (default data/live).
 
 import { appendFileSync, mkdirSync } from "node:fs";
 import { createServer, type ServerResponse } from "node:http";
 import { join } from "node:path";
 import type { Snapshot } from "../src/ingest";
 import type { RawMetar } from "../src/metar";
-import { SampleLog, toLoggedFlights } from "./sampleLog";
+import type { LiveSamplesEvent } from "../src/track";
+import { SampleLog, toLiveFlightSamples } from "./sampleLog";
 import { LiveStore } from "./store";
 
 const SFO_LAT = 37.6189;
@@ -25,7 +27,7 @@ const MAX_BACKOFF_MS = 120_000;
 const REQUEST_TIMEOUT_MS = 15_000;
 const METAR_INTERVAL_MS = 10 * 60_000;
 const PRUNE_INTERVAL_MS = 60_000;
-const HEARTBEAT_MS = 15_000; // keeps idle SSE connections open through proxies
+const HEARTBEAT_MS = 15_000; // a `ping` event, so clients can tell a live stream from a hung one
 
 const port = Number(process.env.PORT ?? 8787);
 const retentionMs = Number(process.env.RETENTION_HOURS ?? 4) * 3_600_000;
@@ -36,7 +38,7 @@ const rawPath = process.argv.includes("--raw")
 const log = (msg: string) => console.log(`${new Date().toISOString()} ${msg}`);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-const sampleLog = new SampleLog(join("data", "live"));
+const sampleLog = new SampleLog(process.env.LIVE_DATA_DIR ?? join("data", "live"));
 const store = new LiveStore(retentionMs, sampleLog.load(Date.now() - retentionMs));
 store.prune(Date.now());
 log(`Restored ${JSON.stringify(store.counts())}`);
@@ -69,9 +71,9 @@ async function pollAdsbForever(): Promise<void> {
       const snap: Snapshot = { now: body.now, ac: body.ac ?? [] };
       if (rawPath) appendFileSync(rawPath, JSON.stringify({ recordedAt: startedAt, ...snap }) + "\n");
 
-      const flights = toLoggedFlights(store.ingest(snap));
+      const flights = toLiveFlightSamples(store.ingest(snap));
       sampleLog.appendSamples(snap.now, flights);
-      broadcast("samples", { now: snap.now, flights });
+      broadcast("samples", { now: snap.now, flights } satisfies LiveSamplesEvent);
       latestNowMs = snap.now;
       backoffMs = 0;
       Object.assign(lastPoll, {
@@ -128,14 +130,14 @@ const server = createServer((req, res) => {
     const from = Number(url.searchParams.get("from") ?? Date.now() - retentionMs);
     const to = Number(url.searchParams.get("to") ?? Number.MAX_SAFE_INTEGER);
     if (!Number.isFinite(from) || !Number.isFinite(to)) return sendJson(res, 400, { error: "from and to must be ms" });
-    return sendJson(res, 200, store.history(from, to));
+    return sendJson(res, 200, { ...store.history(from, to), retentionMs });
   }
 
   if (url.pathname === "/api/live") {
     res.writeHead(200, { "Content-Type": "text/event-stream", "Cache-Control": "no-store", Connection: "keep-alive" });
     res.write("retry: 3000\n\n");
     clients.add(res);
-    const heartbeat = setInterval(() => res.write(": heartbeat\n\n"), HEARTBEAT_MS);
+    const heartbeat = setInterval(() => res.write("event: ping\ndata: {}\n\n"), HEARTBEAT_MS);
     req.on("close", () => {
       clearInterval(heartbeat);
       clients.delete(res);

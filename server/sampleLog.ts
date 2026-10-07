@@ -6,23 +6,14 @@ import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSyn
 import { join } from "node:path";
 import type { FlightUpdate, IngestFlight } from "../src/ingest";
 import type { RawMetar } from "../src/metar";
-import type { TrackSample } from "../src/track";
+import type { LiveFlightSamples } from "../src/track";
 
 const HOUR_MS = 3_600_000;
 const FILE_RE = /^live-(\d{4}-\d{2}-\d{2}T\d{2})\.ndjson$/;
 
-/** A flight's new samples from one poll, with its metadata as known at that time. */
-export interface LoggedFlight {
-  id: string;
-  hex: string;
-  flight?: string;
-  typeCode?: string;
-  samples: TrackSample[];
-}
+type LogLine = { kind: "samples"; now: number; flights: LiveFlightSamples[] } | { kind: "metars"; metars: RawMetar[] };
 
-type LogLine = { kind: "samples"; now: number; flights: LoggedFlight[] } | { kind: "metars"; metars: RawMetar[] };
-
-export const toLoggedFlights = (updates: FlightUpdate[]): LoggedFlight[] =>
+export const toLiveFlightSamples = (updates: FlightUpdate[]): LiveFlightSamples[] =>
   updates.map(({ flight: f, samples }) => ({ id: f.id, hex: f.hex, flight: f.flight, typeCode: f.typeCode, samples }));
 
 const hourStartMs = (name: string) => Date.parse(`${name.match(FILE_RE)![1]}:00:00Z`);
@@ -32,7 +23,7 @@ export class SampleLog {
     mkdirSync(dir, { recursive: true });
   }
 
-  appendSamples(now: number, flights: LoggedFlight[]): void {
+  appendSamples(now: number, flights: LiveFlightSamples[]): void {
     if (flights.length) this.append({ kind: "samples", now, flights });
   }
 

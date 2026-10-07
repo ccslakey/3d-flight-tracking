@@ -106,9 +106,12 @@ async function loadReplay(): Promise<void> {
     }
     viewer.selectedEntity = flight?.entity;
     viewer.trackedEntity = flight?.entity;
+    showDetails(flight);
+    list.setSelected(flight?.track.id ?? null);
+  }
+  function showDetails(flight: ReplayFlight | null): void {
     trails.show(flight ? (flight.track.flight ?? flight.track.hex) : null, flight?.resolved ?? []);
     curtains.show(flight);
-    list.setSelected(flight?.track.id ?? null);
   }
   viewer.selectedEntityChanged.addEventListener((entity?: Entity) => {
     if (!entity) return select(null);
@@ -129,10 +132,21 @@ async function loadReplay(): Promise<void> {
       (err) => console.error(err),
     );
   } else {
-    runLive(viewer, ctx, source, flights, (flight) => {
-      byEntityId.set(flight.entity.id, flight);
-      list.add(flight);
-      curtains.add(flight);
+    runLive(viewer, ctx, source, flights, {
+      added(flight) {
+        byEntityId.set(flight.entity.id, flight);
+        list.add(flight);
+        curtains.add(flight);
+      },
+      changed(flight) {
+        if (flight === current) showDetails(flight);
+      },
+      removed(flight) {
+        if (flight === current) select(null);
+        byEntityId.delete(flight.entity.id);
+        list.remove(flight);
+        curtains.remove(flight);
+      },
     });
   }
 

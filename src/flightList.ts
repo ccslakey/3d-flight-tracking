@@ -6,6 +6,7 @@ export interface FlightList {
   setSelected(id: string | null): void;
   /** Appends a flight that started after the list was built. */
   add(flight: ReplayFlight): void;
+  remove(flight: ReplayFlight): void;
 }
 
 export function createFlightList(
@@ -68,5 +69,15 @@ export function createFlightList(
       selected?.scrollIntoView({ block: "nearest" });
     },
     add,
+    remove(flight) {
+      const li = rows.get(flight.track.id);
+      if (!li) return;
+      li.remove();
+      rows.delete(flight.track.id);
+      if (selected === li) selected = undefined;
+      flightCount--;
+      if (flight.track.landing) landings--;
+      header.textContent = `${flightCount} flights, ${landings} SFO landings`;
+    },
   };
 }

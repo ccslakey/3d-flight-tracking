@@ -259,7 +259,36 @@ export function appendResolved(flight: ReplayFlight, added: ResolvedSample[]): v
   // Headings depend on neighboring samples and the whole flight, so rebuild them.
   flight.entity.orientation = buildOrientation(flight.usable);
   flight.stopMs = usable[usable.length - 1].sample.tMs;
-  // Mutated in place: drop lines share this collection.
+  updateAvailability(flight);
+}
+
+/** Drops samples before `startMs`. Returns false if no samples with a height remain. */
+export function trimFlightBefore(flight: ReplayFlight, startMs: number): boolean {
+  const firstKept = (list: ResolvedSample[]) => {
+    const i = list.findIndex((r) => r.sample.tMs >= startMs);
+    return i < 0 ? list.length : i;
+  };
+  const usableDropped = firstKept(flight.usable);
+  flight.resolved.splice(0, firstKept(flight.resolved));
+  if (!usableDropped) return true;
+  flight.usable.splice(0, usableDropped);
+  if (!flight.usable.length) return false;
+
+  (flight.entity.position as SampledPositionProperty).removeSamples(
+    new TimeInterval({
+      start: JulianDate.fromDate(new Date(flight.startMs)),
+      stop: JulianDate.fromDate(new Date(startMs)),
+      isStopIncluded: false,
+    }),
+  );
+  flight.entity.orientation = buildOrientation(flight.usable);
+  flight.startMs = flight.usable[0].sample.tMs;
+  updateAvailability(flight);
+  return true;
+}
+
+/** Mutated in place: drop lines share this collection. */
+function updateAvailability(flight: ReplayFlight): void {
   flight.entity.availability!.removeAll();
   flight.entity.availability!.addInterval(timeInterval(flight.startMs, flight.stopMs + flight.holdAfterMs));
 }
