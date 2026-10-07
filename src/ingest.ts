@@ -117,6 +117,15 @@ export class Ingester {
     return [...updates].map(([flight, samples]) => ({ flight, samples }));
   }
 
+  /** Forgets a flight, freeing its ID. Used when retention drops all of its samples. */
+  remove(id: string): void {
+    const flight = this.flights.get(id);
+    if (!flight) return;
+    this.flights.delete(id);
+    this.usedIds.delete(id);
+    if (this.currentByHex.get(flight.hex) === flight) this.currentByHex.delete(flight.hex);
+  }
+
   private startFlight(hex: string): IngestFlight {
     const id = assignFlightId(hex, this.usedIds);
     this.usedIds.add(id);

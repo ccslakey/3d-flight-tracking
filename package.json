@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "relay": "tsx server/relay.ts",
     "test": "vitest run",
     "record:adsb": "tsx scripts/record-adsb.ts",
     "record:metar": "tsx scripts/record-metar.ts",

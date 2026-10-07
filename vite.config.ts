@@ -8,6 +8,10 @@ export default defineConfig({
   define: {
     CESIUM_BASE_URL: JSON.stringify(`/${cesiumBaseUrl}`),
   },
+  server: {
+    // The live relay (npm run relay) serves /api.
+    proxy: { "/api": `http://localhost:${process.env.RELAY_PORT ?? 8787}` },
+  },
   plugins: [
     viteStaticCopy({
       targets: [

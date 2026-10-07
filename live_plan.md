@@ -53,6 +53,7 @@ A flight's ID is assigned once, when the flight is created, and never changes. T
 /server
   relay.ts               # poller, store, retention, persistence, HTTP + SSE
   store.ts               # in-memory flights and METARs, window queries, pruning
+  sampleLog.ts           # hourly NDJSON persistence and restore
 /src
   ingest.ts              # snapshot -> samples, shared with extract-tracks.ts
   ingest.test.ts

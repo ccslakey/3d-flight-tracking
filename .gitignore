@@ -2,3 +2,4 @@ node_modules/
 dist/
 .env
 public/data/raw/
+data/live/
