@@ -7,31 +7,13 @@
 
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
+import { Ingester, type Snapshot } from "../src/ingest";
 import type { FlightSummary, Landing, RecordingIndex, TrackFile, TrackManifest, TrackSample } from "../src/track";
 
 const SFO_LAT = 37.6189;
 const SFO_LON = -122.375;
 const LANDING_RADIUS_NM = 2; // covers all four SFO runways
-const MAX_POS_AGE_S = 15; // older positions are stale carry-overs
-const FLIGHT_GAP_MS = 10 * 60_000; // split one hex into separate flights after this gap
 const FALLBACK_GS_KT = 60; // below this near SFO after being airborne counts as landed
-
-interface RawAircraft {
-  hex: string;
-  type?: string;
-  flight?: string;
-  t?: string;
-  lat?: number;
-  lon?: number;
-  alt_baro?: number | "ground";
-  alt_geom?: number;
-  gs?: number;
-  track?: number;
-  true_heading?: number;
-  baro_rate?: number;
-  seen?: number;
-  seen_pos?: number;
-}
 
 function distanceNm(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const toRad = Math.PI / 180;
@@ -68,44 +50,13 @@ const rawPath = process.argv[2];
 if (!rawPath) throw new Error("Usage: tsx scripts/extract-tracks.ts <adsb ndjson>");
 
 const stamp = basename(rawPath).replace(/^adsb-/, "").replace(/\.ndjson$/, "");
-const byHex = new Map<string, { flight?: string; typeCode?: string; samples: TrackSample[] }>();
+const ingester = new Ingester();
 let snapshotCount = 0;
-let droppedStale = 0;
-let droppedDuplicate = 0;
 
 for (const line of readFileSync(rawPath, "utf8").split("\n")) {
   if (!line) continue;
-  const snap = JSON.parse(line) as { now: number; ac: RawAircraft[] };
+  ingester.ingest(JSON.parse(line) as Snapshot);
   snapshotCount++;
-  for (const ac of snap.ac) {
-    if (ac.lat === undefined || ac.lon === undefined || ac.seen_pos === undefined) continue;
-    if (ac.seen_pos > MAX_POS_AGE_S) {
-      droppedStale++;
-      continue;
-    }
-    const tMs = Math.round(snap.now - ac.seen_pos * 1000);
-    let entry = byHex.get(ac.hex);
-    if (!entry) byHex.set(ac.hex, (entry = { samples: [] }));
-    const last = entry.samples[entry.samples.length - 1];
-    // Same position time as last poll means nothing new was received.
-    if (last && Math.abs(tMs - last.tMs) < 100) {
-      droppedDuplicate++;
-      continue;
-    }
-    entry.flight ??= ac.flight?.trim() || undefined;
-    entry.typeCode ??= ac.t;
-    entry.samples.push({
-      tMs,
-      lat: ac.lat,
-      lon: ac.lon,
-      altBaroFt: ac.alt_baro ?? null,
-      altGeomFt: ac.alt_geom ?? null,
-      gsKt: ac.gs ?? null,
-      trackDeg: ac.track ?? null,
-      trueHeadingDeg: ac.true_heading ?? null,
-      baroRateFpm: ac.baro_rate ?? null,
-    });
-  }
 }
 
 const outDir = join("public", "data", "tracks", stamp);
@@ -113,35 +64,20 @@ rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 
 const flights: FlightSummary[] = [];
-for (const [hex, { flight, typeCode, samples }] of byHex) {
-  samples.sort((a, b) => a.tMs - b.tMs);
-  let segment: TrackSample[] = [];
-  const segments: TrackSample[][] = [];
-  for (const s of samples) {
-    if (segment.length && s.tMs - segment[segment.length - 1].tMs > FLIGHT_GAP_MS) {
-      segments.push(segment);
-      segment = [];
-    }
-    segment.push(s);
-  }
-  if (segment.length) segments.push(segment);
-
-  segments.forEach((seg, i) => {
-    const id = segments.length > 1 ? `${hex}-${i}` : hex;
-    const landing = detectLanding(seg);
-    const file: TrackFile = { id, hex, flight, typeCode, landing, samples: seg };
-    writeFileSync(join(outDir, `${id}.json`), JSON.stringify(file));
-    flights.push({
-      id,
-      hex,
-      flight,
-      typeCode,
-      sampleCount: seg.length,
-      startMs: seg[0].tMs,
-      endMs: seg[seg.length - 1].tMs,
-      hasGeom: seg.some((s) => s.altGeomFt !== null),
-      landing,
-    });
+for (const { id, hex, flight, typeCode, samples } of ingester.flights.values()) {
+  const landing = detectLanding(samples);
+  const file: TrackFile = { id, hex, flight, typeCode, landing, samples };
+  writeFileSync(join(outDir, `${id}.json`), JSON.stringify(file));
+  flights.push({
+    id,
+    hex,
+    flight,
+    typeCode,
+    sampleCount: samples.length,
+    startMs: samples[0].tMs,
+    endMs: samples[samples.length - 1].tMs,
+    hasGeom: samples.some((s) => s.altGeomFt !== null),
+    landing,
   });
 }
 
@@ -150,10 +86,10 @@ const summary = {
   source: basename(rawPath),
   snapshotCount,
   rawBytes: statSync(rawPath).size,
-  distinctAircraft: byHex.size,
+  distinctAircraft: new Set(flights.map((f) => f.hex)).size,
   flightCount: flights.length,
-  droppedStale,
-  droppedDuplicate,
+  droppedStale: ingester.droppedStale,
+  droppedDuplicate: ingester.droppedDuplicate,
   landings: {
     ground: landings.filter((f) => f.landing!.method === "ground").length,
     fallback: landings.filter((f) => f.landing!.method === "fallback").length,

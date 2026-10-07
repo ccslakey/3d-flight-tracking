@@ -71,7 +71,7 @@ vite.config.ts           # /api proxy to the relay in dev
 - Move snapshot processing out of `extract-tracks.ts` into `src/ingest.ts`, keeping its rules unchanged.
 - Unit tests cover the timestamp rule, stale and duplicate drops, gap splitting, and ID assignment (first flight gets the bare hex, later ones the first free index, existing IDs never change).
 
-**Done when:** tests pass, and re-running `extract-tracks.ts` on the first recording produces the same samples as the committed track files. Only the IDs of split flights change (`a0ad24-0` becomes `a0ad24`).
+**Done when:** tests pass, and re-running `extract-tracks.ts` on the first recording produces the same samples as the committed track files. Only split flights change: `a0ad24-0` becomes `a0ad24`, and each later segment keeps its own callsign instead of the first segment's.
 
 ### Phase 2: Relay
 
