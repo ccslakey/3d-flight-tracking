@@ -4,6 +4,7 @@ import { createConnectionPanel } from "./connectionPanel";
 import { createCurtains } from "./curtains";
 import { createDebugTrails } from "./debugTrails";
 import { createFlightList } from "./flightList";
+import { createHelpOverlay } from "./helpOverlay";
 import { enableKeyboardCamera } from "./keyboardCamera";
 import { enableKeyboardTime } from "./keyboardTime";
 import { loadGeoidGrid } from "./geoid";
@@ -42,6 +43,7 @@ if (import.meta.env.DEV) Object.assign(window, { viewer });
 
 enableKeyboardCamera(viewer);
 enableKeyboardTime(viewer);
+createHelpOverlay(viewer);
 
 // Hide anything below terrain so altitude errors are visible.
 viewer.scene.globe.depthTestAgainstTerrain = true;
