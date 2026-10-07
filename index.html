@@ -54,6 +54,18 @@
       .live-button::before { content: "● "; color: #777; }
       .live-button.is-live { color: #fff; border-color: #d33; cursor: default; }
       .live-button.is-live::before { color: #f44; }
+      .connection-panel {
+        position: absolute; top: 50px; right: 12px; z-index: 10; max-width: calc(100% - 24px);
+        padding: 8px 10px; border-radius: 4px; border-left: 3px solid #7cf29a;
+        font: 12px/1.5 system-ui, sans-serif; color: #eee; background: rgba(30, 30, 30, 0.85);
+      }
+      .connection-panel.is-warn { border-left-color: #ffc94d; }
+      .connection-panel.is-bad { border-left-color: #ff5c5c; }
+      .connection-title { font-weight: 600; margin-bottom: 2px; }
+      .connection-row { display: grid; grid-template-columns: 6.5em auto; gap: 8px; }
+      .connection-row span:first-child { color: #aaa; }
+      .connection-row.is-warn span:last-child { color: #ffc94d; }
+      .connection-row.is-bad span:last-child { color: #ff5c5c; }
     </style>
   </head>
   <body>

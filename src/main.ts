@@ -1,5 +1,6 @@
 import { Cartesian3, type Entity, Ion, JulianDate, Math as CesiumMath, Terrain, type TerrainProvider, Viewer } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
+import { createConnectionPanel } from "./connectionPanel";
 import { createCurtains } from "./curtains";
 import { createDebugTrails } from "./debugTrails";
 import { createFlightList } from "./flightList";
@@ -132,6 +133,7 @@ async function loadReplay(): Promise<void> {
       (err) => console.error(err),
     );
   } else {
+    createConnectionPanel(source);
     runLive(viewer, ctx, source, flights, {
       added(flight) {
         byEntityId.set(flight.entity.id, flight);

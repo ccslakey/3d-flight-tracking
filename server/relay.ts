@@ -147,6 +147,7 @@ const server = createServer((req, res) => {
 
   if (url.pathname === "/api/status") {
     return sendJson(res, 200, {
+      nowMs: Date.now(),
       retentionStartMs: Date.now() - retentionMs,
       latestNowMs,
       lastPoll,

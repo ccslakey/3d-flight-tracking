@@ -45,6 +45,8 @@ export interface LiveFeed {
   retentionMs: number;
   /** Starts delivering messages, beginning with any that arrived while history loaded. */
   run(handler: (message: LiveMessage) => void): void;
+  /** Whether the event stream is open, and when the page last heard from it. */
+  stream(): { open: boolean; lastHeardMs: number };
 }
 
 async function fetchHistory(fromMs?: number): Promise<History> {
@@ -94,6 +96,7 @@ export async function connectLive(): Promise<LiveFeed> {
       deliver = handler;
       for (const message of queued.splice(0)) handler(message);
     },
+    stream: () => ({ open: source.readyState === EventSource.OPEN, lastHeardMs }),
   };
 }
 
