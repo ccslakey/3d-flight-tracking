@@ -10,7 +10,7 @@ import {
   appendResolved,
   type ReplayContext,
   type ReplayFlight,
-  resolveSamples,
+  resolveSampleGroups,
   trimFlightBefore,
 } from "./replay";
 import type { LiveFlightSamples, LiveSamplesEvent, TrackFile, TrackSample } from "./track";
@@ -146,27 +146,24 @@ export function runLive(viewer: Viewer, ctx: ReplayContext, feed: LiveFeed, flig
       fresh.push({ track, samples });
     }
 
-    // One terrain query for the whole batch.
-    const resolved = await resolveSamples(
-      fresh.flatMap((f) => f.samples),
+    // One terrain query for the whole batch. Flights not rendered yet need two samples with
+    // heights, so their earlier samples are resolved again with the new ones.
+    const resolved = await resolveSampleGroups(
+      fresh.map(({ track, samples }) => (flightsById.has(track.id) ? samples : track.samples)),
       ctx,
     );
-    let i = 0;
-    for (const { track, samples } of fresh) {
-      const added = resolved.slice(i, (i += samples.length));
+    fresh.forEach(({ track }, i) => {
       const flight = flightsById.get(track.id);
       if (flight) {
-        appendResolved(flight, added);
+        appendResolved(flight, resolved[i]);
         hooks.changed(flight);
-        continue;
+        return;
       }
-      // Not rendered yet: needs two samples with heights. Resolve the earlier ones too.
-      const earlier = await resolveSamples(track.samples.slice(0, -samples.length), ctx);
-      const created = addFlightEntity(viewer, track, [...earlier, ...added], ctx.geoid, LIVE_HOLD_MS);
-      if (!created) continue;
+      const created = addFlightEntity(viewer, track, resolved[i], ctx.geoid, LIVE_HOLD_MS);
+      if (!created) return;
       flightsById.set(track.id, created);
       hooks.added(created);
-    }
+    });
   }
 
   function addMetars(metars: RawMetar[]): void {

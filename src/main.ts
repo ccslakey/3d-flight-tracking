@@ -7,7 +7,7 @@ import { createFlightList } from "./flightList";
 import { loadGeoidGrid } from "./geoid";
 import { parseMetars, type RawMetar } from "./metar";
 import { connectLive, LIVE_HOLD_MS, runLive } from "./live";
-import { addFlightEntity, type ReplayContext, type ReplayFlight, resolveSamples, setClockRange } from "./replay";
+import { addFlightEntity, type ReplayContext, type ReplayFlight, resolveSampleGroups, setClockRange } from "./replay";
 import { addValidationPanel } from "./validationPanel";
 import type { RecordingIndex, TrackFile, TrackManifest } from "./track";
 
@@ -82,13 +82,13 @@ async function loadReplay(): Promise<void> {
     terrainReady,
   ]);
   const ctx: ReplayContext = { geoid, metars: parseMetars(source.rawMetars), geomReference, terrainProvider };
-  const flights = (
-    await Promise.all(
-      source.tracks.map(async (t) =>
-        addFlightEntity(viewer, t, await resolveSamples(t.samples, ctx), geoid, live ? LIVE_HOLD_MS : 0),
-      ),
-    )
-  ).filter((f) => f !== null);
+  const resolved = await resolveSampleGroups(
+    source.tracks.map((t) => t.samples),
+    ctx,
+  );
+  const flights = source.tracks
+    .map((t, i) => addFlightEntity(viewer, t, resolved[i], geoid, live ? LIVE_HOLD_MS : 0))
+    .filter((f) => f !== null);
   const byEntityId = new Map(flights.map((f) => [f.entity.id, f]));
 
   const sidePanel = document.createElement("div");

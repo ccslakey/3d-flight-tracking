@@ -19,7 +19,6 @@ import {
   Quaternion,
   SampledPositionProperty,
   SampledProperty,
-  sampleTerrainMostDetailed,
   type TerrainProvider,
   TimeInterval,
   TimeIntervalCollection,
@@ -30,6 +29,7 @@ import {
 import { type AltResult, ellipsoidMToMslFt, flightPathAngleRad, toEllipsoidHeight } from "./altitude";
 import { geoidUndulationM, type GeoidGrid } from "./geoid";
 import { type Metar, metarAt } from "./metar";
+import { sampleTerrainHeights } from "./terrain";
 import type { TrackFile, TrackSample } from "./track";
 
 const TRAIL_SECONDS = 90;
@@ -65,6 +65,13 @@ export interface ReplayFlight {
   holdAfterMs: number; // stays shown at its last position this long after its last sample
 }
 
+/** Resolves several tracks' samples with one terrain query, so tiles they share are fetched once. */
+export async function resolveSampleGroups(groups: TrackSample[][], ctx: ReplayContext): Promise<ResolvedSample[][]> {
+  const all = await resolveSamples(groups.flat(), ctx);
+  let i = 0;
+  return groups.map((g) => all.slice(i, (i += g.length)));
+}
+
 /** Converts samples to ellipsoid heights, sampling terrain for ground samples in one batch. */
 export async function resolveSamples(samples: TrackSample[], ctx: ReplayContext): Promise<ResolvedSample[]> {
   const resolved: ResolvedSample[] = samples.map((sample) => {
@@ -77,10 +84,9 @@ export async function resolveSamples(samples: TrackSample[], ctx: ReplayContext)
   const ground = resolved.filter((r) => r.alt.source === "ground");
   if (ground.length) {
     const cartos = ground.map((r) => Cartographic.fromDegrees(r.sample.lon, r.sample.lat));
-    const sampled = await sampleTerrainMostDetailed(ctx.terrainProvider, cartos);
+    const heights = await sampleTerrainHeights(ctx.terrainProvider, cartos);
     ground.forEach((r, i) => {
-      const h = sampled[i].height;
-      r.terrainHeightM = Number.isFinite(h) ? h : null;
+      r.terrainHeightM = heights[i];
       r.heightM = r.terrainHeightM;
     });
   }
