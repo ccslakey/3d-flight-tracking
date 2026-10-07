@@ -18,15 +18,17 @@ const MIN_HEIGHT_M = 30;
 
 const KEYS = new Set(["w", "a", "s", "d", "r", "f", "q", "e", "x", "c"]);
 
+/** True when a key press belongs to a text field or a browser/OS shortcut, not to the app. */
+export const isNotForShortcuts = (e: KeyboardEvent): boolean =>
+  e.ctrlKey || e.metaKey || e.altKey || (e.target instanceof HTMLElement && !!e.target.closest("input, textarea, select"));
+
 export function enableKeyboardCamera(viewer: Viewer): void {
   const { scene, camera } = viewer;
   const held = new Set<string>();
 
-  const ignore = (e: KeyboardEvent) =>
-    e.ctrlKey || e.metaKey || e.altKey || (e.target instanceof HTMLElement && e.target.closest("input, textarea, select"));
   window.addEventListener("keydown", (e) => {
     const key = e.key.toLowerCase();
-    if (!KEYS.has(key) || ignore(e)) return;
+    if (!KEYS.has(key) || isNotForShortcuts(e)) return;
     held.add(key);
     e.preventDefault();
   });
