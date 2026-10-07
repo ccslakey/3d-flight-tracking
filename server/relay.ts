@@ -3,17 +3,20 @@
 //   GET /api/live                       Server-Sent Events: `samples` after each poll, `metar` on new METARs,
 //                                       `ping` every 15 s
 //   GET /api/status                     poll health and store size
+//   GET anything else                   the built app from STATIC_DIR, when it exists (production)
 // Usage: tsx server/relay.ts [--raw]
 //   --raw also writes raw snapshots to public/data/raw/, in record-adsb.ts format.
-// Env: PORT (default 8787), RETENTION_HOURS (default 4), LIVE_DATA_DIR (default data/live).
+// Env: PORT (default 8787), RETENTION_HOURS (default 4), LIVE_DATA_DIR (default data/live),
+//      STATIC_DIR (default dist).
 
-import { appendFileSync, mkdirSync } from "node:fs";
-import { createServer, type ServerResponse } from "node:http";
+import { appendFileSync, existsSync, mkdirSync } from "node:fs";
+import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { join } from "node:path";
 import type { Snapshot } from "../src/ingest";
 import type { RawMetar } from "../src/metar";
 import type { LiveSamplesEvent } from "../src/track";
 import { SampleLog, toLiveFlightSamples } from "./sampleLog";
+import { send, serveStatic } from "./static";
 import { LiveStore } from "./store";
 
 const SFO_LAT = 37.6189;
@@ -31,6 +34,7 @@ const HEARTBEAT_MS = 15_000; // a `ping` event, so clients can tell a live strea
 
 const port = Number(process.env.PORT ?? 8787);
 const retentionMs = Number(process.env.RETENTION_HOURS ?? 4) * 3_600_000;
+const staticDir = process.env.STATIC_DIR ?? "dist";
 const rawPath = process.argv.includes("--raw")
   ? join("public", "data", "raw", `adsb-${new Date().toISOString().replace(/[:.]/g, "-")}.ndjson`)
   : null;
@@ -117,20 +121,26 @@ async function fetchMetars(): Promise<void> {
   }
 }
 
-function sendJson(res: ServerResponse, status: number, body: unknown): void {
-  res.writeHead(status, { "Content-Type": "application/json", "Cache-Control": "no-store" });
-  res.end(JSON.stringify(body));
+function sendJson(req: IncomingMessage, res: ServerResponse, status: number, body: unknown): Promise<void> {
+  return send(req, res, status, { "Content-Type": "application/json", "Cache-Control": "no-store" }, JSON.stringify(body));
 }
 
 const server = createServer((req, res) => {
+  handle(req, res).catch((err) => {
+    log(`Request failed: ${req.url} (${(err as Error).message})`);
+    if (!res.headersSent) res.writeHead(500).end();
+  });
+});
+
+async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
   const url = new URL(req.url ?? "/", "http://relay");
-  if (req.method !== "GET") return sendJson(res, 405, { error: "GET only" });
+  if (req.method !== "GET") return sendJson(req, res, 405, { error: "GET only" });
 
   if (url.pathname === "/api/history") {
     const from = Number(url.searchParams.get("from") ?? Date.now() - retentionMs);
     const to = Number(url.searchParams.get("to") ?? Number.MAX_SAFE_INTEGER);
-    if (!Number.isFinite(from) || !Number.isFinite(to)) return sendJson(res, 400, { error: "from and to must be ms" });
-    return sendJson(res, 200, { ...store.history(from, to), retentionMs });
+    if (!Number.isFinite(from) || !Number.isFinite(to)) return sendJson(req, res, 400, { error: "from and to must be ms" });
+    return sendJson(req, res, 200, { ...store.history(from, to), retentionMs });
   }
 
   if (url.pathname === "/api/live") {
@@ -146,7 +156,7 @@ const server = createServer((req, res) => {
   }
 
   if (url.pathname === "/api/status") {
-    return sendJson(res, 200, {
+    return sendJson(req, res, 200, {
       nowMs: Date.now(),
       retentionStartMs: Date.now() - retentionMs,
       latestNowMs,
@@ -159,8 +169,9 @@ const server = createServer((req, res) => {
     });
   }
 
-  sendJson(res, 404, { error: "Not found" });
-});
+  if (!url.pathname.startsWith("/api/") && existsSync(staticDir) && (await serveStatic(req, res, staticDir, url.pathname))) return;
+  return sendJson(req, res, 404, { error: "Not found" });
+}
 
 server.listen(port, () => log(`Relay on http://localhost:${port}, retention ${retentionMs / 3_600_000} h`));
 

@@ -1,4 +1,4 @@
-import { Cartesian3, type Entity, Ion, JulianDate, Math as CesiumMath, Terrain, type TerrainProvider, Viewer } from "cesium";
+import { Cartesian3, Credit, type Entity, Ion, JulianDate, Math as CesiumMath, Terrain, type TerrainProvider, Viewer } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { createConnectionPanel } from "./connectionPanel";
 import { createCurtains } from "./curtains";
@@ -29,6 +29,12 @@ const terrainReady = new Promise<TerrainProvider>((resolve, reject) => {
 });
 
 const viewer = new Viewer("cesiumContainer", { terrain, infoBox: false, navigationInstructionsInitiallyVisible: false });
+viewer.creditDisplay.addStaticCredit(
+  new Credit(
+    'ADS-B data <a href="https://adsb.lol" target="_blank">adsb.lol</a> (<a href="https://opendatacommons.org/licenses/odbl/" target="_blank">ODbL</a>), weather <a href="https://aviationweather.gov" target="_blank">NOAA AWC</a>',
+    true,
+  ),
+);
 
 if (import.meta.env.DEV) Object.assign(window, { viewer });
 

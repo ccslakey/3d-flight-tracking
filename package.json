@@ -16,14 +16,17 @@
     "model": "tsx scripts/build-aircraft-model.ts"
   },
   "dependencies": {
-    "cesium": "^1.146.0"
+    "cesium": "^1.146.0",
+    "tsx": "^4.23.15"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
-    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.2",
     "vite-plugin-static-copy": "^4.1.1",
     "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
