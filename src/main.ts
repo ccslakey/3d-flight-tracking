@@ -5,7 +5,8 @@ import { createDebugTrails } from "./debugTrails";
 import { createFlightList } from "./flightList";
 import { loadGeoidGrid } from "./geoid";
 import { parseMetars, type RawMetar } from "./metar";
-import { addFlightEntity, type ReplayFlight, resolveSamples, setClockRange } from "./replay";
+import { connectLive, LIVE_HOLD_MS, runLive } from "./live";
+import { addFlightEntity, type ReplayContext, type ReplayFlight, resolveSamples, setClockRange } from "./replay";
 import { addValidationPanel } from "./validationPanel";
 import type { RecordingIndex, TrackFile, TrackManifest } from "./track";
 
@@ -49,37 +50,45 @@ async function fetchJson<T>(url: string): Promise<T> {
   return (await res.json()) as T;
 }
 
-async function loadReplay(): Promise<void> {
-  const params = new URLSearchParams(location.search);
-  const geomReference = params.get("geom") === "MSL" ? "MSL" : DEFAULT_GEOM_REFERENCE;
+interface Recording {
+  tracks: TrackFile[];
+  rawMetars: RawMetar[];
+  index: RecordingIndex;
+}
 
+async function loadRecording(stamp: string | null): Promise<Recording> {
   const manifest = await fetchJson<TrackManifest>("/data/tracks/manifest.json");
-  const recording =
-    manifest.recordings.find((r) => r.stamp === params.get("rec")) ?? manifest.recordings[manifest.recordings.length - 1];
+  const recording = manifest.recordings.find((r) => r.stamp === stamp) ?? manifest.recordings[manifest.recordings.length - 1];
   if (!recording) throw new Error("No recordings in manifest");
-
-  const [index, rawMetars, geoid, terrainProvider] = await Promise.all([
+  const [index, rawMetars] = await Promise.all([
     fetchJson<RecordingIndex>(`/data/tracks/${recording.stamp}/index.json`),
     fetchJson<RawMetar[]>(`/data/${recording.metarFile}`),
-    loadGeoidGrid(),
-    terrainReady,
   ]);
-  const metars = parseMetars(rawMetars);
   const tracks = await Promise.all(
     index.flights.map((f) => fetchJson<TrackFile>(`/data/tracks/${recording.stamp}/${f.id}.json`)),
   );
-  const tracksById = new Map(tracks.map((t) => [t.id, t]));
+  return { tracks, rawMetars, index };
+}
 
-  const ctx = { geoid, metars, geomReference, terrainProvider } as const;
+async function loadReplay(): Promise<void> {
+  const params = new URLSearchParams(location.search);
+  const geomReference = params.get("geom") === "MSL" ? "MSL" : DEFAULT_GEOM_REFERENCE;
+  const live = params.has("live");
+
+  const [source, geoid, terrainProvider] = await Promise.all([
+    live ? connectLive() : loadRecording(params.get("rec")),
+    loadGeoidGrid(),
+    terrainReady,
+  ]);
+  const ctx: ReplayContext = { geoid, metars: parseMetars(source.rawMetars), geomReference, terrainProvider };
   const flights = (
-    await Promise.all(tracks.map(async (t) => addFlightEntity(viewer, t, await resolveSamples(t, ctx), geoid)))
+    await Promise.all(
+      source.tracks.map(async (t) =>
+        addFlightEntity(viewer, t, await resolveSamples(t.samples, ctx), geoid, live ? LIVE_HOLD_MS : 0),
+      ),
+    )
   ).filter((f) => f !== null);
   const byEntityId = new Map(flights.map((f) => [f.entity.id, f]));
-  setClockRange(
-    viewer,
-    Math.min(...flights.map((f) => f.startMs)),
-    Math.max(...flights.map((f) => f.stopMs)),
-  );
 
   const sidePanel = document.createElement("div");
   sidePanel.className = "side-panel";
@@ -109,17 +118,31 @@ async function loadReplay(): Promise<void> {
     if (viewer.selectedEntity !== current?.entity) viewer.selectedEntity = current?.entity;
   });
 
+  if ("index" in source) {
+    setClockRange(
+      viewer,
+      Math.min(...flights.map((f) => f.startMs)),
+      Math.max(...flights.map((f) => f.stopMs)),
+    );
+    const tracksById = new Map(source.tracks.map((t) => [t.id, t]));
+    void addValidationPanel(source.index, async (id) => tracksById.get(id)!, geoid, ctx.metars, terrainProvider).catch(
+      (err) => console.error(err),
+    );
+  } else {
+    runLive(viewer, ctx, source, flights, (flight) => {
+      byEntityId.set(flight.entity.id, flight);
+      list.add(flight);
+      curtains.add(flight);
+    });
+  }
+
   const requested = params.get("flight");
   if (requested) {
     const flight = flights.find((f) => f.track.id === requested);
-    if (!flight) throw new Error(`Flight ${requested} not found in ${index.source}`);
+    if (!flight) throw new Error(`Flight ${requested} not found`);
     select(flight);
   }
-
-  void addValidationPanel(index, async (id) => tracksById.get(id)!, geoid, metars, terrainProvider).catch((err) =>
-    console.error(err),
-  );
-  console.info(`Replaying ${flights.length} flights from ${recording.stamp}`);
+  console.info(`${live ? "Live" : "Replaying"}: ${flights.length} flights`);
 }
 
 loadReplay().catch((err) => {

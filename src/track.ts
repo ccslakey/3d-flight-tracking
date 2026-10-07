@@ -56,3 +56,18 @@ export interface RecordingIndex {
 export interface TrackManifest {
   recordings: { stamp: string; metarFile: string }[];
 }
+
+/** One flight's new samples from a live poll, with its metadata as known at that time. */
+export interface LiveFlightSamples {
+  id: string;
+  hex: string;
+  flight?: string;
+  typeCode?: string;
+  samples: TrackSample[];
+}
+
+/** Payload of the relay's `samples` Server-Sent Event, sent after each poll. */
+export interface LiveSamplesEvent {
+  now: number; // the poll's API data time (ms)
+  flights: LiveFlightSamples[];
+}

@@ -44,6 +44,16 @@
       .validation-panel th:first-child, .validation-panel td:first-child { text-align: left; }
       .validation-title { font-weight: 600; margin-bottom: 4px; }
       .validation-note { margin-top: 4px; color: #aaa; max-width: 36ch; }
+      /* Sits just right of the animation widget, above the timeline. */
+      .live-button {
+        position: absolute; left: 180px; bottom: 36px; z-index: 10;
+        padding: 3px 10px; border: 1px solid #666; border-radius: 3px; cursor: pointer;
+        font: 600 12px/1.4 system-ui, sans-serif; letter-spacing: 0.05em;
+        color: #bbb; background: rgba(30, 30, 30, 0.85);
+      }
+      .live-button::before { content: "● "; color: #777; }
+      .live-button.is-live { color: #fff; border-color: #d33; cursor: default; }
+      .live-button.is-live::before { color: #f44; }
     </style>
   </head>
   <body>

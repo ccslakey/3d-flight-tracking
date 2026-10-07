@@ -11,13 +11,15 @@ const CURTAIN_COLOR = Color.fromCssColorString("#4dd2ff");
 export interface Curtains {
   /** Shows the curtain for this flight, or removes it when null. */
   show(flight: ReplayFlight | null): void;
+  /** Adds a drop line for a flight created after setup. */
+  add(flight: ReplayFlight): void;
 }
 
 export function createCurtains(viewer: Viewer, container: HTMLElement, flights: ReplayFlight[], geoid: GeoidGrid): Curtains {
   // Drop lines share a parent so one toggle hides them all.
   const dropLines = viewer.entities.add({ id: "drop-lines" });
   const scratch = new Cartographic();
-  for (const flight of flights) {
+  function add(flight: ReplayFlight): void {
     const { entity } = flight;
     viewer.entities.add({
       id: `drop-${flight.track.id}`,
@@ -36,6 +38,7 @@ export function createCurtains(viewer: Viewer, container: HTMLElement, flights: 
       },
     });
   }
+  flights.forEach(add);
 
   let curtainsOn = true;
   let curtain: Entity | undefined;
@@ -76,5 +79,5 @@ export function createCurtains(viewer: Viewer, container: HTMLElement, flights: 
   toggle("Drop lines to sea level", dropLines.show, (on) => (dropLines.show = on));
   container.append(section);
 
-  return { show };
+  return { show, add };
 }

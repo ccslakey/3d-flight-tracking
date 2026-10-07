@@ -58,14 +58,16 @@ export interface ResolvedSample {
 export interface ReplayFlight {
   track: TrackFile;
   resolved: ResolvedSample[];
+  usable: ResolvedSample[]; // resolved samples with a height, which drive the entity
   entity: Entity;
   startMs: number;
   stopMs: number;
+  holdAfterMs: number; // stays shown at its last position this long after its last sample
 }
 
-/** Converts every sample to an ellipsoid height, sampling terrain for ground samples. */
-export async function resolveSamples(track: TrackFile, ctx: ReplayContext): Promise<ResolvedSample[]> {
-  const resolved: ResolvedSample[] = track.samples.map((sample) => {
+/** Converts samples to ellipsoid heights, sampling terrain for ground samples in one batch. */
+export async function resolveSamples(samples: TrackSample[], ctx: ReplayContext): Promise<ResolvedSample[]> {
+  const resolved: ResolvedSample[] = samples.map((sample) => {
     const geoidN = geoidUndulationM(ctx.geoid, sample.lat, sample.lon);
     const { altimeterInHg } = metarAt(ctx.metars, sample.tMs);
     const alt = toEllipsoidHeight(sample, { altimeterInHg, geoidN, geomReference: ctx.geomReference });
@@ -179,12 +181,16 @@ function liveLabel(
   }, false);
 }
 
-/** Adds one aircraft entity that exists only during its recorded time span. Null if it has no usable heights. */
+/**
+ * Adds one aircraft entity that exists only during its recorded time span, plus `holdAfterMs`.
+ * Null if it has no usable heights.
+ */
 export function addFlightEntity(
   viewer: Viewer,
   track: TrackFile,
   resolved: ResolvedSample[],
   geoid: GeoidGrid,
+  holdAfterMs = 0,
 ): ReplayFlight | null {
   const usable = resolved.filter((r) => r.heightM !== null);
   if (usable.length < 2) return null;
@@ -207,9 +213,7 @@ export function addFlightEntity(
   const entity = viewer.entities.add({
     id: `flight-${track.id}`,
     name,
-    availability: new TimeIntervalCollection([
-      new TimeInterval({ start: JulianDate.fromDate(new Date(startMs)), stop: JulianDate.fromDate(new Date(stopMs)) }),
-    ]),
+    availability: new TimeIntervalCollection([timeInterval(startMs, stopMs + holdAfterMs)]),
     position,
     orientation: buildOrientation(usable),
     model: {
@@ -236,7 +240,28 @@ export function addFlightEntity(
       translucencyByDistance: new NearFarScalar(15_000, 1, 60_000, 0),
     },
   });
-  return { track, resolved, entity, startMs, stopMs };
+  return { track, resolved, usable, entity, startMs, stopMs, holdAfterMs };
+}
+
+const timeInterval = (startMs: number, stopMs: number) =>
+  new TimeInterval({ start: JulianDate.fromDate(new Date(startMs)), stop: JulianDate.fromDate(new Date(stopMs)) });
+
+/** Extends a flight with samples that are all later than its current ones. */
+export function appendResolved(flight: ReplayFlight, added: ResolvedSample[]): void {
+  flight.resolved.push(...added);
+  const usable = added.filter((r) => r.heightM !== null);
+  if (!usable.length) return;
+  flight.usable.push(...usable);
+  (flight.entity.position as SampledPositionProperty).addSamples(
+    usable.map((r) => JulianDate.fromDate(new Date(r.sample.tMs))),
+    usable.map((r) => Cartesian3.fromDegrees(r.sample.lon, r.sample.lat, r.heightM!)),
+  );
+  // Headings depend on neighboring samples and the whole flight, so rebuild them.
+  flight.entity.orientation = buildOrientation(flight.usable);
+  flight.stopMs = usable[usable.length - 1].sample.tMs;
+  // Mutated in place: drop lines share this collection.
+  flight.entity.availability!.removeAll();
+  flight.entity.availability!.addInterval(timeInterval(flight.startMs, flight.stopMs + flight.holdAfterMs));
 }
 
 /** Sets the clock and timeline to span the given time range. */

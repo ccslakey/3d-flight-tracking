@@ -4,6 +4,8 @@ import type { ReplayFlight } from "./replay";
 
 export interface FlightList {
   setSelected(id: string | null): void;
+  /** Appends a flight that started after the list was built. */
+  add(flight: ReplayFlight): void;
 }
 
 export function createFlightList(
@@ -14,10 +16,10 @@ export function createFlightList(
   const panel = document.createElement("div");
   panel.className = "flight-list";
 
-  const landings = flights.filter((f) => f.track.landing).length;
   const header = document.createElement("div");
   header.className = "flight-list-title";
-  header.textContent = `${flights.length} flights, ${landings} SFO landings`;
+  let flightCount = 0;
+  let landings = 0;
 
   const search = document.createElement("input");
   search.type = "search";
@@ -26,8 +28,7 @@ export function createFlightList(
 
   const list = document.createElement("ul");
   const rows = new Map<string, HTMLLIElement>();
-  const sorted = [...flights].sort((a, b) => a.startMs - b.startMs);
-  for (const flight of sorted) {
+  function add(flight: ReplayFlight): void {
     const { track } = flight;
     const li = document.createElement("li");
     li.dataset.search = [track.flight, track.hex, track.typeCode].filter(Boolean).join(" ").toLowerCase();
@@ -37,13 +38,22 @@ export function createFlightList(
     li.querySelector(".fl-type")!.textContent = track.typeCode ?? "";
     if (track.landing) li.classList.add("is-landing");
     li.addEventListener("click", () => onSelect(flight));
+    li.hidden = !matches(li);
     list.append(li);
     rows.set(track.id, li);
+    flightCount++;
+    if (track.landing) landings++;
+    header.textContent = `${flightCount} flights, ${landings} SFO landings`;
   }
 
-  search.addEventListener("input", () => {
+  const matches = (li: HTMLLIElement) => {
     const q = search.value.trim().toLowerCase();
-    for (const li of rows.values()) li.hidden = q !== "" && !li.dataset.search!.includes(q);
+    return q === "" || li.dataset.search!.includes(q);
+  };
+
+  for (const flight of [...flights].sort((a, b) => a.startMs - b.startMs)) add(flight);
+  search.addEventListener("input", () => {
+    for (const li of rows.values()) li.hidden = !matches(li);
   });
 
   panel.append(header, search, list);
@@ -57,5 +67,6 @@ export function createFlightList(
       selected?.classList.add("is-selected");
       selected?.scrollIntoView({ block: "nearest" });
     },
+    add,
   };
 }
