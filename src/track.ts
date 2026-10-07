@@ -9,6 +9,7 @@ export interface TrackSample {
   altGeomFt: number | null;
   gsKt: number | null;
   trackDeg: number | null;
+  trueHeadingDeg?: number | null; // nose direction; absent in recordings extracted before it was kept
   baroRateFpm: number | null;
 }
 

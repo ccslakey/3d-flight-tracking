@@ -1,1 +1,1 @@
-{"id":"~ac759b-1","hex":"~ac759b","landing":null,"samples":[{"tMs":1791264461517,"lat":37.712528,"lon":-122.216501,"altBaroFt":"ground","altGeomFt":null,"gsKt":9.2,"trackDeg":95.62,"baroRateFpm":null}]}
+{"id":"~ac759b-1","hex":"~ac759b","landing":null,"samples":[{"tMs":1791264461517,"lat":37.712528,"lon":-122.216501,"altBaroFt":"ground","altGeomFt":null,"gsKt":9.2,"trackDeg":95.62,"trueHeadingDeg":null,"baroRateFpm":null}]}

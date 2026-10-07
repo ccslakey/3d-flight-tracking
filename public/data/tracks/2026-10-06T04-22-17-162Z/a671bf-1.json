@@ -1,1 +1,1 @@
-{"id":"a671bf-1","hex":"a671bf","flight":"OPS18","landing":null,"samples":[{"tMs":1791264427440,"lat":37.629158,"lon":-122.380931,"altBaroFt":"ground","altGeomFt":null,"gsKt":0,"trackDeg":null,"baroRateFpm":null}]}
+{"id":"a671bf-1","hex":"a671bf","flight":"OPS18","landing":null,"samples":[{"tMs":1791264427440,"lat":37.629158,"lon":-122.380931,"altBaroFt":"ground","altGeomFt":null,"gsKt":0,"trackDeg":null,"trueHeadingDeg":null,"baroRateFpm":null}]}

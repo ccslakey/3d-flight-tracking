@@ -36,6 +36,8 @@ const TRAIL_SECONDS = 90;
 const MODEL_URL = "/models/airliner.glb";
 const LANDING_COLOR = Color.fromCssColorString("#7cf29a");
 const OTHER_COLOR = Color.WHITE;
+// Shorter moves between samples are position noise, not a direction of travel.
+const MIN_MOTION_M = 15;
 
 export interface ReplayContext {
   geoid: GeoidGrid;
@@ -83,21 +85,60 @@ export async function resolveSamples(track: TrackFile, ctx: ReplayContext): Prom
   return resolved;
 }
 
-/** Orientation from each sample's recorded track and climb angle, smoother than velocity between sparse samples. */
+/** Initial bearing from a to b in degrees from north, or null if they are too close to give a direction. */
+function motionBearingDeg(a: TrackSample, b: TrackSample): number | null {
+  const toRad = Math.PI / 180;
+  const dNorthM = (b.lat - a.lat) * 111_320;
+  const dEastM = (b.lon - a.lon) * 111_320 * Math.cos(a.lat * toRad);
+  if (Math.hypot(dNorthM, dEastM) < MIN_MOTION_M) return null;
+  return (Math.atan2(dEastM, dNorthM) / toRad + 360) % 360;
+}
+
+/**
+ * Heading per sample in degrees from north. Airborne samples use the recorded track. Ground
+ * samples rarely carry a track and often hold a stale one, so they use true heading, then the
+ * bearing of the segment being driven, then the last known heading while stopped. Some
+ * transponders freeze true heading, so it is ignored if it never changes while moving.
+ */
+function sampleHeadingsDeg(usable: ResolvedSample[]): (number | null)[] {
+  const motions = usable.map((r, i) => {
+    const s = r.sample;
+    const next = usable[i + 1]?.sample;
+    const prev = usable[i - 1]?.sample;
+    return (next && motionBearingDeg(s, next)) ?? (prev && motionBearingDeg(prev, s)) ?? null;
+  });
+  const movingTrueHeadings = usable
+    .filter((r, i) => r.alt.source === "ground" && motions[i] !== null)
+    .map((r) => r.sample.trueHeadingDeg)
+    .filter((h) => h != null);
+  const trueHeadingFrozen = movingTrueHeadings.length > 1 && new Set(movingTrueHeadings).size === 1;
+  const headings: (number | null)[] = usable.map((r, i) => {
+    const s = r.sample;
+    if (r.alt.source === "ground") return (trueHeadingFrozen ? null : s.trueHeadingDeg) ?? motions[i];
+    return s.trackDeg ?? motions[i];
+  });
+  // Hold through stops, and backfill a leading stop with the first known heading.
+  let last = headings.find((h) => h !== null) ?? null;
+  return headings.map((h) => (last = h ?? last));
+}
+
+/** Orientation from each sample's heading and climb angle, smoother than velocity between sparse samples. */
 function buildOrientation(usable: ResolvedSample[]): SampledProperty {
   const orientation = new SampledProperty(Quaternion);
   orientation.forwardExtrapolationType = ExtrapolationType.HOLD;
   orientation.backwardExtrapolationType = ExtrapolationType.HOLD;
-  for (const r of usable) {
-    const { trackDeg, gsKt, baroRateFpm } = r.sample;
-    if (trackDeg === null) continue;
+  const headings = sampleHeadingsDeg(usable);
+  usable.forEach((r, i) => {
+    const trackDeg = headings[i];
+    if (trackDeg === null) return;
+    const { gsKt, baroRateFpm } = r.sample;
     const onGround = r.alt.source === "ground";
     const pitch = onGround || gsKt === null || baroRateFpm === null ? 0 : flightPathAngleRad(baroRateFpm, gsKt);
     // Cesium model heading is measured from east; ADS-B track is measured from north.
     const hpr = new HeadingPitchRoll(CesiumMath.toRadians(trackDeg - 90), pitch, 0);
     const position = Cartesian3.fromDegrees(r.sample.lon, r.sample.lat, r.heightM!);
     orientation.addSample(JulianDate.fromDate(new Date(r.sample.tMs)), Transforms.headingPitchRollQuaternion(position, hpr));
-  }
+  });
   return orientation;
 }
 

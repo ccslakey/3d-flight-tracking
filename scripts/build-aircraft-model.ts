@@ -1,6 +1,6 @@
 // Generates a low-poly airliner as public/models/airliner.glb (about A320 size, in meters).
-// glTF axes: +X forward (nose), +Y up, Z across the wings. Cesium points a model's +X
-// along its heading.
+// Built with +X forward (nose), +Y up, Z across the wings, then rotated on output to the
+// glTF 2.0 convention of +Z forward, which Cesium turns to point along the heading.
 // Usage: tsx scripts/build-aircraft-model.ts
 
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -18,12 +18,15 @@ const normalize = (v: Vec3): Vec3 => {
   return [v[0] / len, v[1] / len, v[2] / len];
 };
 
+/** Rotates +X-forward build axes to glTF's +Z forward, keeping +Y up. */
+const toGltf = (v: Vec3): Vec3 => [-v[2], v[1], v[0]];
+
 /** Flat-shaded triangle; the normal follows the winding. The material is double-sided. */
 function tri(a: Vec3, b: Vec3, c: Vec3): void {
   const n = normalize(cross(sub(b, a), sub(c, a)));
   for (const v of [a, b, c]) {
-    positions.push(...v);
-    normals.push(...n);
+    positions.push(...toGltf(v));
+    normals.push(...toGltf(n));
   }
 }
 

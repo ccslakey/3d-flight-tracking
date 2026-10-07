@@ -27,6 +27,7 @@ interface RawAircraft {
   alt_geom?: number;
   gs?: number;
   track?: number;
+  true_heading?: number;
   baro_rate?: number;
   seen?: number;
   seen_pos?: number;
@@ -101,6 +102,7 @@ for (const line of readFileSync(rawPath, "utf8").split("\n")) {
       altGeomFt: ac.alt_geom ?? null,
       gsKt: ac.gs ?? null,
       trackDeg: ac.track ?? null,
+      trueHeadingDeg: ac.true_heading ?? null,
       baroRateFpm: ac.baro_rate ?? null,
     });
   }
