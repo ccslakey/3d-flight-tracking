@@ -7,6 +7,8 @@ import type { TrackSample } from "./track";
 export const MAX_POS_AGE_S = 15; // older positions are stale carry-overs
 export const FLIGHT_GAP_MS = 10 * 60_000; // split one hex into separate flights after this gap
 const DUPLICATE_MS = 100; // same position time as the last poll means nothing new was received
+// Some ADS-R ground vehicles at SFO report this fixed point off Half Moon Bay instead of their position.
+const PLACEHOLDER_POSITION = { lat: 37.5, lon: -122.553191 };
 
 export interface RawAircraft {
   hex: string;
@@ -56,6 +58,7 @@ export function assignFlightId(hex: string, usedIds: Set<string>): string {
 /** Converts one aircraft entry to a sample timed by its position age, or null if it has no usable position. */
 export function toSample(ac: RawAircraft, nowMs: number): TrackSample | null {
   if (ac.lat === undefined || ac.lon === undefined || ac.seen_pos === undefined) return null;
+  if (ac.lat === PLACEHOLDER_POSITION.lat && ac.lon === PLACEHOLDER_POSITION.lon) return null;
   return {
     tMs: Math.round(nowMs - ac.seen_pos * 1000),
     lat: ac.lat,

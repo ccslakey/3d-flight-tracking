@@ -132,6 +132,12 @@ slab(
   2,
 );
 
+// Put the origin at the lowest point so the model sits on its position instead of half below
+// it; otherwise it sinks into the terrain on the ground, more so when minimumPixelSize scales it up.
+let minY = Infinity;
+for (let i = 1; i < positions.length; i += 3) minY = Math.min(minY, positions[i]);
+for (let i = 1; i < positions.length; i += 3) positions[i] -= minY;
+
 // Pack a binary glTF: one mesh, non-indexed triangles, one double-sided material.
 const posBuf = Buffer.from(new Float32Array(positions).buffer);
 const nrmBuf = Buffer.from(new Float32Array(normals).buffer);

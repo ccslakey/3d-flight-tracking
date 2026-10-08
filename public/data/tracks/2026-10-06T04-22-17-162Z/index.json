@@ -3,9 +3,9 @@
  "snapshotCount": 436,
  "rawBytes": 12508485,
  "distinctAircraft": 205,
- "flightCount": 235,
- "droppedStale": 1630,
- "droppedDuplicate": 1210,
+ "flightCount": 234,
+ "droppedStale": 1610,
+ "droppedDuplicate": 1204,
  "landings": {
   "ground": 43,
   "fallback": 0
@@ -864,16 +864,6 @@
    "landing": null
   },
   {
-   "id": "a6792d",
-   "hex": "a6792d",
-   "flight": "AAST1",
-   "sampleCount": 4,
-   "startMs": 1791260576590,
-   "endMs": 1791260596655,
-   "hasGeom": false,
-   "landing": null
-  },
-  {
    "id": "a9ec06",
    "hex": "a9ec06",
    "flight": "UAL2633",
@@ -1297,7 +1287,7 @@
    "id": "a9a8b7",
    "hex": "a9a8b7",
    "flight": "OPS28",
-   "sampleCount": 265,
+   "sampleCount": 261,
    "startMs": 1791261412854,
    "endMs": 1791264728139,
    "hasGeom": false,
@@ -1364,7 +1354,7 @@
    "landing": null
   },
   {
-   "id": "a6792d-1",
+   "id": "a6792d",
    "hex": "a6792d",
    "flight": "AAST1",
    "sampleCount": 97,
@@ -1859,7 +1849,7 @@
    "id": "a67ce4",
    "hex": "a67ce4",
    "flight": "AAST2",
-   "sampleCount": 115,
+   "sampleCount": 111,
    "startMs": 1791262902410,
    "endMs": 1791264727519,
    "hasGeom": false,
@@ -2060,7 +2050,7 @@
    "hex": "a37ae9",
    "flight": "OPS40",
    "typeCode": "SERV",
-   "sampleCount": 34,
+   "sampleCount": 32,
    "startMs": 1791263536423,
    "endMs": 1791264632702,
    "hasGeom": false,
@@ -2226,7 +2216,7 @@
    "id": "a34fb3-1",
    "hex": "a34fb3",
    "flight": "OPS48",
-   "sampleCount": 49,
+   "sampleCount": 47,
    "startMs": 1791263823628,
    "endMs": 1791264729501,
    "hasGeom": false,

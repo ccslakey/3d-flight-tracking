@@ -34,6 +34,12 @@ describe("Ingester", () => {
     expect(ing.flights.size).toBe(0);
   });
 
+  it("skips the placeholder position some ground vehicles report", () => {
+    const ing = new Ingester();
+    expect(ing.ingest({ now: 0, ac: [ac({ lat: 37.5, lon: -122.553191, alt_baro: "ground" })] })).toEqual([]);
+    expect(ing.flights.size).toBe(0);
+  });
+
   it("drops stale positions", () => {
     const ing = new Ingester();
     ing.ingest({ now: 100_000, ac: [ac({ seen_pos: 16 })] });
