@@ -252,45 +252,24 @@ export function addFlightEntity(
 const timeInterval = (startMs: number, stopMs: number) =>
   new TimeInterval({ start: JulianDate.fromDate(new Date(startMs)), stop: JulianDate.fromDate(new Date(stopMs)) });
 
-/** Extends a flight with samples that are all later than its current ones. */
-export function appendResolved(flight: ReplayFlight, added: ResolvedSample[]): void {
-  flight.resolved.push(...added);
-  const usable = added.filter((r) => r.heightM !== null);
+/** Adds samples at any time, before, after, or between the flight's current ones. */
+export function mergeResolved(flight: ReplayFlight, added: ResolvedSample[]): void {
+  if (!added.length) return;
+  const byTime = (a: ResolvedSample, b: ResolvedSample) => a.sample.tMs - b.sample.tMs;
+  flight.resolved = [...flight.resolved, ...added].sort(byTime);
+  const usable = added.filter((r) => r.heightM !== null).sort(byTime);
   if (!usable.length) return;
-  flight.usable.push(...usable);
+  flight.usable = flight.resolved.filter((r) => r.heightM !== null);
+  // Cesium inserts each sample at its time.
   (flight.entity.position as SampledPositionProperty).addSamples(
     usable.map((r) => JulianDate.fromDate(new Date(r.sample.tMs))),
     usable.map((r) => Cartesian3.fromDegrees(r.sample.lon, r.sample.lat, r.heightM!)),
   );
   // Headings depend on neighboring samples and the whole flight, so rebuild them.
   flight.entity.orientation = buildOrientation(flight.usable);
-  flight.stopMs = usable[usable.length - 1].sample.tMs;
-  updateAvailability(flight);
-}
-
-/** Drops samples before `startMs`. Returns false if no samples with a height remain. */
-export function trimFlightBefore(flight: ReplayFlight, startMs: number): boolean {
-  const firstKept = (list: ResolvedSample[]) => {
-    const i = list.findIndex((r) => r.sample.tMs >= startMs);
-    return i < 0 ? list.length : i;
-  };
-  const usableDropped = firstKept(flight.usable);
-  flight.resolved.splice(0, firstKept(flight.resolved));
-  if (!usableDropped) return true;
-  flight.usable.splice(0, usableDropped);
-  if (!flight.usable.length) return false;
-
-  (flight.entity.position as SampledPositionProperty).removeSamples(
-    new TimeInterval({
-      start: JulianDate.fromDate(new Date(flight.startMs)),
-      stop: JulianDate.fromDate(new Date(startMs)),
-      isStopIncluded: false,
-    }),
-  );
-  flight.entity.orientation = buildOrientation(flight.usable);
   flight.startMs = flight.usable[0].sample.tMs;
+  flight.stopMs = flight.usable[flight.usable.length - 1].sample.tMs;
   updateAvailability(flight);
-  return true;
 }
 
 /** Mutated in place: drop lines share this collection. */

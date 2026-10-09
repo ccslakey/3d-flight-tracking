@@ -9,8 +9,9 @@ import { enableKeyboardCamera } from "./keyboardCamera";
 import { enableKeyboardTime } from "./keyboardTime";
 import { loadGeoidGrid } from "./geoid";
 import { parseMetars, type RawMetar } from "./metar";
-import { connectLive, LIVE_HOLD_MS, runLive } from "./live";
+import { connectLive, fetchArchive, LIVE_HOLD_MS, type LiveView, runLive } from "./live";
 import { addFlightEntity, type ReplayContext, type ReplayFlight, resolveSampleGroups, setClockRange } from "./replay";
+import { createSourcePicker, type SourcePickerHandlers } from "./sourcePicker";
 import { addValidationPanel } from "./validationPanel";
 import type { RecordingIndex, TrackFile, TrackManifest } from "./track";
 
@@ -65,13 +66,15 @@ async function fetchJson<T>(url: string): Promise<T> {
 }
 
 interface Recording {
+  stamp: string;
   tracks: TrackFile[];
   rawMetars: RawMetar[];
   index: RecordingIndex;
 }
 
-async function loadRecording(stamp: string | null): Promise<Recording> {
-  const manifest = await fetchJson<TrackManifest>("/data/tracks/manifest.json");
+const fetchManifest = () => fetchJson<TrackManifest>("/data/tracks/manifest.json");
+
+async function loadRecording(manifest: TrackManifest, stamp: string | null): Promise<Recording> {
   const recording = manifest.recordings.find((r) => r.stamp === stamp) ?? manifest.recordings[manifest.recordings.length - 1];
   if (!recording) throw new Error("No recordings in manifest");
   const [index, rawMetars] = await Promise.all([
@@ -81,18 +84,37 @@ async function loadRecording(stamp: string | null): Promise<Recording> {
   const tracks = await Promise.all(
     index.flights.map((f) => fetchJson<TrackFile>(`/data/tracks/${recording.stamp}/${f.id}.json`)),
   );
-  return { tracks, rawMetars, index };
+  return { stamp: recording.stamp, tracks, rawMetars, index };
 }
 
 async function loadReplay(): Promise<void> {
   const params = new URLSearchParams(location.search);
   const geomReference = params.get("geom") === "MSL" ? "MSL" : DEFAULT_GEOM_REFERENCE;
-  const live = params.has("live");
+  // Live (the default) shows the relay's archive up to now, starting at ?t=<ms> if given.
+  // ?rec=<stamp> plays a static recording, as does the default when the relay is down.
+  const rec = params.get("rec");
+  const startAtMs = params.has("t") ? Number(params.get("t")) : undefined;
+  const manifestReady = fetchManifest().catch(() => null);
+  const liveFeed =
+    rec === null
+      ? await connectLive(startAtMs).catch((err: Error) => {
+          if (params.has("live") || startAtMs !== undefined) throw err;
+          console.warn(`Showing the latest recording: ${err.message}`);
+          return null;
+        })
+      : null;
+  const live = liveFeed !== null;
+  const loadStatic = async () => {
+    const manifest = await manifestReady;
+    if (!manifest) throw new Error("No recordings found");
+    return loadRecording(manifest, rec);
+  };
 
-  const [source, geoid, terrainProvider] = await Promise.all([
-    live ? connectLive() : loadRecording(params.get("rec")),
+  const [source, geoid, terrainProvider, manifest] = await Promise.all([
+    liveFeed ?? loadStatic(),
     loadGeoidGrid(),
     terrainReady,
+    manifestReady,
   ]);
   const ctx: ReplayContext = { geoid, metars: parseMetars(source.rawMetars), geomReference, terrainProvider };
   const resolved = await resolveSampleGroups(
@@ -107,6 +129,16 @@ async function loadReplay(): Promise<void> {
   const sidePanel = document.createElement("div");
   sidePanel.className = "side-panel";
   document.body.append(sidePanel);
+
+  let view: LiveView | null = null;
+  const navigate = (search: string) => (location.search = search);
+  const handlers: SourcePickerHandlers = {
+    live: () => (view ? (view.goLive(), history.replaceState(null, "", location.pathname)) : navigate("")),
+    archive: (ms) => (view ? (view.jumpTo(ms), history.replaceState(null, "", `?t=${ms}`)) : navigate(`?t=${ms}`)),
+    recording: (stamp) => navigate(`?rec=${stamp}`),
+  };
+  const relayUp = live || (await fetchArchive().then(() => true, () => false));
+  const picker = createSourcePicker(sidePanel, relayUp ? fetchArchive : null, manifest, handlers);
   const list = createFlightList(sidePanel, flights, (f) => select(f));
   const trails = createDebugTrails(viewer, sidePanel, geomReference);
   const curtains = createCurtains(viewer, sidePanel, flights, geoid);
@@ -136,6 +168,7 @@ async function loadReplay(): Promise<void> {
   });
 
   if ("index" in source) {
+    picker.setCurrent({ kind: "recording", stamp: source.stamp });
     setClockRange(
       viewer,
       Math.min(...flights.map((f) => f.startMs)),
@@ -146,8 +179,7 @@ async function loadReplay(): Promise<void> {
       (err) => console.error(err),
     );
   } else {
-    createConnectionPanel(source);
-    runLive(viewer, ctx, source, flights, {
+    view = runLive(viewer, ctx, source, flights, {
       added(flight) {
         byEntityId.set(flight.entity.id, flight);
         list.add(flight);
@@ -162,7 +194,15 @@ async function loadReplay(): Promise<void> {
         list.remove(flight);
         curtains.remove(flight);
       },
-    });
+    }, startAtMs);
+    createConnectionPanel(source, view);
+    const liveView = view;
+    const showCurrent = () =>
+      picker.setCurrent(
+        liveView.following() ? { kind: "live" } : { kind: "archive", ms: JulianDate.toDate(viewer.clock.currentTime).getTime() },
+      );
+    showCurrent();
+    setInterval(showCurrent, 1_000);
   }
 
   const requested = params.get("flight");

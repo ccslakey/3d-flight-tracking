@@ -1,6 +1,8 @@
 // Track file formats written by scripts/extract-tracks.ts and read by the browser.
 // Altitudes are raw feet as reported; convert them only through altitude.ts.
 
+import type { RawMetar } from "./metar";
+
 export interface TrackSample {
   tMs: number; // position time: snapshot `now` minus `seen_pos`
   lat: number;
@@ -70,4 +72,24 @@ export interface LiveFlightSamples {
 export interface LiveSamplesEvent {
   now: number; // the poll's API data time (ms)
   flights: LiveFlightSamples[];
+}
+
+/** Flights that started in one UTC hour of the relay's archive. */
+export interface ArchiveHour {
+  startMs: number;
+  flights: number;
+  landings: number;
+}
+
+/** Response of the relay's /api/archive: what it holds, for the timeline and the source picker. */
+export interface ArchiveInfo {
+  startMs: number | null; // oldest sample, or null when empty
+  retentionMs: number;
+  hours: ArchiveHour[];
+}
+
+/** Response of the relay's /api/history: flights with samples in a window, each whole, and METARs. */
+export interface LiveHistory {
+  flights: TrackFile[];
+  metars: RawMetar[];
 }

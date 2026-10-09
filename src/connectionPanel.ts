@@ -1,7 +1,7 @@
 // Live-mode panel showing whether data is flowing: the page's event stream, the relay, the
 // relay's adsb.lol polling, and how old the latest data is.
 
-import type { LiveFeed } from "./live";
+import type { LiveFeed, LiveView } from "./live";
 
 const STATUS_POLL_MS = 5_000;
 const RENDER_MS = 1_000;
@@ -24,7 +24,9 @@ const LEVEL_RANK: Record<Level, number> = { ok: 0, warn: 1, bad: 2 };
 const worst = (levels: Level[]): Level => levels.reduce((a, b) => (LEVEL_RANK[b] > LEVEL_RANK[a] ? b : a), "ok");
 const secondsText = (s: number) => (s < 90 ? `${Math.round(s)} s` : `${Math.round(s / 60)} min`);
 
-export function createConnectionPanel(feed: LiveFeed): void {
+const clockText = (ms: number) => new Date(ms).toISOString().slice(5, 16).replace("T", " ");
+
+export function createConnectionPanel(feed: LiveFeed, view: LiveView): void {
   const panel = document.createElement("div");
   panel.className = "connection-panel";
   const title = document.createElement("div");
@@ -95,6 +97,11 @@ export function createConnectionPanel(feed: LiveFeed): void {
         const level: Level = ageS >= DATA_BAD_S ? "bad" : ageS >= DATA_WARN_S ? "warn" : "ok";
         items.push(row(level, "Latest data", `${secondsText(ageS)} old`));
       }
+    }
+
+    const loading = view.loading();
+    if (loading) {
+      items.push(row("ok", "Archive", `Loading ${clockText(loading.fromMs)}–${loading.toMs === null ? "now" : clockText(loading.toMs)}Z`));
     }
 
     const overall = worst(items.map(([level]) => level));

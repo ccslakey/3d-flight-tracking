@@ -80,14 +80,17 @@ export class Ingester {
   private readonly currentByHex = new Map<string, IngestFlight>();
   private readonly lastReceivedByHex = new Map<string, TrackSample>();
 
-  /** `existing` restores flights kept from earlier runs, so their IDs stay taken and they can keep growing. */
-  constructor(existing: Iterable<IngestFlight> = []) {
+  /**
+   * `existing` restores flights kept from earlier runs, so their IDs stay taken and they can keep
+   * growing. `reservedIds` are IDs of flights held elsewhere, such as finished archived flights.
+   */
+  constructor(existing: Iterable<IngestFlight> = [], reservedIds: Iterable<string> = []) {
     for (const f of existing) {
       this.flights.set(f.id, f);
       const current = this.currentByHex.get(f.hex);
       if (!current || lastMs(f) > lastMs(current)) this.currentByHex.set(f.hex, f);
     }
-    this.usedIds = new Set(this.flights.keys());
+    this.usedIds = new Set([...reservedIds, ...this.flights.keys()]);
   }
 
   /** Adds a snapshot's new positions and returns the samples it added, grouped by flight. */
@@ -122,10 +125,18 @@ export class Ingester {
 
   /** Forgets a flight, freeing its ID. Used when retention drops all of its samples. */
   remove(id: string): void {
+    this.retire(id);
+    this.usedIds.delete(id);
+  }
+
+  /**
+   * Forgets a finished flight's samples but keeps its ID taken. A later position for its hex
+   * starts a new flight, as it would after FLIGHT_GAP_MS anyway.
+   */
+  retire(id: string): void {
     const flight = this.flights.get(id);
     if (!flight) return;
     this.flights.delete(id);
-    this.usedIds.delete(id);
     if (this.currentByHex.get(flight.hex) === flight) this.currentByHex.delete(flight.hex);
   }
 

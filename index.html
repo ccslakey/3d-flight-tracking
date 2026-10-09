@@ -17,6 +17,15 @@
       .error-banner { position: absolute; top: 12px; left: 12px; z-index: 11; }
       .flight-list { display: flex; flex-direction: column; min-height: 0; }
       .flight-list-title { font-weight: 600; }
+      .source-picker {
+        display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; border-radius: 4px;
+        background: rgba(30, 30, 30, 0.85);
+      }
+      .source-picker select {
+        width: 100%; padding: 3px 4px; font: 13px system-ui, sans-serif; color: #eee;
+        background: rgba(255, 255, 255, 0.08); border: 1px solid #555; border-radius: 3px;
+      }
+      .source-picker select option, .source-picker select optgroup { color: #eee; background: #262626; }
       .flight-list-search {
         margin: 4px 0; padding: 3px 6px; font: inherit; color: inherit;
         background: rgba(255, 255, 255, 0.08); border: 1px solid #555; border-radius: 3px;

@@ -1,12 +1,13 @@
-// Live relay: polls adsb.lol and KSFO METARs, keeps the last few hours, and serves them.
-//   GET /api/history?from=<ms>&to=<ms>  tracks and METARs in a time window (default: all held), and the retention
+// Live relay: polls adsb.lol and KSFO METARs, archives them in SQLite for a few weeks, and serves them.
+//   GET /api/history?from=<ms>&to=<ms>  flights with samples in a time window (default: the last hour), and METARs
+//   GET /api/archive                    what the archive holds: its start, and flights per hour
 //   GET /api/live                       Server-Sent Events: `samples` after each poll, `metar` on new METARs,
 //                                       `ping` every 15 s
-//   GET /api/status                     poll health and store size
+//   GET /api/status                     poll health and archive size
 //   GET anything else                   the built app from STATIC_DIR, when it exists (production)
 // Usage: tsx server/relay.ts [--raw]
 //   --raw also writes raw snapshots to public/data/raw/, in record-adsb.ts format.
-// Env: PORT (default 8787), RETENTION_HOURS (default 4), LIVE_DATA_DIR (default data/live),
+// Env: PORT (default 8787), RETENTION_DAYS (default 30), ARCHIVE_PATH (default data/archive.sqlite),
 //      STATIC_DIR (default dist).
 
 import { appendFileSync, existsSync, mkdirSync } from "node:fs";
@@ -15,9 +16,8 @@ import { join } from "node:path";
 import type { Snapshot } from "../src/ingest";
 import type { RawMetar } from "../src/metar";
 import type { LiveSamplesEvent } from "../src/track";
-import { SampleLog, toLiveFlightSamples } from "./sampleLog";
+import { Archive, toLiveFlightSamples } from "./archive";
 import { send, serveStatic } from "./static";
-import { LiveStore } from "./store";
 
 const SFO_LAT = 37.6189;
 const SFO_LON = -122.375;
@@ -25,15 +25,22 @@ const RADIUS_NM = 40;
 const ADSB_URL = `https://api.adsb.lol/v2/point/${SFO_LAT}/${SFO_LON}/${RADIUS_NM}`;
 const METAR_URL = "https://aviationweather.gov/api/data/metar?ids=KSFO&format=json";
 const USER_AGENT = "flight-tracker-poc/0.1 (ADS-B live relay)";
-const POLL_INTERVAL_MS = 5_000;
+// adsb.lol rate-limits faster polling: at 5 s about every other request got HTTP 429.
+const POLL_INTERVAL_MS = 10_000;
+// Each 429 stretches the interval, and each success shrinks it back by a step, so the relay
+// settles just under the limit instead of bursting into it after every backoff.
+const MAX_POLL_INTERVAL_MS = 30_000;
+const INTERVAL_STEP_MS = 1_000;
 const MAX_BACKOFF_MS = 120_000;
 const REQUEST_TIMEOUT_MS = 15_000;
 const METAR_INTERVAL_MS = 10 * 60_000;
-const PRUNE_INTERVAL_MS = 60_000;
+const MAINTENANCE_INTERVAL_MS = 60_000;
+const DEFAULT_HISTORY_MS = 3_600_000;
+const MAX_METAR_HOURS = 7 * 24; // how far back a restart backfills METARs
 const HEARTBEAT_MS = 15_000; // a `ping` event, so clients can tell a live stream from a hung one
 
 const port = Number(process.env.PORT ?? 8787);
-const retentionMs = Number(process.env.RETENTION_HOURS ?? 4) * 3_600_000;
+const retentionMs = Number(process.env.RETENTION_DAYS ?? 30) * 24 * 3_600_000;
 const staticDir = process.env.STATIC_DIR ?? "dist";
 const rawPath = process.argv.includes("--raw")
   ? join("public", "data", "raw", `adsb-${new Date().toISOString().replace(/[:.]/g, "-")}.ndjson`)
@@ -42,15 +49,16 @@ const rawPath = process.argv.includes("--raw")
 const log = (msg: string) => console.log(`${new Date().toISOString()} ${msg}`);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-const sampleLog = new SampleLog(process.env.LIVE_DATA_DIR ?? join("data", "live"));
-const store = new LiveStore(retentionMs, sampleLog.load(Date.now() - retentionMs));
-store.prune(Date.now());
-log(`Restored ${JSON.stringify(store.counts())}`);
+const archive = new Archive(process.env.ARCHIVE_PATH ?? join("data", "archive.sqlite"), retentionMs);
+archive.prune(Date.now());
+archive.finishFlights(Date.now());
+log(`Archive ${JSON.stringify(archive.counts())}`);
 
 const clients = new Set<ServerResponse>();
 const lastPoll = { atMs: 0, ok: false, error: null as string | null, aircraft: 0, newSamples: 0 };
 let latestNowMs: number | null = null;
 let backoffMs = 0;
+let pollIntervalMs = POLL_INTERVAL_MS;
 
 function broadcast(event: string, data: unknown): void {
   const message = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
@@ -75,11 +83,11 @@ async function pollAdsbForever(): Promise<void> {
       const snap: Snapshot = { now: body.now, ac: body.ac ?? [] };
       if (rawPath) appendFileSync(rawPath, JSON.stringify({ recordedAt: startedAt, ...snap }) + "\n");
 
-      const flights = toLiveFlightSamples(store.ingest(snap));
-      sampleLog.appendSamples(snap.now, flights);
+      const flights = toLiveFlightSamples(archive.ingest(snap));
       broadcast("samples", { now: snap.now, flights } satisfies LiveSamplesEvent);
       latestNowMs = snap.now;
       backoffMs = 0;
+      pollIntervalMs = Math.max(POLL_INTERVAL_MS, pollIntervalMs - INTERVAL_STEP_MS);
       Object.assign(lastPoll, {
         atMs: startedAt,
         ok: true,
@@ -88,8 +96,9 @@ async function pollAdsbForever(): Promise<void> {
         newSamples: flights.reduce((n, f) => n + f.samples.length, 0),
       });
     } catch (err) {
+      if ((err as Error).message === "HTTP 429") pollIntervalMs = Math.min(pollIntervalMs * 1.5, MAX_POLL_INTERVAL_MS);
       backoffMs = Math.max(
-        Math.min(Math.max(backoffMs * 2, POLL_INTERVAL_MS), MAX_BACKOFF_MS),
+        Math.min(Math.max(backoffMs * 2, pollIntervalMs), MAX_BACKOFF_MS),
         (err as { retryAfterMs?: number }).retryAfterMs ?? 0,
       );
       Object.assign(lastPoll, { atMs: startedAt, ok: false, error: (err as Error).message });
@@ -97,22 +106,22 @@ async function pollAdsbForever(): Promise<void> {
       await sleep(backoffMs);
       continue;
     }
-    await sleep(Math.max(0, POLL_INTERVAL_MS - (Date.now() - startedAt)));
+    await sleep(Math.max(0, pollIntervalMs - (Date.now() - startedAt)));
   }
 }
 
-/** Fetches METARs back to the retention start plus an hour, so every held sample has one in effect. */
+/** Fetches METARs since the newest one held (a week at most), so every sample has one in effect. */
 async function fetchMetars(): Promise<void> {
-  const hours = Math.ceil(retentionMs / 3_600_000) + 2;
+  const latestMs = archive.latestMetarMs();
+  const hours = latestMs === null ? 2 : Math.min(Math.ceil((Date.now() - latestMs) / 3_600_000) + 1, MAX_METAR_HOURS);
   try {
     const res = await fetch(`${METAR_URL}&hours=${hours}`, {
       headers: { "User-Agent": USER_AGENT },
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const added = store.addMetars((await res.json()) as RawMetar[]);
+    const added = archive.addMetars((await res.json()) as RawMetar[]);
     if (added.length) {
-      sampleLog.appendMetars(added);
       broadcast("metar", { metars: added });
       log(`${added.length} new METAR(s)`);
     }
@@ -137,10 +146,14 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
   if (req.method !== "GET") return sendJson(req, res, 405, { error: "GET only" });
 
   if (url.pathname === "/api/history") {
-    const from = Number(url.searchParams.get("from") ?? Date.now() - retentionMs);
+    const from = Number(url.searchParams.get("from") ?? Date.now() - DEFAULT_HISTORY_MS);
     const to = Number(url.searchParams.get("to") ?? Number.MAX_SAFE_INTEGER);
     if (!Number.isFinite(from) || !Number.isFinite(to)) return sendJson(req, res, 400, { error: "from and to must be ms" });
-    return sendJson(req, res, 200, { ...store.history(from, to), retentionMs });
+    return sendJson(req, res, 200, archive.history(from, to));
+  }
+
+  if (url.pathname === "/api/archive") {
+    return sendJson(req, res, 200, { startMs: archive.startMs(), retentionMs, hours: archive.hours() });
   }
 
   if (url.pathname === "/api/live") {
@@ -158,13 +171,14 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
   if (url.pathname === "/api/status") {
     return sendJson(req, res, 200, {
       nowMs: Date.now(),
-      retentionStartMs: Date.now() - retentionMs,
+      archiveStartMs: archive.startMs(),
       latestNowMs,
       lastPoll,
       backoffMs,
+      pollIntervalMs,
       clients: clients.size,
-      droppedStale: store.droppedStale,
-      ...store.counts(),
+      droppedStale: archive.droppedStale,
+      ...archive.counts(),
       rssMb: Math.round(process.memoryUsage().rss / 1e6),
     });
   }
@@ -173,12 +187,23 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
   return sendJson(req, res, 404, { error: "Not found" });
 }
 
-server.listen(port, () => log(`Relay on http://localhost:${port}, retention ${retentionMs / 3_600_000} h`));
+server.listen(port, () => log(`Relay on http://localhost:${port}, retention ${retentionMs / 86_400_000} days`));
 
 setInterval(() => {
-  store.prune(Date.now());
-  sampleLog.deleteBefore(Date.now() - retentionMs);
-}, PRUNE_INTERVAL_MS);
+  archive.finishFlights(Date.now());
+  archive.prune(Date.now());
+}, MAINTENANCE_INTERVAL_MS);
+
+// Railway sends SIGTERM on every redeploy. Close streams and the archive so it shuts down cleanly.
+for (const signal of ["SIGTERM", "SIGINT"] as const) {
+  process.once(signal, () => {
+    log(`${signal}, shutting down`);
+    for (const res of clients) res.end();
+    server.close();
+    archive.close();
+    process.exit(0);
+  });
+}
 await fetchMetars();
 setInterval(fetchMetars, METAR_INTERVAL_MS);
 void pollAdsbForever();
