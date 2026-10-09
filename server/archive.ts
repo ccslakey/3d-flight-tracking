@@ -178,8 +178,8 @@ export class Archive {
 
   /**
    * Every flight with samples in [fromMs, toMs], each with all of its samples so landings and
-   * headings see the whole flight, and the METARs covering the window, including the one in
-   * effect at its start.
+   * headings see the whole flight, and the METARs covering those samples, including the one in
+   * effect at the earliest. A flight can start hours before the window.
    */
   history(fromMs: number, toMs: number): LiveHistory {
     const rows = this.db
@@ -198,7 +198,7 @@ export class Archive {
            WHERE obs_time >= coalesce((SELECT max(obs_time) FROM metars WHERE obs_time <= ?), 0) AND obs_time <= ?
            ORDER BY obs_time`,
         )
-        .all(fromMs / 1000, toMs / 1000) as { raw: string }[]
+        .all(Math.min(fromMs, ...flights.map((f) => f.samples[0]?.tMs ?? fromMs)) / 1000, toMs / 1000) as { raw: string }[]
     ).map((r) => JSON.parse(r.raw) as RawMetar);
     return { flights, metars };
   }

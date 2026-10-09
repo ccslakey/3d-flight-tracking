@@ -68,6 +68,16 @@ describe("Archive", () => {
     expect(times).toEqual([HOUR, 2 * HOUR]);
   });
 
+  it("covers a long flight's earlier samples with METARs, not only the window", () => {
+    const archive = new Archive(":memory:", DAY);
+    archive.addMetars([metar(0), metar(HOUR), metar(2 * HOUR), metar(3 * HOUR)]);
+    // One aircraft reporting every few minutes for hours, so it stays one flight.
+    for (let t = 0.5 * HOUR; t <= 3.5 * HOUR; t += 5 * 60_000) archive.ingest({ now: t, ac: [ac("aaa111")] });
+    const h = archive.history(3.2 * HOUR, 3.5 * HOUR);
+    expect(h.flights[0].samples[0].tMs).toBe(0.5 * HOUR);
+    expect(h.metars.map((m) => m.obsTime * 1000)).toEqual([0, HOUR, 2 * HOUR, 3 * HOUR]);
+  });
+
   it("ignores METARs it already holds", () => {
     const archive = new Archive(":memory:", DAY);
     archive.addMetars([metar(0)]);
